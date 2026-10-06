@@ -1,0 +1,251 @@
+{
+  "shape": [
+    3730,
+    3292
+  ],
+  "channels": [
+    "mag_anom",
+    "rtp",
+    "tmi_hg",
+    "geod_2ndinv",
+    "iso_grav_anom_slope",
+    "tc",
+    "geod_shearrate",
+    "geod_dilaterate",
+    "tmi_vg",
+    "deq_n100a15",
+    "iso_grav_anom_vg",
+    "det_elev",
+    "iso_grav_anom",
+    "tmi",
+    "depth_to_base_surf",
+    "ieq_n100a15",
+    "cond_surf",
+    "iso_grav_anom_hg",
+    "det_elev_slope",
+    "b12_odd_s2",
+    "b12_even_s2",
+    "b12_odd_s5",
+    "b12_even_s5",
+    "b2_odd_s2",
+    "b2_even_s2",
+    "b2_odd_s5",
+    "b2_even_s5",
+    "b13_odd_s2",
+    "b13_even_s2",
+    "b13_odd_s5",
+    "b13_even_s5",
+    "b12_odd_fraction_s2",
+    "b12_signed_phase_s2",
+    "b12_odd_fraction_s5",
+    "b12_signed_phase_s5",
+    "b12_signed_phase_agreement",
+    "b2_odd_fraction_s2",
+    "b2_signed_phase_s2",
+    "b2_odd_fraction_s5",
+    "b2_signed_phase_s5",
+    "b2_signed_phase_agreement",
+    "b13_odd_fraction_s2",
+    "b13_signed_phase_s2",
+    "b13_odd_fraction_s5",
+    "b13_signed_phase_s5",
+    "b13_signed_phase_agreement"
+  ],
+  "baseline_channels": 31,
+  "candidate_channels": 46,
+  "band_metadata": [
+    {
+      "band": 1,
+      "tags": {
+        "band_name": "mag_anom",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Magnetic anomaly - deviation from expected Earth's magnetic field"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 2,
+      "tags": {
+        "band_name": "rtp",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Reduced to pole magnetic data - magnetic anomaly corrected for latitude effects"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 3,
+      "tags": {
+        "band_name": "tmi_hg",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Total magnetic intensity horizontal gradient - rate of change in horizontal direction"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 4,
+      "tags": {
+        "band_name": "geod_2ndinv",
+        "data_category": "geodetic_strain",
+        "data_type": "numeric",
+        "description": "Geodetic second invariant - measure of strain rate tensor magnitude"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 5,
+      "tags": {
+        "band_name": "iso_grav_anom_slope",
+        "data_category": "gravity_data",
+        "data_type": "numeric",
+        "description": "Isostatic gravity anomaly slope - gradient of gravity after isostatic correction"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 6,
+      "tags": {
+        "band_name": "tc",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Tilt angle or total curvature - magnetic field derivative for edge detection"
+      },
+      "invalid": 7113320
+    },
+    {
+      "band": 7,
+      "tags": {
+        "band_name": "geod_shearrate",
+        "data_category": "geodetic_strain",
+        "data_type": "numeric",
+        "description": "Geodetic shear rate - rate of angular deformation from GPS/InSAR"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 8,
+      "tags": {
+        "band_name": "geod_dilaterate",
+        "data_category": "geodetic_strain",
+        "data_type": "numeric",
+        "description": "Geodetic dilatation rate - rate of volumetric strain (expansion/contraction)"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 9,
+      "tags": {
+        "band_name": "tmi_vg",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Total magnetic intensity vertical gradient - rate of change in vertical direction"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 10,
+      "tags": {
+        "band_name": "deq_n100a15",
+        "data_category": "seismic",
+        "data_type": "numeric",
+        "description": "Distance to earthquake (n=100km radius, a=15\u00b0 azimuth parameters)"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 11,
+      "tags": {
+        "band_name": "iso_grav_anom_vg",
+        "data_category": "gravity_data",
+        "data_type": "numeric",
+        "description": "Isostatic gravity anomaly vertical gradient - vertical rate of change"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 12,
+      "tags": {
+        "band_name": "det_elev",
+        "data_category": "topographic",
+        "data_type": "numeric",
+        "description": "Detrended elevation - topography with regional trends removed"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 13,
+      "tags": {
+        "band_name": "iso_grav_anom",
+        "data_category": "gravity_data",
+        "data_type": "numeric",
+        "description": "Isostatic gravity anomaly - gravity after compensating for topographic mass"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 14,
+      "tags": {
+        "band_name": "tmi",
+        "data_category": "magnetic_data",
+        "data_type": "numeric",
+        "description": "Total magnetic intensity - total strength of magnetic field"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 15,
+      "tags": {
+        "band_name": "depth_to_base_surf",
+        "data_category": "subsurface",
+        "data_type": "numeric",
+        "description": "Depth to basement surface - thickness of sedimentary cover"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 16,
+      "tags": {
+        "band_name": "ieq_n100a15",
+        "data_category": "seismic",
+        "data_type": "numeric",
+        "description": "Earthquake intensity or density (n=100km radius, a=15\u00b0 parameters)"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 17,
+      "tags": {
+        "band_name": "cond_surf",
+        "data_category": "subsurface",
+        "data_type": "numeric",
+        "description": "Conductivity surface - electrical conductivity of subsurface"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 18,
+      "tags": {
+        "band_name": "iso_grav_anom_hg",
+        "data_category": "gravity_data",
+        "data_type": "numeric",
+        "description": "Isostatic gravity anomaly horizontal gradient - horizontal rate of change"
+      },
+      "invalid": 7113308
+    },
+    {
+      "band": 19,
+      "tags": {
+        "band_name": "det_elev_slope",
+        "data_category": "topographic",
+        "data_type": "numeric",
+        "description": "Detrended elevation slope - gradient of elevation after detrending"
+      },
+      "invalid": 7113308
+    }
+  ],
+  "preregistration_sha256": "387de3974626a2efec0a12e9c16540dba4c6ff4409cb2a16a66e6bd6bd5687ba",
+  "feature_bytes": 2259365568,
+  "template_warning": "Mirror template has positive labels; values never used as predictions or model inputs."
+}

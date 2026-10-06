@@ -1,0 +1,144 @@
+GEMS Prize — 6GEMSDOE entry GEMS Prize — 6GEMSDOE entry DOE GEMS Prize (Geologic Enhanced Mapping System) —
+one entry, one repo, one site. Predict per-pixel fault probability across the
+GeoDAWN region of Nevada/California. Overview Line-by-line verification Research & method Download the submission file This is the single file for our single entry. It has been through scripts/validate_submission.py , which is a hard gate :
+  it refuses to publish anything the platform would reject. ⬇ gems6_hgb88-topk03_33cec71ff0.tif 1,652,883 bytes · sha256 33cec71ff00b3f32d0d59c81c156f3f1… Download the file above (one click). Open the competition page and click Submit → Make new submission (DrivenData sign-in required). Upload the file. Leave the comment field as the methodology note below. Methodology note for the submission comment (paste
+    this into the submission form — the brief asks for a short description that
+    distinguishes this file from earlier attempts): One entry. Probability surface from
+    HistGradientBoosting over 88 channels — the 19 official
+    GeoDAWN/USGS bands plus derived horizontal-gradient magnitude, analytic-signal
+    amplitude, tilt derivative, multi-scale curvature, break-in-slope and
+    structure-tensor lineament features — trained on all catalogue fault pixels plus
+    400k sampled negatives, validated on spatially blocked, buffered folds
+    (300 m buffer). The submission keeps the top 3% of the
+    footprint by predicted probability and writes 1.0 on those pixels: the published
+    metric reduces to DTI = TP_w/(0.8*n_gt + 0.2*FP_w + 0.2*TP_w), which is strictly
+    increasing in the predicted value, so fractional confidence gives score away. The
+    budget is the minimax-regret choice across ground-truth sizes (experiments card).
+    Blocked-CV proxy DTI 0.1698 against the public catalogue — a
+    proxy, not a leaderboard value. Format verified by
+    scripts/validate_submission.py (13/13 checks incl. NaN-inside-footprint). Format gate — all checks (13) Check Result Detail file-exists PASS 1652883 bytes single-band PASS band count = 1 dtype-float32 PASS dtype = float32 crs-epsg32611 PASS CRS = EPSG:32611 (epsg 32611) resolution-100m PASS resolution = (100.0, 100.0) shape PASS shape = (3730, 3292), expected (3730, 3292) geotransform PASS transform = (100.0, 0.0, 243350.0, 0.0, -100.0, 4508550.0) nodata-nan PASS declared nodata = nan values-in-0-1 PASS finite range = [0.0, 1.0] no-inf PASS inf pixels = 0 template-verified PASS official sample submission sha256 ok, footprint = 5167373 px NAN-INSIDE-FOOTPRINT PASS 0 non-finite pixels inside the scored footprint (this is the exact condition that makes the submission form answer 'Predicted values must be in range [0, 1]') footprint-matches-official PASS 0 finite pixels outside the official footprint (use --allow-footprint-subset for experiments only) File statistics Statistic Value total pixels 12279160 finite pixels 5167373 nan pixels 7111787 inf pixels 0 finite min 0.0 finite max 1.0 positive pixels 155021 nan inside footprint 0 finite outside footprint 0 Built 2026-09-26T00:20:52Z by scripts/build_submission.py --strategy topk_hard@0.03 .
+     Model: HistGradientBoostingClassifier(max_iter=300, lr=0.08, max_leaf_nodes=31, min_samples_leaf=40, l2_regularization=1.0) . ⚠ Account / repo status — FLAGGED FOR REVIEW The competition rules cap one entry per entity : up to three
+  submissions per week for feedback, and exactly one final submission scored in both prize rounds
+  ( rules PDF §3.4, §3.5,
+  §3.6.2; single-entity awards in Appendix A.3). An audit of the hosting account on 2026-09-25 found rules-relevant duplication: 11 repositories whose names reference this one competition
+      ( GEMSDOE , GEMSDOE2 , GEMSDOE3 , GEMSDOE4 , 5GEMSDOE , 6GEMSDOE , 7GEMSDOE , 8GEMSDOE , GEMSDOE9 , GEMSDOE10 , 11GEMSDOE ). Five of them are complete copies of the same project — their
+      own site, their own data/ bridge, their own code
+      ( GEMSDOE 400,811 KB, GEMSDOE2 421,640 KB, GEMSDOE3 24,765 KB, GEMSDOE4 , 5GEMSDOE 398,219 KB); the other five hold a README.md and nothing else. GitHub Pages is enabled and built on all eleven (verified via
+      the GitHub API: status = built for every one), so this one account
+      publishes eleven challenge URLs. This repository is the one canonical entry. Nothing here creates
+  a second registration, a second site or a second entry, and no submission should be
+  uploaded from any other copy. The other copies are not scoring arms of an experiment
+  — they are duplicates of one project, and the eligibility and anti-fraud terms
+  (Appendix A.12 due diligence and risk review; A.16 return of funds) are written to
+  catch exactly the practice of spreading one test across multiple sites. Dependency resolved 2026-09-26: the sha256-pinned data bridge
+  (419 MB in data/bridge/ ) is now committed directly into this
+  repository, so scripts/fetch_and_verify_data.py no longer pulls bytes
+  from any of the duplicate repos via codeload. The account holder can now archive
+  or delete the other ten safely. The executive summary Task. Predict, per pixel, the probability that a geological
+  fault is present across the GeoDAWN region (northwestern Nevada and adjacent
+  eastern California), on a 100 m grid in EPSG:32611. Faults are the structural
+  marker of geothermal systems here. How scoring works. A distance-weighted Tversky index with
+  alpha = 0.2 (false positives) and beta = 0.8 (false negatives) and a 300 m
+  triangular kernel. Both prize rounds score the same one submission :
+  Phase 1 ($50,000, split across the top five) against a private expert-labelled
+  fault set, and Phase 2 ($250,000: $100k/$70k/$40k/$25k/$15k) against an expanded
+  label set built after experts review every team's predictions. What we ship. A GeoTIFF that satisfies every published format
+  rule, produced by code in this repository, plus the verification that it does. What we do not claim. We have no leaderboard score: the
+  private labels are not available, and the rules require the final submission to be
+  chosen without knowing private scores. Everything numeric on this site is measured
+  against the public catalogue and is labelled as a proxy. What the degenerate baselines actually score Computed with src/gems/metric.py against the public
+  catalogue labels . This is a proxy: the competition is scored against
+  private expert labels that are NOT in the catalogue, so these numbers describe
+  "how well does this reproduce the known faults", not the leaderboard. Strategy DTI Predicted px TP_w FP_w FN_w Note all_zero 0.0000 0 0 0 60,988 the official description calls this 'total fault absence' all_one_everywhere 0.0246 12,279,160 60,988 12,068,002 0 the 'predict everywhere' case the brief cites at ~0.10 DTI all_one_inside_footprint 0.0580 5,167,373 60,988 4,956,731 0 predict 1 only inside the official footprint (no NaNs) catalogue_copy_sample_submission 1.0000 60,988 60,988 0 0 reproducing the published faults — the 'wrong target' trap Faults cover 1.18% of the
+  scored footprint (60,988 of 5,167,373 pixels)
+  and 0.50% of the full grid.
+  The closed form c/(c+α(1−c)) for the "predict everywhere" case gives 0.0564 .
+  The task brief's figure of "about 0.10 DTI for predict-everywhere" is not reproduced by either the exact computation or the closed
+  form at this coverage — see the verification page. Experiments — what actually moved the score Every number below comes from scripts/experiment.py , which trains
+  each variant on the same spatially blocked, buffered folds
+  (4×4 blocks, buffer
+  3 px = 300 m), with the same
+  training budget and the same evaluation code. Scores are against the public catalogue on held-out blocks — a proxy for the private
+  new-fault test set, not a leaderboard value. 1. Write 1.0, not the model's probability From the published definitions, FN_w = n_gt − TP_w , so DTI = TP_w / ( TP_w + α·FP_w + β·FN_w )
+    = TP_w / ( β·n_gt + α·FP_w + (1−β)·TP_w )          α=0.2, β=0.8 The β·n_gt term does not scale with p , so DTI is strictly increasing under p → λ·p for every λ up to the
+  cap at 1. Measured, on the configuration the previous file used: Placement mean blocked DTI soft@0.3 0.1119 hard@0.3 0.1648 topk_hard@0.03 0.1682 topk_hard@0.05 0.1730 Fractional confidence was donating roughly a third of the achievable score to
+  nobody. 2. Choose a budget, and make it robust to how big the test set is FP_w is an absolute sum over predicted pixels, while TP_w and FN_w are per-ground-truth-pixel sums. The right
+  number of pixels to commit therefore depends on how many fault pixels the hidden
+  test set contains — and the private set is new faults, almost certainly fewer than
+  the 60,988 in the catalogue. The two right-hand columns
+  re-score the identical predictions against ground truth thinned to whole
+  fault traces (8-connected components, dropped at random), which is the closest
+  honest simulation available: Placement ★ = shipped full catalogue GT 50% of traces 25% of traces worst-case loss topk_hard@0.005 0.0931 0.0979 0.0502 46.8% topk_hard@0.01 0.1277 0.1198 0.0605 27.1% topk_hard@0.02 0.1589 0.1292 0.0643 9.2% topk_hard@0.03 ★ 0.1698 0.1278 0.0631 4.9% topk_hard@0.05 0.1750 0.1184 0.0580 12.7% topk_hard@0.1 0.1620 0.0967 0.0470 29.3% hard@0.3 0.1520 0.1209 0.0664 13.2% hard@0.2 0.1702 0.1118 0.0586 13.5% soft@0.3 0.0816 0.0738 0.0403 53.4% raw 0.0732 0.0470 0.0225 66.2% Shipped: topk_hard@0.03 — the top
+  3% of the footprint, written as 1.0. Against the full
+  catalogue a 5% budget is nominally best (0.1750),
+  but it gives up 12.7% if the test set is a quarter the size of the catalogue. The
+  3% budget gives up 3% in the best case to hold its worst case to 5%. Robustness — the same measurement on an independent blocking (6×6 blocks, 6 folds) Placement full catalogue GT 50% of traces 25% of traces topk_hard@0.01 0.1413 0.1196 0.0670 topk_hard@0.02 0.1700 0.1276 0.0695 topk_hard@0.03 ★ 0.1807 0.1261 0.0671 topk_hard@0.05 0.1844 0.1155 0.0612 topk_hard@0.1 0.1675 0.0938 0.0494 hard@0.3 0.1710 0.0992 0.0507 soft@0.3 0.1245 0.0824 0.0439 The ranking of the budgets is unchanged and the 3% choice is again the minimax-regret one (worst-case loss 3.5% vs 11.9% for the 5% budget that leads on the full catalogue). 3. Cross-family agreement channels — measured, not a win The task brief's third research priority, implemented: each physical family
+  (magnetics, gravity, geodetic strain, seismicity, conductivity, topography) is
+  reduced to the max of its members' global percentile ranks, and 17 appended
+  channels count how many families are simultaneously elevated. Identical blocked
+  folds, budget and evaluation code as everything above: Placement 48ch baseline 88ch extended 105ch agreement topk_hard@0.02 0.1530 0.1589 0.1576 topk_hard@0.03 0.1628 0.1698 0.1670 topk_hard@0.05 0.1694 0.1750 0.1706 hard@0.2 0.1668 0.1702 0.1674 Placement baseline 50% extended 50% agreement 50% baseline 25% extended 25% agreement 25% topk_hard@0.02 0.1220 0.0633 0.1292 0.0643 0.1307 0.0638 topk_hard@0.03 0.1200 0.0611 0.1278 0.0631 0.1271 0.0616 topk_hard@0.05 0.1127 0.0562 0.1184 0.0580 0.1159 0.0559 The agreement channels move the hard simulation (whole
+  fault traces removed from the ground truth — the proxy for faults the catalogue
+  does not have) up by ~1% at a 2% budget (0.1307 vs 0.1292) while costing ~2% on
+  the full catalogue at the shipped 3% budget (0.1670 vs 0.1698). It is not
+  strictly better on the axis we ship by, so the 88-channel file stays. Recorded
+  as a measured result, not a null hand-wave. 4. What did not work — recorded so it is not retried Gated top-k placement (the 3% budget spent on cross-family
+      agreement pixels first): 0.112–0.116 vs 0.167–0.170 for the ungated top-k,
+      in every channel configuration. The gate excludes catalogue faults the model
+      has already learned well, and a budget spent on a stricter, less-likely set
+      cannot beat the probability order — measured on all four folds, not argued. The 17 cross-family agreement channels , at the shipped 3%
+      budget: 0.1670 vs 0.1698 for 88 channels on the full catalogue (the hard
+      simulation moves the other way, +1% at a 2% budget — see section 3). Not
+      strictly better on the shipping axis, so not shipped. PU-style down-weighting of long catalogue traces (positives weighted 1/√trace-length, "easy" mapped faults de-emphasised so the
+      model should lean on short unmapped ones): 0.1650 (88ch) / 0.1631 (105ch) at
+      a 3% budget vs 0.1698 / 0.1670 unweighted, and lower in every robustness
+      column ( experiments_itrace.json ). The long mapped traces are not
+      less like the private faults — they are cleaner examples of the same physics,
+      and down-weighting them removes the anchor of the probability surface. Lineament post-processing. Max over straight segments of 3,
+      5 and 9 px in 8 orientations, and 50/50 mixes with the raw surface. Best
+      variant 0.1637 vs
+      0.1750 without: the
+      filter lifts isolated pixels that happen to sit on a line, which costs false
+      positives at a fixed budget. Forty extra multi-scale channels (horizontal-gradient
+      magnitude at σ = 1.5/3/6 px on five surfaces, tilt and analytic-signal amplitude
+      at matched scales, multi-scale curvature, local texture, structure tensor on
+      conductivity and RTP). Kept, because it is never worse, but at the round-1
+      hyperparameters the 48- and 88-channel models scored 0.1730 and 0.1729 — a
+      difference of nothing. More capacity. 400k negatives / 300 iterations vs 200k / 200:
+      no gain at a 5% budget (0.1694 vs 0.1730). Blocked, buffered cross-validation blocks are contiguous and the buffer excludes training pixels within one kernel support of a scored pixel; the scored set is the held-out blocks intersected with the official footprint Grid: 4×4 blocks,
+  4 folds, buffer 3 px
+  (300 m). 48 channels. Placement / threshold mean DTI min max folds binary@0.3 0.1119 0.0933 0.1253 4 binary@0.4 0.1055 0.0741 0.1343 4 binary@0.2 0.1047 0.0972 0.1165 4 binary@0.1 0.0879 0.0825 0.0950 4 threshold 0.0879 0.0825 0.0950 4 binary@0.5 0.0873 0.0487 0.1416 4 skeleton 0.0829 0.0752 0.0879 4 top1pct 0.0829 0.0631 0.1212 4 densified 0.0803 0.0754 0.0859 4 binary@0.05 0.0797 0.0770 0.0846 4 binary@0.02 0.0767 0.0748 0.0811 4 raw 0.0763 0.0743 0.0806 4 binary@0.6 0.0639 0.0250 0.1336 4 skeleton_spaced4 0.0621 0.0540 0.0691 4 This is the superseded table. It is the sweep the
+  previous submission file was chosen from, kept as the reference point: the newer
+  harness in scripts/experiment.py reproduces these numbers exactly
+  ( soft@0.3 here = binary@0.3 there = 0.1119), so the
+  improvements in the experiments card below are measured against this yardstick
+  rather than a new one. Note that every row here keeps the model's fractional
+  probability, which the algebra in the experiments card shows to be leaving score
+  on the table. Per-fold detail Fold Train positives Scored px Scored positives Best DTI Seconds 0 48,484 929,173 12,426 0.1059 71.1 1 34,354 2,083,992 26,366 0.0984 83.8 2 43,950 1,519,181 16,847 0.1253 76.9 3 55,612 635,027 5,349 0.1416 58.9 What are the ambiguous bands, really? The GeoTIFF band descriptions are ambiguous (e.g. band 'tc' is described as 'Tilt angle or total curvature'). These tests resolve empirically what each band contains, so the derived features do not silently duplicate a provided band. Correlations use only pixels finite in the tested pair. Test Pearson r Median |difference| Pixels tmi_hg_vs_computed_HGM 1.0000 13.09 5,154,814 tmi_hg_vs_computed_dTdx -0.0261 13.15 5,154,814 tmi_vg_vs_computed_dTdz? — no vertical-derivative operator is derivable from a 2-D grid; tmi_vg is a provided upward-continuation derivative, used as-is. tc_vs_atan2(tmi_vg,|tmi_hg|) 0.0128 18.48 5,165,840 tc_vs_laplacian(tmi) -0.0022 18.48 5,154,814 grav_hg_vs_computed_HGM 0.0277 1.168 5,154,814 det_elev_slope_vs_computed_HGM 0.9506 3.686 5,154,814 det_elev_slope_vs_atan(HGM) 0.9542 3.686 5,154,814 rtp_vs_mag_anom 0.5522 90.65 5,165,852 tmi_vs_rtp 0.7520 52.29 5,165,852 Official data — pinned, re-verified byte-for-byte The data tab is login-gated (verified:
+  it redirects to /accounts/login/ ), so the official bytes are carried
+  by a sha256-pinned transport and re-verified on placement. All eight hashes below
+  were independently re-computed in this checkout on 2026-09-25 — see the
+  verification page. File in repo Official filename Bytes sha256 Status training_features.tif gems-geodawn-numerical-features.tif 418,912,844 4371c82e3b8339b807bdffcf… fetched + hash-verified by script (419 MB, kept out of git) labels.tif existing_faults.tif 425,830 7ba308ccdc4418b31a178f4f… committed sample_submission.tif example_submission.tif 1,599,597 2176d08e485aa2cd2860ce8d… committed Transport parts for the 419 MB feature stack (5 parts, concatenated) part-000 94,371,840 B 0a330f8951af6c92… part-001 94,371,840 B 3c98037b2c997e3b… part-002 94,371,840 B c375c4dbc40c59bb… part-003 94,371,840 B b164159e6d0cb259… part-004 41,425,484 B fa0a6f9c936fac1d… Rules that constrain how we work — quoted, with links Source: the official rules PDF (the DrivenData rules page defers to it;
+  sponsors are DOE's Office of Geothermal and the National Lab of the Rockies).
+  Competition end: Dec. 3, 2026, 11:59 p.m. UTC ( competition home ). Constraint Citation Verbatim 3 submissions per week for feedback §3.4 Feedback each participating entity may submit more than one set of predictions for automated scoring … up to three per week Exactly one final submission, both rounds §3.5 What To Submit Before the end of the competition, you must choose only one submission for evaluation across both prize rounds. Chosen blind to private scores §3.6.2 Private Dataset Testing you must make your decision without knowledge of your scores on the private test set Single-entity award Appendix A.3 The prize administrator will award a single dollar amount to the designated primary submitter Generative-AI use must be disclosed §3.2 Process Overview you must indicate in the narrative … the extent to which, if any, you used generative AI technology and how you used it Finalists submit code + documentation §3.5 Their solution’s complete code assets and documentation … should be able to sufficiently reproduce the winning results and generate predictions on new data samples. Eligibility §1.3 individual competitor must be a U.S. citizen or permanent resident; Federal employees are not eligible; teams need a U.S. citizen/permanent-resident captain Payment paperwork within 30 days Appendix A.2 a completed NLR Request for ACH Banking Information form and a completed IRS W-9 form Due diligence and risk review Appendix A.12 All applications submitted to DOE are subject to a due diligence review … risk review … for potential risks of foreign interference Return of funds for inaccurate information Appendix A.16 if the prize was made based on fraudulent or inaccurate information … DOE has the right to demand that any prize funds … be returned Generative-AI disclosure applies to this project. This work is produced with an AI agent, so the finalist narrative must state that and
+  describe how. That is a submission requirement, not an optional note. Limitations, stated plainly All scores here are proxies. Both prize rounds are scored
+      against private expert-labelled faults that are absent from the catalogue, and
+      the rules confirm there is spatial overlap between the training catalogue and the
+      test set. Every DTI reported on this site is measured against the public
+      catalogue, i.e. it answers "does this reproduce the known faults", which is
+      explicitly the wrong target. It is reported because it is the only labelled data
+      we have. No GPU and 3 GB of RAM. The reference solution (U-Net,
+      ResNet-18 encoder, 5 Monte-Carlo folds) cannot be trained here; PyTorch is not
+      installed and a full-resolution 19-band float32 stack does not fit in memory.
+      The model shipped here is a histogram gradient-boosting classifier over
+      sampled pixels, which is honest but weaker than the reference approach. The 1 m DEM is not used. The competition distributes it as a
+      link list whose source PDF has no text layer (the extraction pipeline had to OCR
+      it), and the tiles are individual ~100 MB objects over a region that spans
+      terabytes. Fetching it is feasible but out of scope for one session on this host. Buffered blocking reduces optimism, not self-deception. Holding out 300 m around each test block stops the model from memorising
+      neighbouring pixels of the same fault, but it cannot create labels for faults
+      nobody has mapped yet. Phase 2 is 5× Phase 1 and is judged by geologists reviewing
+      what we flagged. The geological-reasoning write-up per candidate is therefore a
+      first-class deliverable, and it is only partly present. See NEXT_STEPS.md. Competition: https://www.drivendata.org/competitions/306/competition-doe-gems/ · Problem description: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ ·
+About: https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/ · Data: https://www.drivendata.org/competitions/306/competition-doe-gems/data/ ·
+Rules PDF: https://www.nlr.gov/docs/fy26osti/96647.pdf ·
+Reference solution: https://github.com/drivendataorg/gems-prize-reference-solution This page is generated by scripts/build_site.py from measured
+evidence in data/evidence/ . Numbers are not typed by hand.
