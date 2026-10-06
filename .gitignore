@@ -1,0 +1,16 @@
+# Large competition data — placed locally, never committed
+data/bridge/
+artifacts/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# Timestamped build outputs (keep the stable GEMSDOE45_* aliases in docs/downloads)
+docs/downloads/gems45-*

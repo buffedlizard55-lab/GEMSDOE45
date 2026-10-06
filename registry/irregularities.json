@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "generated_utc": "2026-10-06",
+  "project": "GEMSDOE45",
+  "irregularities": [
+    {
+      "id": "IRR-01",
+      "title": "Proxy-holdout DTI is uncorrelated with the live leaderboard",
+      "severity": "high",
+      "detail": "A sibling project (GEMSDOE42) measured the correlation between a spatially-blocked catalogue-holdout DTI and the live DrivenData leaderboard at Spearman rho ~ 0.0866 (p ~ 0.80), i.e. essentially zero. We reproduced the qualitative finding: our catalogue-holdout DTIs (0.01-0.02 for novel hypotheses; ~0.18 for the strongest priors) are a RELATIVE ranking instrument only and must NOT be presented as a predictor of the official score.",
+      "action": "Stated explicitly on the site (index.html, executive_summary.html, methodology.html) and in README. We ship the most novel distinct hypothesis rather than chasing the proxy maximum."
+    },
+    {
+      "id": "IRR-02",
+      "title": "External geothermal-relevant data blocked in this sandbox",
+      "severity": "medium",
+      "detail": "usgs.gov, dropbox.com and raw.githubusercontent.com are unreachable from this sandbox's egress policy (SSL_ERROR_SYSCALL / curl 000). Therefore the native-float GeoDAWN radiometrics (DOI 10.5066/P93LGLVQ) and a USGS ComCat/FDSN seismicity catalogue (https://earthquake.usgs.gov/fdsnws/event/1/) cannot be fetched here. Both are free and official and would strengthen hypotheses H45-3 (seismicity-weighted strain) and the documented H42-B (radiometric K/Th), but they are NOT required for the shipped submission, which uses only the 19 supplied bands.",
+      "action": "Documented as future work. download_competition_data.sh and prepare_data.py are provided so an unrestricted runner can add them."
+    },
+    {
+      "id": "IRR-03",
+      "title": "Prior-family implementation source not committed",
+      "severity": "low",
+      "detail": "GEMSDOE42's scripts import a src/gemsdoe45 package (pipeline/raster/holdout/diagnostics/distinctness) that is NOT present in that public repo; only the skeleton scripts and registry JSON are. Our metric, I/O, holdout and distinctness modules are clean-room re-derivations implemented from the official problem-page equations and verified against analytic cases; no prior code was copied.",
+      "action": "Kept the implementation independent; cited the official metric equations verbatim."
+    },
+    {
+      "id": "IRR-04",
+      "title": "Feature cube stored as 5 byte-split parts in the bridge",
+      "severity": "info",
+      "detail": "GitHub's 100 MB blob limit forced the 418,912,844-byte feature cube to be split into 5 parts (part-000..004). Re-assembly is a concatenation; the SHA-256 of the reassembled file matches the pinned manifest value 4371c82e...",
+      "action": "scripts/prepare_data.py verifies the SHA-256 automatically."
+    }
+  ]
+}

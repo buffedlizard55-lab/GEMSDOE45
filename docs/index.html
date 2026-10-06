@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE45 — DOE GEMS geothermal-fault submission</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">GEMSDOE45 <small>unique geothermal-fault submission</small></div>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="executive_summary.html">Submit</a>
+    <a href="methodology.html">Method</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <h1>Download a ready-to-submit GEMS Prize GeoTIFF</h1>
+  <p>This site publishes a <b>single-band float32 GeoTIFF</b> predicting geothermal-fault
+  likelihood for the DOE GEMS Prize Challenge (DrivenData competition 306). It is a
+  <b>brand-new, unique</b> submission — distinct from every prior GEMSDOE submission — and
+  passes all format checks, including the <code>[0,1]</code> value range that caused the
+  earlier upload error.</p>
+  <div class="cta">
+    <a class="btn" href="docs/downloads/GEMSDOE45_submission_latest.tif" download>⬇ Download submission (.tif)</a>
+    <a class="btn ghost" href="docs/downloads/GEMSDOE45_submission_latest.zip" download>⬇ Download as .zip</a>
+  </div>
+  <div class="badges">
+    <span class="badge">EPSG <b>32611</b></span>
+    <span class="badge">100 m · <b>3292×3730</b></span>
+    <span class="badge">float32 · values <b>[0,1]</b></span>
+    <span class="badge">unique vs priors: <b>|r|≤0.10</b></span>
+  </div>
+</div></section>
+
+<div class="wrap">
+
+  <!-- EXECUTIVE SUMMARY (front and center, per project requirement) -->
+  <section class="block" id="exec">
+    <h2>Executive summary — how to submit</h2>
+    <p class="sub">Everything you need to upload is here. No code or accounts required beyond a DrivenData login.</p>
+
+    <div class="note ok">
+      <b>Submission file name:</b>
+      <span class="pill">gems45-H45-1a-mtbasement-blend_cov0p0080-20261006T095520Z</span><br>
+      <b>Short comment (paste into the "Note" field):</b><br>
+      <span class="pill" style="display:block;margin-top:8px;white-space:normal">GEMSDOE45 H45-1a: MT basement/conductivity offset edge corroborated by magnetic+gravity+topographic worms, activity-gated, blended with the worm field; sparse binary fault lines.</span>
+    </div>
+
+    <div class="step"><div class="n">1</div><div>
+      Download the file: <a href="docs/downloads/GEMSDOE45_submission_latest.tif">GEMSDOE45_submission_latest.tif</a>
+      (or the <a href="docs/downloads/GEMSDOE45_submission_latest.zip">.zip</a>).
+    </div></div>
+    <div class="step"><div class="n">2</div><div>
+      Go to the DrivenData <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">New submission</a> page and choose <b>File to submit</b>.
+    </div></div>
+    <div class="step"><div class="n">3</div><div>
+      In the optional <b>Note</b> field, paste the short comment above (so the run can be told apart later).
+    </div></div>
+    <div class="step"><div class="n">4</div><div>
+      Click <b>Submit</b>. The file is a single float32 band in <code>[0,1]</code>, EPSG:32611, 100 m — it will pass the "values must be in range [0,1]" check.
+    </div></div>
+
+    <div class="note">
+      <b>Why the earlier "Predicted values must be in range [0,1]" error?</b> A submission must contain only
+      probabilities between 0 and 1. Our pipeline clips and validates every pixel to <code>[0,1]</code> and refuses
+      to write a file that fails the check (see <a href="methodology.html">Method → Validation</a>). The published file is
+      verified: <code>min=0.0, max=1.0</code>, and the outside-footprint area is set to <code>NaN</code> exactly like the
+      official sample submission.
+    </div>
+    <div class="note flag">
+      <b>Honest limitation (read before spending a slot):</b> the live DrivenData score cannot be computed here because the
+      hidden test labels are not public. We validate on a spatially-blocked <i>proxy</i> holdout (the public fault catalogue)
+      and on <i>uniqueness</i> versus every prior submission. A sibling project measured near-zero correlation
+      (Spearman ρ≈0.09) between such catalogue-holdout scores and the live leaderboard, so the proxy is a relative
+      instrument only. This submission's novelty targets the <i>unmapped</i> geothermal-conduit population the competition
+      is specifically about.
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>What you are downloading</h2>
+    <div class="grid">
+      <div class="card"><h3>Unique</h3><p>Maximum |Pearson|/|Spearman| correlation with all 24 checked prior GEMSDOE submissions is <b>0.10</b> (threshold 0.90) — a genuinely new hypothesis, not a copy.</p></div>
+      <div class="card"><h3>Format-exact</h3><p>Same CRS, resolution, bounds and dtype as the official sample; 3292×3730 float32; NaN outside the GeoDAWN footprint.</p></div>
+      <div class="card"><h3>No external data</h3><p>Built only from the 19 supplied competition feature bands — fully reproducible in this sandbox without DrivenData login.</p></div>
+      <div class="card"><h3>Geothermal-targeted</h3><p>Lead signal is magnetotelluric basement/conductivity offsets — a deep fault-zone signature no prior hypothesis used.</p></div>
+    </div>
+    <img class="preview" src="docs/downloads/GEMSDOE45_submission_preview.png" alt="submission preview">
+    <p class="sub" style="text-align:center;margin-top:8px">Left: predicted fault lines (red/yellow). Right: our prediction (red) over the public fault catalogue (cyan) for reference.</p>
+  </section>
+
+  <section class="block">
+    <h2>Learn more</h2>
+    <div class="grid">
+      <div class="card"><h3><a href="executive_summary.html">Full submission guide</a></h3><p>Rules, format requirements, the [0,1] fix, and the Prize structure.</p></div>
+      <div class="card"><h3><a href="methodology.html">Methodology &amp; validation</a></h3><p>The novel hypothesis, candidate ranking, proxy holdout, uniqueness audit and the IRR-01 caveat.</p></div>
+      <div class="card"><h3><a href="sources.html">Verified sources</a></h3><p>Official competition, reference solution, GeoDAWN/USGS/GDR data and papers — all linked for manual review.</p></div>
+    </div>
+  </section>
+
+</div>
+<footer>
+  GEMSDOE45 · Generated autonomously from the official competition feature cube and public fault catalogue.
+  Not an official DOE/DrivenData product. Verify against the sources on the <a href="sources.html">Sources</a> page.
+</footer>
+</body>
+</html>

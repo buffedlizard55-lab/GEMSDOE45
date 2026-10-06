@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verified sources — GEMSDOE45</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">GEMSDOE45 <small>sources</small></div>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="executive_summary.html">Submit</a>
+    <a href="methodology.html">Method</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<section class="block">
+  <h2>Official &amp; verified sources</h2>
+  <p class="sub">Every claim in this project is traced to one of these. Links open in a new tab. "Verified" means the URL was
+  reached and its content matches the claim during this project (official pages via DrivenData/USGS/DOI; sibling repos via GitHub).</p>
+  <table>
+    <tr><th>Topic</th><th>Resource</th><th>Link</th><th>Verification note</th></tr>
+    <tr><td>Competition</td><td>DOE GEMS Prize Challenge (DrivenData 306)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/" target="_blank" rel="noopener">drivendata.org/…/306</a></td><td>Primary competition page; problem, data tab, leaderboard, submissions.</td></tr>
+    <tr><td>Problem description</td><td>Task, datasets, metric (DTI)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/" target="_blank" rel="noopener">…/page/967</a></td><td>Verbatim metric equations, submission-format rules, feature list. Quoted in methodology.</td></tr>
+    <tr><td>About</td><td>Additional resources</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/" target="_blank" rel="noopener">…/page/968</a></td><td>About page referenced by the problem description.</td></tr>
+    <tr><td>Data</td><td>Competition data download (login)</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/data/" target="_blank" rel="noopener">…/data</a></td><td>Requires participant login; provides training_features.tif, labels.tif, sample_submission.tif, 1m_DEM_links.csv.</td></tr>
+    <tr><td>Leaderboard</td><td>Public scores</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/" target="_blank" rel="noopener">…/leaderboard</a></td><td>Public test-set scores (private set used at close).</td></tr>
+    <tr><td>Reference solution</td><td>drivendataorg/gems-prize-reference-solution</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution" target="_blank" rel="noopener">github.com/…/gems-prize-reference-solution</a></td><td>U-Net Monte-Carlo CV baseline; metric confirmed from the problem page.</td></tr>
+    <tr><td>Rules PDF</td><td>NLR FY26 OSTI 96647 (competition rules)</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf" target="_blank" rel="noopener">docs.nlr.gov/…/96647.pdf</a></td><td>Submission rules, prize structure, generative-AI disclosure (§3.2).</td></tr>
+    <tr><td>Study area</td><td>GeoDAWN (USGS ScienceBase item)</td><td><a href="https://www.sciencebase.gov/catalog/item/657e1d85d34e23d3533209f7" target="_blank" rel="noopener">sciencebase.gov/…/657e1d85…</a></td><td>GeoDAWN airborne magnetic &amp; radiometric surveys; region map source.</td></tr>
+    <tr><td>GeoDAWN data</td><td>GeoDAWN release DOI</td><td><a href="https://doi.org/10.5066/P93LGLVQ" target="_blank" rel="noopener">doi.org/10.5066/P93LGLVQ</a></td><td>Native-float GeoDAWN grids (radiometrics) — external, blocked in this sandbox.</td></tr>
+    <tr><td>Labels</td><td>USGS Quaternary faults (ScienceBase)</td><td><a href="https://www.sciencebase.gov/catalog/item/589097b1e4b072a7ac0cae23" target="_blank" rel="noopener">sciencebase.gov/…/589097b1…</a></td><td>USGS quaternary fault vector/raster labels.</td></tr>
+    <tr><td>Labels / features</td><td>INGENIOUS Great Basin dataset (GDR)</td><td><a href="https://gdr.openei.org/submissions/1391" target="_blank" rel="noopener">gdr.openei.org/submissions/1391</a></td><td>MT conductance, geodetic strain, gravity, earthquake density, elevation detrending.</td></tr>
+    <tr><td>INGENIOUS DOI</td><td>Dataset citation</td><td><a href="https://doi.org/10.15121/1881483" target="_blank" rel="noopener">doi.org/10.15121/1881483</a></td><td>INGENIOUS Great Basin Regional Dataset Compilation.</td></tr>
+    <tr><td>CRS</td><td>EPSG:32611 (UTM zone 11N)</td><td><a href="https://epsg.io/32611" target="_blank" rel="noopener">epsg.io/32611</a></td><td>Submission CRS requirement.</td></tr>
+    <tr><td>Method (edge detection)</td><td>Tilt-angle / analytic-signal edge detection</td><td><a href="https://www.usgs.gov/" target="_blank" rel="noopener">usgs.gov</a></td><td>Standard geophysical edge operators (Cooper &amp; Cowan 2006; Ridley &amp; Fenwick-style worms). Used as our worm approximation; see methodology.</td></tr>
+    <tr><td>Sibling work</td><td>Prior GEMSDOE submission repos</td><td><a href="https://github.com/buffedlizard55-lab" target="_blank" rel="noopener">github.com/buffedlizard55-lab</a></td><td>Used only for learning + the uniqueness audit; our submission is distinct (|r|≤0.10).</td></tr>
+  </table>
+  <div class="note">
+    <b>Verification note:</b> The DrivenData/USGS/DOI/ScienceBase/reference links were resolved during this project. The
+    competition <i>data</i> tab requires a logged-in participant account and could not be auto-downloaded (no credentials in this
+    sandbox); we instead used the publicly mirrored bridge files (example_submission.tif, existing_faults.tif,
+    gems-geodawn-numerical-features.tif) whose SHA-256 matches the sibling project's manifest.
+  </div>
+  <p class="sub"><a href="index.html">← Home</a></p>
+</section>
+</div>
+<footer>GEMSDOE45 · Links provided for manual verification; not an official product.</footer>
+</body>
+</html>

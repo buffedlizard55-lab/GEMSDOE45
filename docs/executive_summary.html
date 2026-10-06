@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive summary &amp; submission guide — GEMSDOE45</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="brand">GEMSDOE45 <small>submission guide</small></div>
+  <nav class="links">
+    <a href="index.html">Home</a>
+    <a href="executive_summary.html">Submit</a>
+    <a href="methodology.html">Method</a>
+    <a href="sources.html">Sources</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+<section class="block">
+  <h2>Executive summary — submit to the DOE GEMS Prize</h2>
+  <p class="sub">One page you can act on. All requirements below are quoted/derived from the official problem page and rules PDF and re-checked line by line.</p>
+
+  <div class="note ok">
+    <b>File to upload:</b> <a href="docs/downloads/GEMSDOE45_submission_latest.tif" download>GEMSDOE45_submission_latest.tif</a>
+    &nbsp;·&nbsp; <a href="docs/downloads/GEMSDOE45_submission_latest.zip" download>.zip</a><br>
+    <b>Name:</b> <span class="pill">gems45-H45-1a-mtbasement-blend_cov0p0080-20261006T095520Z</span><br>
+    <b>Comment:</b> <span class="pill" style="display:block;margin-top:6px;white-space:normal">GEMSDOE45 H45-1a: MT basement/conductivity offset edge corroborated by magnetic+gravity+topographic worms, activity-gated, blended with the worm field; sparse binary fault lines.</span>
+  </div>
+
+  <h3>Step-by-step</h3>
+  <div class="step"><div class="n">1</div><div>Download <a href="docs/downloads/GEMSDOE45_submission_latest.tif">the .tif</a> (or <a href="docs/downloads/GEMSDOE45_submission_latest.zip">.zip</a>) from this site.</div></div>
+  <div class="step"><div class="n">2</div><div>Open <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/" target="_blank" rel="noopener">DrivenData → New submission</a>.</div></div>
+  <div class="step"><div class="n">3</div><div>Click <b>File to submit</b> and choose the downloaded file.</div></div>
+  <div class="step"><div class="n">4</div><div>In the optional <b>Note</b> field paste the comment above (helps tell submissions apart later).</div></div>
+  <div class="step"><div class="n">5</div><div>Press <b>Submit</b>. The file passes the <code>[0,1]</code> and format checks.</div></div>
+
+  <h3>Submission format (verified from the official page)</h3>
+  <table>
+    <tr><th>Requirement</th><th>Our file</th><th>Source</th></tr>
+    <tr><td>CRS = UTM zone 11N, EPSG:32611</td><td>EPSG:32611 ✓</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#submission-format" target="_blank" rel="noopener">problem page</a></td></tr>
+    <tr><td>Resolution 100 m</td><td>100 m ✓</td><td>same</td></tr>
+    <tr><td>Same bounds; outside = null/NaN</td><td>NaN outside the 42.1% footprint ✓</td><td>same</td></tr>
+    <tr><td>Single band, float32, values in [0,1]</td><td>float32, min 0.0 max 1.0 ✓</td><td>same</td></tr>
+    <tr><td>Matches sample submission grid</td><td>3292×3730, same transform ✓</td><td>example_submission.tif</td></tr>
+  </table>
+
+  <div class="note">
+    <b>Earlier error "Predicted values must be in range [0,1]":</b> fixed by clipping every pixel to
+    <code>[0,1]</code> and validating before write. The published file is verified <code>min=0.0, max=1.0</code>.
+  </div>
+
+  <h3>Prize structure &amp; limits (official rules PDF / problem page)</h3>
+  <ul class="clean">
+    <li><b>Initial round $50,000</b> — top 5, $10,000 each, scored on a private set of new faults labeled before the competition.</li>
+    <li><b>Final round $250,000</b> — top 5 ($100k/$70k/$40k/$25k/$15k) re-scored against the expanded label set that includes faults experts verify from <i>all</i> submissions.</li>
+    <li><b>Up to 3 submissions per week</b>; you must finally select <b>one</b> submission for both rounds (can't see private scores first).</li>
+    <li><b>Generative-AI disclosure:</b> if you used generative AI, state its extent in the narrative (rules §3.2). This submission was produced with autonomous agent assistance; the algorithm, data provenance and validation are fully documented on the <a href="methodology.html">Method</a> page.</li>
+  </ul>
+
+  <div class="note flag">
+    <b>Before you spend a slot — read this.</b> The live score cannot be computed here (hidden test labels are not public).
+    We validate on a <i>proxy</i> holdout (public catalogue) and on <i>uniqueness</i> vs prior submissions. A sibling project
+    measured near-zero correlation between such proxy scores and the live leaderboard (Spearman ρ≈0.09, IRR-01), so the proxy is
+    a relative instrument only. We publish it for transparency, not as a live-score prediction. The novelty here targets the
+    unmapped geothermal-conduit population the competition is about.
+  </div>
+
+  <p class="sub"><a href="methodology.html">→ Methodology, candidate ranking &amp; validation</a> &nbsp;·&nbsp; <a href="sources.html">→ Verified sources</a></p>
+</section>
+</div>
+<footer>GEMSDOE45 · Not an official product. Verify against the linked official sources.</footer>
+</body>
+</html>
