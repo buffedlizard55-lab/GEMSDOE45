@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Executive summary — GEMSDOE45</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;
+--acc:#4ea1ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+h1{font-size:1.5rem;margin:0;padding:22px 0 4px}
+h2{font-size:1.15rem;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+a{color:var(--acc)}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.88em}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:.84rem}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.dl{background:linear-gradient(135deg,#12351f,#0d2417);border:1px solid #2ea043;border-radius:12px;padding:20px 22px;margin:20px 0}
+.btn{display:inline-block;background:var(--ok);color:#04170a;font-weight:700;text-decoration:none;padding:13px 22px;border-radius:9px;margin:8px 10px 4px 0}
+.btn.alt{background:#2b3444;color:var(--fg)}
+.small{color:var(--mut);font-size:.87rem}
+.note{border-left:3px solid var(--warn);background:#1c1a12;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+ol,ul{padding-left:22px}
+</style>
+</head>
+<body><div class="wrap">
+
+<h1>Executive summary — how to submit, and what this repository actually established</h1>
+<p class="small">GEMSDOE45 · GEMS Prize Challenge · 2026-10-06 ·
+<a href="index.html">← full site</a></p>
+
+<div class="dl">
+<h2 style="margin:0 0 8px;border:0;padding:0">Submit in five steps</h2>
+<a class="btn" href="../downloads/gems45-h48-kmtip-structural-20261006.tif" download>⬇ Download the submission .tif</a>
+<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.tif" download>.tif (all-finite twin)</a>
+<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.zip" download>.zip</a>
+<ol style="margin-top:14px">
+<li>Sign in at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>
+and accept the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">rules</a> (required once).</li>
+<li>Click the download button above.</li>
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">Submissions tab</a>
+→ <b>New submission</b>.</li>
+<li><b>File to submit:</b> <code>gems45-h48-kmtip-structural-20261006.tif</code>.
+<b>Note (optional):</b> paste the string below.</li>
+<li>Click <b>Submit</b>; the public score returns within a minute or two.</li>
+</ol>
+<p class="small"><b>Note string</b><br>
+<code>GEMSDOE45 H48 | KM tip-survival extension (3866 catalogue tips, product-limit gap curve, per-tip lengths 2-11 px) unioned with a 9-plane rank-ensemble structural field; 40,000 dots at the metric's own marginal bar, all &gt;=200 m from the mapped catalogue</code></p>
+<p class="small"><b>sha256</b> <code>40eb32bf995433b15052745c7ea647ed344dc4d56ca9356f8b843a4c1466a402</code>
+· 138,260 bytes · 40,000 predicted pixels · all finite values in [0, 1] · no sentinel anywhere</p>
+</div>
+
+<h2>What was found, in the order it matters</h2>
+<ol>
+<li><b>The metric is verified, not assumed.</b> <code>src/gems45/metric.py</code> reproduces the
+organizers' own worked example to 0.602652 (page states 0.60), and agrees with a literal
+O(N_truth × N_pred) brute-force transcription on random rasters.</li>
+
+<li><b>Known catalogue faults are masked out of scoring — officially.</b> DrivenData staff: "Pixels
+corresponding to known USGS/INGENIOUS faults are masked / excluded from evaluation, so they do not
+count towards penalty terms", in both rounds. So mass on the mapped catalogue earns nothing and costs
+nothing, and the entire problem is placing mass <b>off</b>-catalogue.</li>
+
+<li><b>There is one emission rule, and it is derived.</b> Adding a unit of mass at a pixel of
+realised kernel weight <code>w</code> raises the denominator by exactly α = 0.2 wherever it lands, so
+it pays iff <code>w &gt; 0.2 · DTI</code>. At DTI 0.30 that is <b>within ≈282 m of a hidden truth
+pixel</b>. Nothing else — not dot count, not density — enters the metric.</li>
+
+<li><b>Nine of the nineteen supplied bands cannot see a 300 m fault.</b> The three geodetic
+strain-rate bands and the earthquake bands are regional fields (ρ(1 km) ≥ 0.98), so a strain-rate
+ridge detector is not a failed idea but an <i>impossible</i> one at this resolution. The best single
+plane is topographic slope (2.8× background enrichment); <code>mag_anom</code> is
+anti-correlated with the catalogue. <code>tc</code> also carries 12 nodata sentinels inside the
+nominal footprint (IR-45-002).</li>
+
+<li><b>The novel contribution: tip extension as a survival function.</b> The catalogue is 3,199
+short segments, not long traces. For each of 3,866 tips we measure the along-strike relay gap —
+3,163 events, 703 right-censored — and fit the Kaplan–Meier product-limit curve. Each tip is extended
+by its <b>own</b> length from that curve; the lengths span 2–11 px over 10 distinct values, so they
+provably vary by fault instead of collapsing to a constant.</li>
+
+<li><b>And the honest refusal.</b> On the only spatially-blocked instrument this environment can
+run, the shipped file does <b>not</b> beat the incumbent: 0.0068 against <code>d2.8</code>'s 0.0634
+and a random control's 0.0127. Worse, that instrument <b>inverts the live order</b> by 23×
+(<code>d2.8</code> live 0.2600 vs <code>h33-2-b2</code> live 0.2778), because its truth is the very
+catalogue the organizers mask out. So the file ships as a <b>candidate under HOLD</b>, and the
+finding recorded is that <i>no</i> candidate can be validated with the instruments available here.</li>
+</ol>
+
+<h2>If the portal says "Predicted values must be in range [0, 1]"</h2>
+<p>Two causes, both reproduced and eliminated:</p>
+<ul>
+<li><code>training_features.tif</code> stores <code>−3.4028235e+38</code> outside the survey, so any
+raster stacked from it wholesale carries values near −10³⁸.</li>
+<li><code>0 &lt;= nan &lt;= 1</code> is <b>False</b>, so a validator that range-tests the whole array
+rejects a NaN-outside file — even though the organizers' own <code>sample_submission.tif</code> uses
+that encoding and the spec says outside-bounds data should be "null or nan".</li>
+</ul>
+<p>Hence two files, same 40,000 predictions: the <b>primary</b> matches the official template
+(NaN outside), and the <b>all-finite twin</b> has every cell in [0, 1] with no NaN at all. Every file
+published here is asserted before writing: single band, float32, template CRS and transform, zero
+sentinels anywhere, all finite in-footprint values in [0, 1].</p>
+
+<h2>The three numbers to argue with</h2>
+<table>
+<tr><th>Quantity</th><th>Value</th><th>Source of truth</th></tr>
+<tr><td>Metric worked example</td><td>0.602652 (page: 0.60)</td><td>official page 967; reproduced in <code>tests/test_metric.py</code></td></tr>
+<tr><td>Marginal bar at DTI 0.30</td><td>0.06 → profitable radius ≈282 m</td><td>derived in <code>src/gems45/metric.py::marginal_bar</code></td></tr>
+<tr><td>Catalogue-truth holdout inversion</td><td>23× vs a live ratio of 0.94</td><td><code>evidence/holdout_shipped.json</code></td></tr>
+</table>
+
+<div class="note"><b>No score is claimed for any file in this repository.</b> 0.2778, 0.2600, 0.3262
+and every other leaderboard value mentioned are owner or third-party-snapshot claims without an
+organizer receipt. The brief's stated leader of 0.3195 appears as rank 3 in the GEMSDOE32 snapshot of
+2026-10-04, behind 0.3262 and 0.3222. The live leaderboard is dynamic and was not read from
+DrivenData directly (automated monitoring is prohibited by their terms of use).</div>
+
+<p class="small"><a href="index.html">Full site</a> ·
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem description</a> ·
+<a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">Official masking clarification</a> ·
+<a href="https://doi.org/10.1080/01621459.1958.10501452">Kaplan &amp; Meier (1958)</a></p>
+</div></body></html>

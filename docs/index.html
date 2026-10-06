@@ -1,8 +1,66 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fault discovery, with evidence · GEMSDOE45</title><meta name="description" content="A unique, reproducible fault-prediction GeoTIFF, spatial validation, and an honest submission gate for the DOE GEMS Prize."><link rel="stylesheet" href="style.css"><script src="site.js" defer></script></head><body><a class="skip" href="#main">Skip to content</a><header><a class="brand" href="index.html">GEMS<span>45 / FIELD NOTES</span></a><nav aria-label="Main"><a href="index.html">Overview</a><a href="research.html">Research</a><a href="validation.html">Validation</a><a href="sources.html">Sources</a><a href="executive-summary.html">How to submit ↗</a></nav></header><main id="main">
-<div class="eyebrow">DOE GEMS Prize / Experiment H45-PHASE / 06 October 2026</div>
-<section class="hero"><div><h1>A different signal.<br>A testable hypothesis.</h1><p class="intro">A new fault detector using differential phase parity across topography, magnetics and gravity. Original predictions. Measured validation. One downloadable GeoTIFF.</p><span class="pill">RESEARCH DOWNLOAD · SUBMISSION GATE CLOSED</span><div class="actions"><a class="button" href="downloads/gems45-phase-parity-20261006-362e1338f293-research.tif" download>↓ Download unique TIF <span>348 KiB</span></a><a class="button secondary" href="downloads/gems45-phase-parity-20261006-362e1338f293-research.zip" download>ZIP ↗</a></div><div class="file">gems45-phase-parity-20261006-362e1338f293-research.tif</div><p class="small">Single-band float32 · EPSG:32611 · 100 m · all stored values in [0,1]</p><div class="notice"><strong>Do not spend a weekly slot yet.</strong> The local spatial proxy passes. Independent off-catalogue confirmation and a comparable incumbent holdout are still missing. Portal acceptance is untested.</div><a href="executive-summary.html">Submission name, note & instructions →</a></div><figure class="map"><span class="label">PREDICTION FOOTPRINT / UTM 11N · N ↑</span><img src="prediction-overview.png" alt="Actual H45 predicted fault pixels in amber within the GeoDAWN footprint. Overview aggregated to 500 metre display cells."><figcaption><span>● Amber: predicted cells, not verified faults</span><span>500 m display aggregation</span></figcaption></figure></section>
-<div class="metrics"><div class="metric"><span>New predicted pixels</span><strong>82,678</strong></div><div class="metric"><span>Paired holdout improvement</span><strong>+0.0154</strong></div><div class="metric"><span>Quadrants improved</span><strong>4 / 4</strong></div><div class="metric"><span>Prior rasters compared</span><strong>309</strong></div></div>
-<section class="section two-col"><div><div class="eyebrow">01 / What changed</div><h2>A new detector.<br>Not another renamed file.</h2><p>Earlier leading artifacts improved the economics of the distance-weighted metric by thinning dots and pruning catalogue flanks. This experiment changes what is detected: step-like boundaries versus symmetric ridges, at two spatial scales.</p><a href="research.html">Read the scientific argument →</a></div><div><h3>Novel predictions, bounded claims</h3><p>The model was trained from supplied features. No previous submission was blended into it. Its pixels differ from all 309 comparable prior raster blobs checked; 2 more had incompatible grids or bands.</p><p>This is an inventory-scoped audit, not proof about unavailable historical artifacts. Neither these predictions nor the 0.2085 local proxy score establish a new geothermal discovery.</p><a href="data/uniqueness.json">Inspect the uniqueness receipt ↗</a></div></section>
-<section class="section"><div class="eyebrow">02 / The evidence</div><h2>One frozen experiment. Four geographic tests.</h2><p>Both arms use the same classifier, sampling and spacing. The candidate adds 15 bounded phase-parity descriptors to 31 baseline features. A separate quadrant selects the emission budget; 3 km split-line exclusions prevent nearby train/test contamination.</p><div class="table-wrap"><table><thead><tr><th>Quadrant</th><th>Baseline DTI</th><th>Phase DTI</th><th>Paired Δ</th><th>Truth pixels</th></tr></thead><tbody><tr><td>01</td><td>0.165132</td><td>0.165466</td><td class="good">+0.000334</td><td>28,135</td></tr><tr><td>02</td><td>0.248154</td><td>0.265539</td><td class="good">+0.017386</td><td>12,033</td></tr><tr><td>03</td><td>0.175398</td><td>0.182716</td><td class="good">+0.007318</td><td>8,463</td></tr><tr><td>04</td><td>0.183651</td><td>0.220362</td><td class="good">+0.036711</td><td>8,817</td></tr></tbody></table></div><p class="small">Mean baseline 0.193084 → candidate 0.208521. Catalogue-transfer proxy only. The 0.2778 incumbent was pruned away from these labels, so using it as a baseline here would manufacture a misleading win.</p><a href="validation.html">Protocol, raw results & limitations →</a></section>
-<section class="section"><div class="eyebrow">03 / A usable research system</div><div class="cards"><article class="card"><span class="num">01 — REPRODUCE</span><h3>Data to download</h3><p>Checksum-pinned mirror restoration, CPU training, geographic validation and a fail-closed raster writer.</p><a href="https://github.com/buffedlizard55-lab/GEMSDOE45#reproduce-without-competition-credentials">Run the pipeline →</a></article><article class="card"><span class="num">02 — VERIFY</span><h3>Every claim has a class</h3><p>Official statements, measured results, reported scores and scientific hypotheses remain separate.</p><a href="sources.html">Open the evidence register →</a></article><article class="card"><span class="num">03 — DECIDE</span><h3>Protect the next slot</h3><p>A catalogue proxy win is a research signal, not permission to claim a winning submission.</p><a href="executive-summary.html">Read the submission gate →</a></article></div></section>
-<section class="section"><div class="eyebrow">04 / Source freshness</div><h3>The leaderboard target has moved.</h3><p>The official 2026-10-06 research snapshot shows <strong>0.3345</strong>, not the prompt’s 0.3195. No organizer score exists for H45.</p><p id="feed-status" class="small">Dated research snapshot; checking the automated source-health feed…</p><a href="data/source_health.json">Source-health log ↗</a> · <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/">Official leaderboard ↗</a></section></main><footer><span>GEMSDOE45 · Maximize P(Win). Own the Outcome.<br>Research evidence, not a promise of leaderboard performance.</span><span><a href="brief.html">Standing project brief</a> · <a href="review.html">Three-pass audit</a> · <a href="https://github.com/buffedlizard55-lab/GEMSDOE45">Code & reproduction ↗</a></span></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE45 — GEMS Prize Challenge work</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;--acc:#4ea1ff;--ok:#3fb950}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:34px 20px 80px}
+h1{font-size:1.45rem;margin:0 0 6px}
+h2{font-size:1.05rem;margin:0 0 6px}
+a{color:var(--acc);text-decoration:none}
+a:hover{text-decoration:underline}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:18px 20px;margin:16px 0}
+.card h2 a{color:var(--fg)}
+.small{color:var(--mut);font-size:.88rem}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.86em}
+.pill{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);
+background:#1c2230;color:var(--mut);margin-right:6px}
+.ok{color:var(--ok)}
+</style>
+</head>
+<body><div class="wrap">
+<h1>GEMSDOE45 — GEMS Prize Challenge</h1>
+<p class="small">Two independent workstreams share this repository. Each has its own site, its own
+submission GeoTIFF, and its own evidence. Nothing below is a score claim: no artifact here has an
+organizer receipt.</p>
+
+<div class="card">
+<h2><a href="e45/index.html">Kaplan–Meier fault-tip survival →</a></h2>
+<p class="small"><span class="pill">this session</span><span class="pill">candidate under HOLD</span></p>
+<p>Extends each of the catalogue's 3,866 fault tips by its <i>own</i> length drawn from a
+Kaplan–Meier product-limit curve fitted to the catalogue's own along-strike relay gaps, unioned with
+a 9-plane rank-ensemble structural field. 40,000 dots, published as a candidate under HOLD because
+it did not beat the incumbent on the only spatially-blocked instrument available here.</p>
+<p class="small">Download:
+<a href="downloads/gems45-h48-kmtip-structural-20261006.tif">.tif</a> ·
+<a href="downloads/gems45-h48-kmtip-structural-20261006-zeros.tif">all-finite .tif</a> ·
+<a href="downloads/gems45-h48-kmtip-structural-20261006-zeros.zip">.zip</a> ·
+<a href="e45/executive-summary.html">how to submit</a></p>
+<p class="small"><code>sha256 40eb32bf995433b15052745c7ea647ed344dc4d56ca9356f8b843a4c1466a402</code></p>
+</div>
+
+<div class="card">
+<h2><a href="phase-parity.html">Phase-parity fault detector →</a></h2>
+<p class="small"><span class="pill">earlier session, merged as PR #1</span></p>
+<p>An original phase-parity detector over the GeoDAWN feature stack, with a validated research TIF,
+a holdout, prior-art fingerprints and a uniqueness audit.</p>
+<p class="small">Download:
+<a href="downloads/gems45-phase-parity-20261006-362e1338f293-research.tif">.tif</a> ·
+<a href="downloads/gems45-phase-parity-20261006-362e1338f293-research.zip">.zip</a> ·
+<a href="downloads/submission-audit.json">format audit</a> ·
+<a href="executive-summary.html">summary</a></p>
+</div>
+
+<div class="card">
+<h2>Sources</h2>
+<p class="small">
+<a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem description (metric, format, structure)</a> ·
+<a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">Official masking clarification (known faults excluded from scoring)</a> ·
+<a href="https://doi.org/10.1080/01621459.1958.10501452">Kaplan &amp; Meier (1958)</a> ·
+<a href="https://github.com/drivendataorg/gems-prize-reference-solution">Reference solution</a></p>
+</div>
+</div></body></html>

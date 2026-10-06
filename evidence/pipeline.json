@@ -1,0 +1,432 @@
+{
+ "started": "2026-10-06T09:46:31Z",
+ "inputs": {
+  "existing_faults.tif": {
+   "bytes": 425830,
+   "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
+  },
+  "labels.tif": {
+   "bytes": 425830,
+   "sha256": "7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093"
+  },
+  "sample_submission.tif": {
+   "bytes": 1599597,
+   "sha256": "2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+  },
+  "training_features.tif": {
+   "bytes": 418912844,
+   "sha256": "4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5"
+  }
+ },
+ "geometry": {
+  "shape": [
+   3730,
+   3292
+  ],
+  "n_bands": 19,
+  "footprint_band1_px": 5165840,
+  "footprint_template_px": 5167373,
+  "footprint_in_all_bands_px": 5165840,
+  "known_fault_px": 60988,
+  "irregularity": "band-1 finite mask (5,165,852), all-band finite mask (5,165,840) and the sample submission's finite mask (5,167,373) differ; the writer uses the sample submission mask because the problem description designates it as the format template.  Band 6 `tc` carries 12 sentinel pixels inside the band-1 mask.  See IR-45-001."
+ },
+ "band_information": [
+  {
+   "index": 1,
+   "band": "mag_anom",
+   "rho_lag10px": 0.9465,
+   "mean_abs_grad_sigma": 0.02101,
+   "auc_value_vs_catalogue": 0.4956,
+   "auc_gradmag_vs_catalogue": 0.5323,
+   "auc_abs_laplace_vs_catalogue": 0.4866,
+   "band_class": "INTERMEDIATE"
+  },
+  {
+   "index": 2,
+   "band": "rtp",
+   "rho_lag10px": 0.7288,
+   "mean_abs_grad_sigma": 0.05202,
+   "auc_value_vs_catalogue": 0.5025,
+   "auc_gradmag_vs_catalogue": 0.5308,
+   "auc_abs_laplace_vs_catalogue": 0.4736,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 3,
+   "band": "tmi_hg",
+   "rho_lag10px": 0.5674,
+   "mean_abs_grad_sigma": 0.11548,
+   "auc_value_vs_catalogue": 0.522,
+   "auc_gradmag_vs_catalogue": 0.5233,
+   "auc_abs_laplace_vs_catalogue": 0.4814,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 4,
+   "band": "geod_2ndinv",
+   "rho_lag10px": 0.9885,
+   "mean_abs_grad_sigma": 0.0027,
+   "auc_value_vs_catalogue": 0.5647,
+   "auc_gradmag_vs_catalogue": 0.5241,
+   "auc_abs_laplace_vs_catalogue": 0.4816,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 5,
+   "band": "iso_grav_anom_slope",
+   "rho_lag10px": 0.91,
+   "mean_abs_grad_sigma": 0.0323,
+   "auc_value_vs_catalogue": 0.525,
+   "auc_gradmag_vs_catalogue": 0.5374,
+   "auc_abs_laplace_vs_catalogue": 0.4934,
+   "band_class": "INTERMEDIATE"
+  },
+  {
+   "index": 6,
+   "band": "tc",
+   "rho_lag10px": 0.8749,
+   "mean_abs_grad_sigma": 0.06208,
+   "auc_value_vs_catalogue": 0.4562,
+   "auc_gradmag_vs_catalogue": 0.5028,
+   "auc_abs_laplace_vs_catalogue": 0.5097,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 7,
+   "band": "geod_shearrate",
+   "rho_lag10px": 0.9875,
+   "mean_abs_grad_sigma": 0.00315,
+   "auc_value_vs_catalogue": 0.5701,
+   "auc_gradmag_vs_catalogue": 0.533,
+   "auc_abs_laplace_vs_catalogue": 0.4634,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 8,
+   "band": "geod_dilaterate",
+   "rho_lag10px": 0.9889,
+   "mean_abs_grad_sigma": 0.00371,
+   "auc_value_vs_catalogue": 0.5267,
+   "auc_gradmag_vs_catalogue": 0.5338,
+   "auc_abs_laplace_vs_catalogue": 0.4703,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 9,
+   "band": "tmi_vg",
+   "rho_lag10px": 0.0458,
+   "mean_abs_grad_sigma": 0.13887,
+   "auc_value_vs_catalogue": 0.4825,
+   "auc_gradmag_vs_catalogue": 0.5162,
+   "auc_abs_laplace_vs_catalogue": 0.4786,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 10,
+   "band": "deq_n100a15",
+   "rho_lag10px": 0.8594,
+   "mean_abs_grad_sigma": 0.00167,
+   "auc_value_vs_catalogue": 0.5576,
+   "auc_gradmag_vs_catalogue": 0.5054,
+   "auc_abs_laplace_vs_catalogue": 0.4854,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 11,
+   "band": "iso_grav_anom_vg",
+   "rho_lag10px": 0.8365,
+   "mean_abs_grad_sigma": 0.04221,
+   "auc_value_vs_catalogue": 0.5211,
+   "auc_gradmag_vs_catalogue": 0.5313,
+   "auc_abs_laplace_vs_catalogue": 0.4831,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 12,
+   "band": "det_elev",
+   "rho_lag10px": 0.9539,
+   "mean_abs_grad_sigma": 0.03288,
+   "auc_value_vs_catalogue": 0.4858,
+   "auc_gradmag_vs_catalogue": 0.5793,
+   "auc_abs_laplace_vs_catalogue": 0.4551,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 13,
+   "band": "iso_grav_anom",
+   "rho_lag10px": 0.9812,
+   "mean_abs_grad_sigma": 0.01314,
+   "auc_value_vs_catalogue": 0.4585,
+   "auc_gradmag_vs_catalogue": 0.5358,
+   "auc_abs_laplace_vs_catalogue": 0.4904,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 14,
+   "band": "tmi",
+   "rho_lag10px": 0.7107,
+   "mean_abs_grad_sigma": 0.0548,
+   "auc_value_vs_catalogue": 0.4897,
+   "auc_gradmag_vs_catalogue": 0.5295,
+   "auc_abs_laplace_vs_catalogue": 0.4745,
+   "band_class": "LOCATOR"
+  },
+  {
+   "index": 15,
+   "band": "depth_to_base_surf",
+   "rho_lag10px": 0.9766,
+   "mean_abs_grad_sigma": 0.012,
+   "auc_value_vs_catalogue": 0.5168,
+   "auc_gradmag_vs_catalogue": 0.5303,
+   "auc_abs_laplace_vs_catalogue": 0.4834,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 16,
+   "band": "ieq_n100a15",
+   "rho_lag10px": 0.9809,
+   "mean_abs_grad_sigma": 0.00305,
+   "auc_value_vs_catalogue": 0.5746,
+   "auc_gradmag_vs_catalogue": 0.5254,
+   "auc_abs_laplace_vs_catalogue": 0.4791,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 17,
+   "band": "cond_surf",
+   "rho_lag10px": 0.9653,
+   "mean_abs_grad_sigma": 0.00782,
+   "auc_value_vs_catalogue": 0.4882,
+   "auc_gradmag_vs_catalogue": 0.5064,
+   "auc_abs_laplace_vs_catalogue": 0.4927,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 18,
+   "band": "iso_grav_anom_hg",
+   "rho_lag10px": 0.9548,
+   "mean_abs_grad_sigma": 0.02228,
+   "auc_value_vs_catalogue": 0.5003,
+   "auc_gradmag_vs_catalogue": 0.5346,
+   "auc_abs_laplace_vs_catalogue": 0.4852,
+   "band_class": "WEIGHT"
+  },
+  {
+   "index": 19,
+   "band": "det_elev_slope",
+   "rho_lag10px": 0.6925,
+   "mean_abs_grad_sigma": 0.26671,
+   "auc_value_vs_catalogue": 0.5515,
+   "auc_gradmag_vs_catalogue": 0.6067,
+   "auc_abs_laplace_vs_catalogue": 0.4297,
+   "band_class": "LOCATOR"
+  }
+ ],
+ "band_screen_seconds": 31.4,
+ "catalogue": {
+  "fault_px": 60988,
+  "components": 3199,
+  "components_ge_12px": 1662,
+  "largest_component_px": 360,
+  "component_size_median": 12.0,
+  "skeleton_px": 59788,
+  "endpoints": 6904
+ },
+ "n_tips": 3866,
+ "tip_extraction_seconds": 689.3,
+ "kaplan_meier": {
+  "n_observations": 3866,
+  "n_events": 3163,
+  "n_censored": 703,
+  "s_max_px": 120.0,
+  "median_gap_px": 9.0,
+  "q25_gap_px": 2.0,
+  "q75_gap_px": 70.0,
+  "restricted_mean_gap_px": 37.04966373512673,
+  "survival_at": {
+   "1": 0.8962752198654941,
+   "2": 0.7320227625452664,
+   "3": 0.6670977754785308,
+   "5": 0.5737196068287636,
+   "8": 0.5038799793067771,
+   "12": 0.45395757889291266,
+   "20": 0.39239524055871694,
+   "40": 0.3137609932747024
+  },
+  "max_greenwood_se": 0.008041295155039081
+ },
+ "kaplan_meier_genuine": {
+  "n_observations": 2127,
+  "n_events": 2127,
+  "n_censored": 0,
+  "s_max_px": 120.0,
+  "median_gap_px": 12.0,
+  "q25_gap_px": 5.0,
+  "q75_gap_px": 39.0,
+  "restricted_mean_gap_px": 26.893747061589092,
+  "survival_at": {
+   "1": 1.0,
+   "2": 1.0,
+   "3": 0.8819934179595674,
+   "5": 0.7122708039492243,
+   "8": 0.5853314527503526,
+   "12": 0.4945933239304184,
+   "20": 0.38269863657733894,
+   "40": 0.23977433004231316
+  },
+  "max_greenwood_se": 0.010840788390432222
+ },
+ "gap_event_histogram_px": {
+  "0": 1499,
+  "5": 477,
+  "10": 206,
+  "15": 133,
+  "20": 104,
+  "25": 94,
+  "30": 78,
+  "35": 50,
+  "40": 52,
+  "45": 45,
+  "50": 40,
+  "55": 41,
+  "60": 41
+ },
+ "km_seconds": 2.7,
+ "extension_budget": {
+  "target_dti": 0.3,
+  "marginal_bar": 0.06,
+  "profile": [
+   0.10884,
+   0.14386,
+   0.16784,
+   0.19041,
+   0.20733,
+   0.16197,
+   0.12341,
+   0.09991,
+   0.08486,
+   0.07076,
+   0.06206,
+   0.05548,
+   0.05101,
+   0.04678,
+   0.04325,
+   0.03949,
+   0.03926,
+   0.03761,
+   0.03479,
+   0.03056,
+   0.02915,
+   0.02915,
+   0.02539,
+   0.02398,
+   0.02492,
+   0.02609,
+   0.02586,
+   0.02445,
+   0.02445,
+   0.02421
+  ],
+  "e_star_px": 11,
+  "e_star_m": 1100,
+  "cap_m": 282.0
+ },
+ "extension_lengths_px": {
+  "n_tips": 3866,
+  "min": 2,
+  "max": 11,
+  "mean": 7.244,
+  "median": 6.0,
+  "histogram": {
+   "0": 0,
+   "1": 0,
+   "2": 612,
+   "3": 102,
+   "4": 226,
+   "5": 48,
+   "6": 1159,
+   "7": 35,
+   "8": 90,
+   "9": 23,
+   "10": 77,
+   "11": 1494
+  },
+  "n_distinct_values": 10,
+  "is_constant": false,
+  "total_m": 2800400.0
+ },
+ "emission": {
+  "tip_px": 26124,
+  "bridge_px": 32870,
+  "raw_union_px": 51900,
+  "mass_allowed_outside_catalogue": 51900,
+  "after_thinning_px": 16793
+ },
+ "emission_seconds": 74.5,
+ "submission": {
+  "filename": "gems45-h46-kmtip-eN-20261006.tif",
+  "bytes": 141948,
+  "sha256": "ce5d85b205ecc937d048982df0e2a52804375dc6785a1085120e19d183abd05b",
+  "shape": [
+   3730,
+   3292
+  ],
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": "nan",
+  "bytes_match": 141948,
+  "finite_inside": 5167373,
+  "nan_inside": 0,
+  "sentinel_anywhere": 0,
+  "inside_min": 0.0,
+  "inside_max": 1.0,
+  "inside_all_in_0_1": true,
+  "outside_all_nan": true,
+  "outside_all_in_0_1_or_nan": true,
+  "n_positive": 16573,
+  "n_at_one": 16573
+ },
+ "submission_zeros_twin": {
+  "filename": "gems45-h46-kmtip-eN-20261006-zeros.tif",
+  "bytes": 98463,
+  "sha256": "5b50e1878328db2f07587fcac92d53031b4bb9625f99a1010908daa29eeab23a",
+  "shape": [
+   3730,
+   3292
+  ],
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": "nan",
+  "bytes_match": 98463,
+  "finite_inside": 5167373,
+  "nan_inside": 0,
+  "sentinel_anywhere": 0,
+  "inside_min": 0.0,
+  "inside_max": 1.0,
+  "inside_all_in_0_1": true,
+  "outside_all_nan": false,
+  "outside_all_in_0_1_or_nan": true,
+  "n_positive": 16573,
+  "n_at_one": 16573
+ },
+ "finished": "2026-10-06T09:59:56Z",
+ "total_seconds": 804.9
+}
