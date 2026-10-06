@@ -1,0 +1,12 @@
+# Competition data (~420 MB) is mirrored publicly and reproduced by data/README.md -- not tracked.
+data/*.tif
+data/*.zip
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+evidence/*.npy
+evidence/tips.npz
+evidence/km.npz
+evidence/catalogue_cache.npz
+evidence/_*.npy
