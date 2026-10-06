@@ -232,8 +232,8 @@ tip is <i>drawn per fault</i> from a Kaplan–Meier product-limit curve fitted t
 relay gaps, so it varies tip to tip ({ext['realised_distinct']} distinct realised lengths, asserted
 in the build and in the tests); (2) splay/parallel-strand positions inside the same fault zone are
 candidates, matching the organizers' published definition of a new fault; (3) the dots are chosen
-by greedy maximum expected coverage of the leaked truth density under the official 300 m triangular
-kernel and stopped at the metric's own marginal bar. What it is <b>not</b> is validated: no
+by greedy maximum expected coverage of a modelled hidden-truth density under the official
+300 m triangular kernel and stopped at the metric's own marginal bar. What it is <b>not</b> is validated: no
 instrument available here ranks it against the hidden new-fault truth.</p>
 """ + tail("scripts/build_h51_site.py")
 
