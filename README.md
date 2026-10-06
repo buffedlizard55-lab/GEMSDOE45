@@ -1,3 +1,19 @@
+# GEMSDOE45 · two workstreams, one repository
+
+Both projects live here. Each has its own site, its own submission GeoTIFF, and its own evidence.
+**No score on this page is an organizer receipt** — see the provenance notes inside each section.
+
+| | Download the submission | Site | Status |
+|---|---|---|---|
+| **Kaplan–Meier fault-tip survival** (H48b) | **[GeoTIFF](docs/downloads/gems45-h48b-structural-noflank-20261006.tif)** · [.zip](docs/downloads/gems45-h48b-structural-noflank-20261006-zeros.zip) | [site](docs/e45/index.html) · [how to submit](docs/e45/executive-summary.html) | candidate under HOLD, 40,000 dots, unique vs 69 prior rasters (max Jaccard 0.017) |
+| **Phase-parity fault detector** | [GeoTIFF](docs/downloads/gems45-phase-parity-20261006-362e1338f293-research.tif) · [.zip](docs/downloads/gems45-phase-parity-20261006-362e1338f293-research.zip) | [site](docs/phase-parity.html) · [summary](docs/executive-summary.html) | research artifact with spatial validation and a uniqueness audit |
+
+Reproduce every published number with **`./runner.sh`** (CPU only, no network, no credentials).
+The tables on the Kaplan–Meier site are *generated* from `evidence/*.json`, and
+`scripts/sync_site_tables.py --check` fails CI if they drift from it.
+
+---
+
 # GEMSDOE45 · fault discovery, with evidence
 
 **Read this README and the standing project prompt below at the start of every session.**
@@ -287,17 +303,36 @@ Both are unreceipted here — see the irregularities ledger.
 | Per-tip extension lengths | min 2 · max 11 · mean 7.24 · median 6 · **10 distinct values** | `evidence/final_submission.json` |
 | Shipped file | 40,000 positive px, 138,260 B, sha256 `40eb32bf…a402` | `evidence/final_submission.json` |
 | Shipped file vs catalogue | min distance 2.0 px · median 11.4 px · 11.9 % inside 300 m | `evidence/final_submission.json` |
-| Blocked holdout (catalogue truth) | shipped 0.0068 · random 0.0127 · d2.8 0.0634 · h33-2-b2 0.0028 | `evidence/holdout_shipped.json` |
+| Blocked holdout (catalogue truth) | **H48b 0.030215** · H48 0.006813 · random 0.012654 · d2.8 0.0634 · h33-2-b2 0.002791 | `evidence/holdout_h48b.json`, `evidence/holdout_h48.json` |
+| Blocked holdout, blocks won vs random | **H48b 9/11** · H48 2/11 · H48b beats d2.8 0/11 | same |
+| Proximity screen, measured random baseline | **8.60 %** of footprint is within 300 m of the catalogue | `evidence/band_screen.json` |
+| Best raw band by top-40k within 300 m | `geod_2ndinv` 30.6 % — but its top 40,000 px are **one connected component** (perimeter/area 0.02): regional, not a localiser | `evidence/band_screen.json` |
+| Best derived plane | `\|grad2.5\|_det_elev_slope` **42.1 %** = 4.89× random, 1,162 components, median 13 px — a genuine localiser | `evidence/band_screen.json` |
+| Band value that looked best and is not | `det_elev_slope` scores **5.1 %**, *below* the 8.6 % baseline; its gradient is what scores | `evidence/band_screen.json` |
+| H47 consensus field, same instrument | 9.9 % = 1.15× — rejected | `evidence/field_screen.json` |
+| H48 rank ensemble, same instrument | top-20k 27.6 % (3.21×) · top-40k 24.4 % (2.83×) · top-80k 21.2 % | `evidence/field_screen.json` |
+| Second published file | H48b 138,304 B, sha256 `be7915f2…2ea8c`, max Jaccard vs 69 priors **0.017** | `evidence/final_submission_noflank.json` |
+| Reproducibility of the shipped bytes | rebuilding with the default flags reproduces `40eb32bf…a402` **exactly** | `scripts/build_final_submission.py` |
 
-Reproduce everything:
+Reproduce everything — or just run **`./runner.sh`**, which runs the whole chain in order:
 
 ```bash
-python scripts/run_pipeline.py            # metric checks, band screen, catalogue, KM  (~14 min)
-python scripts/build_field.py             # the 9-plane rank ensemble                    (~35 s)
-python scripts/build_final_submission.py  # writes the shippable GeoTIFF                (~10 s)
-python scripts/run_holdout.py             # per-fold rebuild of the method               (~80 s)
+./runner.sh
+# equivalently, step by step:
+python scripts/run_pipeline.py            # metric checks, band values, catalogue, Kaplan-Meier
+python scripts/screen_bands.py            # per-band / per-plane localisation + fragmentation
+python scripts/score_fields.py            # every stored field on ONE instrument
+python scripts/sync_site_tables.py        # regenerate the site tables from the evidence
+python scripts/build_field.py             # the 9-plane rank ensemble
+python scripts/build_final_submission.py  # writes the shippable GeoTIFF and its -zeros twin
+python scripts/run_holdout.py --pred <file>   # leakage-controlled blocked holdout
+python scripts/sync_site_tables.py --check    # fails if the site has drifted from the evidence
 python -m pytest tests/ -q
 ```
+
+`scripts/sync_site_tables.py --check`, `scripts/verify_repo.py` and the test suite both run in CI
+terms; the test suite includes `tests/test_site_integrity.py`, which fails if any published sha256
+stops matching the bytes it describes.
 
 ---
 
@@ -330,6 +365,10 @@ site rather than buried: **the shipped file is a candidate under HOLD, not a val
 | IR-45-003 | The catalogue-truth holdout **cannot rank candidates**: it puts `d2.8` (live 0.2600) 23× above `h33-2-b2` (live 0.2778), inverting the live order. Any "we beat the holdout" claim built on it is unsound | `evidence/holdout_shipped.json` |
 | IR-45-004 | Score provenance. No file anywhere in this repository has an organizer receipt. 0.2778, 0.2600, 0.3262 and every other score in the brief are **owner or snapshot claims**. The live leaderboard is dynamic and was read only through third-party snapshots | site, Sources page |
 | IR-45-005 | `deq_n100a15` reaches 4.96 × 10⁶ in a grid spanning ~329 × 373 km, which is not a plausible straight-line distance in metres. The band is used nowhere here, but the value looks like a unit or accumulation error worth reporting to the organizers | `evidence/pipeline.json` |
+| IR-45-006 | **Poisson-disk thinning at the kernel radius is wrong for this metric.** A 1-px line at dot spacing 1/2/3/4 px scores DTI 1.000/0.862/0.813/0.712 — thinning *destroys* score, and a marginal dot in a 3-px lattice adds 0.222 credit for 0.044 denominator (ratio 5.0 > DTI), so the good dots are the ones already present. Two independent routines in `emission.py` are now quarantined behind `allow_thinning=False` | `emission.py` docstring, tests |
+| IR-45-007 | **A table published on the site was wrong, and the way it was wrong is instructive.** It attributed "23.2 % top-40k within 300 m" to the band `det_elev_slope`; that number belongs to `\|grad1.2\|_det_elev_slope`, and the band's own value scores 5.1 %, *below* the 8.6 % baseline. Its ρ and mean-\|grad\| cells also came from a later pipeline run than its percentage cell, and its class column contradicted the class rule in `bands.py` for three bands. Found by **regenerating** the table from evidence. Fixed by generation + `--check` | `evidence/band_screen.json`, `scripts/sync_site_tables.py` |
+| IR-45-008 | **Two bands look like excellent locators and are not.** `geod_2ndinv` (30.6 %) and `geod_shearrate` (27.7 %) post the two best raw-band fractions, yet each one's top 40,000 px form **a single connected component of 40,000 px**. They mark the fault-rich region, not faults. Their gradients change by 0.0023–0.0037 σ/px, so no ridge detector on them can place a dot inside a 300 m kernel. The `perimeter/area` test that exposes this is now published | `evidence/band_screen.json` |
+| IR-45-009 | **My own holdout script was scoring a reconstruction and calling it the file.** `scripts/run_holdout.py` loaded the published GeoTIFF and never used it: each fold's `dti_mine` was a per-fold re-derivation, so passing a different file changed nothing (two different files returned an identical 0.000223 — the tell). Fixed: predictions are stripped of the training catalogue before scoring (the metric's own masking rule, applied to the incumbent files too), and `dti_file` / `dti_rebuild` are now separate keys. The previously published 0.006813 was correct and reproduces exactly | `evidence/holdout_h48.json`, `evidence/holdout_h48b.json` |
 
 ---
 
@@ -351,6 +390,11 @@ site rather than buried: **the shipped file is a candidate under HOLD, not a val
    CPU-feasible detectors are represented.
 5. **Skeletonisation is slow and single-threaded** (~10 min for the catalogue), and the tip
    extraction over-merges segments that touch. Both are known and documented, not hidden.
+6. **The flank question was settled on an instrument with a known bias.** H48b beat H48 4.4× on the
+   leakage-controlled blocked holdout, and the blocked protocol is the fairer of the two local
+   instruments (held-out truth behaves like unmapped faults, and every file is stripped of the
+   training catalogue first). But the gap points in the same direction as the residual bias, so it is
+   strong evidence, not proof. A single real leaderboard number on either file would settle it.
 
 ---
 
@@ -366,7 +410,8 @@ src/gems45/emission.py      dot painting, relay bridges, Poisson-disk thinning (
 src/gems45/bands.py         band information screen (LOCATOR vs WEIGHT classes)
 src/gems45/lineament.py     H47 consensus detector (tested and rejected -- kept as evidence)
 src/gems45/detfeatures.py   memory-bounded feature streaming
-scripts/                    run_pipeline, build_field, build_final_submission, run_holdout, ...
+scripts/                    run_pipeline, screen_bands, score_fields, sync_site_tables,
+                            build_field, build_final_submission, run_holdout, sync_evidence_data
 tests/                      metric verification against a literal brute-force transcription
 evidence/                   every number quoted on the site, as JSON produced by the scripts
 docs/                       the GitHub Pages site

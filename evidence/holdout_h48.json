@@ -1,0 +1,231 @@
+{
+ "aggregate": {
+  "n_folds": 11,
+  "pred": "docs/downloads/gems45-h48-kmtip-structural-20261006.tif",
+  "mean_dti_file": 0.006813,
+  "mean_dti_rebuild": 0.000223,
+  "mean_dti_random": 0.012654,
+  "mean_dti_incumbents": {
+   "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.0634,
+   "h33-2-b2 (owner-reported 0.2778)": 0.002791
+  },
+  "folds_file_beats_random": 2,
+  "folds_file_beats_incumbents": {
+   "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0,
+   "h33-2-b2 (owner-reported 0.2778)": 8
+  },
+  "truth_px_total": 60985,
+  "caveat": "Catalogue-truth proxy; the organizers mask the catalogue out of scoring, so this instrument is a screen only (sibling repos measure LOO Spearman -0.897 between such a proxy and live scores)."
+ },
+ "folds": [
+  {
+   "fold": "0_0",
+   "truth_px": 4955,
+   "emitted_px_global": 30055,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.293,
+   "dti_file": 0.007376,
+   "dti_rebuild": 0.0,
+   "random_dti": 0.01304,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.066573,
+    "h33-2-b2 (owner-reported 0.2778)": 0.003182
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "0_1",
+   "truth_px": 6138,
+   "emitted_px_global": 29348,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.248,
+   "dti_file": 0.001602,
+   "dti_rebuild": 0.001125,
+   "random_dti": 0.012639,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.082559,
+    "h33-2-b2 (owner-reported 0.2778)": 0.004085
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "0_2",
+   "truth_px": 6151,
+   "emitted_px_global": 29618,
+   "e_star_px": 11,
+   "km_median_gap_px": 13.0,
+   "ext_len_mean": 7.283,
+   "dti_file": 0.003656,
+   "dti_rebuild": 0.000182,
+   "random_dti": 0.0141,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.108852,
+    "h33-2-b2 (owner-reported 0.2778)": 0.003958
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "0_3",
+   "truth_px": 5349,
+   "emitted_px_global": 28948,
+   "e_star_px": 10,
+   "km_median_gap_px": 13.0,
+   "ext_len_mean": 6.853,
+   "dti_file": 0.001983,
+   "dti_rebuild": 0.0,
+   "random_dti": 0.014047,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.058622,
+    "h33-2-b2 (owner-reported 0.2778)": 0.004014
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "1_0",
+   "truth_px": 7471,
+   "emitted_px_global": 26956,
+   "e_star_px": 11,
+   "km_median_gap_px": 11.0,
+   "ext_len_mean": 7.19,
+   "dti_file": 0.006951,
+   "dti_rebuild": 0.000181,
+   "random_dti": 0.015419,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.04988,
+    "h33-2-b2 (owner-reported 0.2778)": 0.0023
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "1_1",
+   "truth_px": 10737,
+   "emitted_px_global": 26218,
+   "e_star_px": 11,
+   "km_median_gap_px": 11.0,
+   "ext_len_mean": 7.228,
+   "dti_file": 0.013101,
+   "dti_rebuild": 0.000857,
+   "random_dti": 0.018827,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.066794,
+    "h33-2-b2 (owner-reported 0.2778)": 0.002966
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "1_2",
+   "truth_px": 1096,
+   "emitted_px_global": 32045,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.239,
+   "dti_file": 0.003171,
+   "dti_rebuild": 3.5e-05,
+   "random_dti": 0.002555,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.027186,
+    "h33-2-b2 (owner-reported 0.2778)": 0.000736
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "2_1",
+   "truth_px": 5605,
+   "emitted_px_global": 29770,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.264,
+   "dti_file": 0.01398,
+   "dti_rebuild": 7.5e-05,
+   "random_dti": 0.014254,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.066471,
+    "h33-2-b2 (owner-reported 0.2778)": 0.003759
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "2_2",
+   "truth_px": 4242,
+   "emitted_px_global": 30641,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.266,
+   "dti_file": 0.002805,
+   "dti_rebuild": 0.0,
+   "random_dti": 0.009375,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.047909,
+    "h33-2-b2 (owner-reported 0.2778)": 0.001868
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "3_1",
+   "truth_px": 3886,
+   "emitted_px_global": 30478,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.269,
+   "dti_file": 0.013194,
+   "dti_rebuild": 0.0,
+   "random_dti": 0.010916,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.055866,
+    "h33-2-b2 (owner-reported 0.2778)": 0.0018
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  },
+  {
+   "fold": "3_2",
+   "truth_px": 5355,
+   "emitted_px_global": 30417,
+   "e_star_px": 11,
+   "km_median_gap_px": 12.0,
+   "ext_len_mean": 7.188,
+   "dti_file": 0.007126,
+   "dti_rebuild": 0.0,
+   "random_dti": 0.014021,
+   "incumbents": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 0.066689,
+    "h33-2-b2 (owner-reported 0.2778)": 0.002036
+   },
+   "incumbent_mass": {
+    "dotted-h19-5-d2-8 (owner-reported 0.2600)": 44090,
+    "h33-2-b2 (owner-reported 0.2778)": 37654
+   }
+  }
+ ]
+}

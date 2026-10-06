@@ -1,0 +1,78 @@
+{
+ "kernel_px": 3,
+ "random_within_300m_pct": 8.6,
+ "catalogue_px": 60894,
+ "footprint_px": 5165840,
+ "fields": {
+  "H48_rank_ensemble": {
+   "source": "evidence/field.npy",
+   "top_20k": {
+    "mass_px": 20000,
+    "within_300m_frac": 0.2759,
+    "within_300m_pct": 27.6,
+    "enrichment_vs_random": 3.21,
+    "n_components": 978,
+    "median_component_px": 5,
+    "perimeter_over_area": 0.736
+   },
+   "top_40k": {
+    "mass_px": 40000,
+    "within_300m_frac": 0.2436,
+    "within_300m_pct": 24.4,
+    "enrichment_vs_random": 2.83,
+    "n_components": 1510,
+    "median_component_px": 5,
+    "perimeter_over_area": 0.665
+   },
+   "top_80k": {
+    "mass_px": 80000,
+    "within_300m_frac": 0.2124,
+    "within_300m_pct": 21.2,
+    "enrichment_vs_random": 2.47,
+    "n_components": 2545,
+    "median_component_px": 4,
+    "perimeter_over_area": 0.605
+   }
+  },
+  "H47_consensus": {
+   "source": "evidence/consensus.npy",
+   "top_20k": {
+    "mass_px": 20000,
+    "within_300m_frac": 0.1019,
+    "within_300m_pct": 10.2,
+    "enrichment_vs_random": 1.19,
+    "n_components": 4015,
+    "median_component_px": 2,
+    "perimeter_over_area": 0.908
+   },
+   "top_40k": {
+    "mass_px": 40000,
+    "within_300m_frac": 0.0987,
+    "within_300m_pct": 9.9,
+    "enrichment_vs_random": 1.15,
+    "n_components": 6926,
+    "median_component_px": 3,
+    "perimeter_over_area": 0.885
+   },
+   "top_80k": {
+    "mass_px": 80000,
+    "within_300m_frac": 0.095,
+    "within_300m_pct": 9.5,
+    "enrichment_vs_random": 1.1,
+    "n_components": 11492,
+    "median_component_px": 3,
+    "perimeter_over_area": 0.851
+   }
+  },
+  "H48_shipped_file": {
+   "source": "docs/downloads/gems45-h48-kmtip-structural-20261006.tif",
+   "mass_px": 40000,
+   "within_300m_frac": 0.1186,
+   "within_300m_pct": 11.9,
+   "enrichment_vs_random": 1.38,
+   "n_components": 4118,
+   "median_component_px": 2,
+   "perimeter_over_area": 0.745
+  }
+ }
+}
