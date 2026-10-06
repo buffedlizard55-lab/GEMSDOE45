@@ -5,12 +5,69 @@ Both projects live here. Each has its own site, its own submission GeoTIFF, and 
 
 | | Download the submission | Site | Status |
 |---|---|---|---|
+| **H51 — Kaplan–Meier fault-zone emission** (newest) | **[GeoTIFF](docs/downloads/gems45-h51-km-faultzone-20261006-zeros.tif)** · [NaN-outside](docs/downloads/gems45-h51-km-faultzone-20261006.tif) · [.zip](docs/downloads/gems45-h51-km-faultzone-20261006-zeros.zip) | [site](docs/h51/index.html) · [how to submit](docs/h51/executive-summary.html) | **UNSCORED CANDIDATE**, 37,654 dots, 30 distinct realised extension lengths, 309 priors compared / 0 identical |
 | **Kaplan–Meier fault-tip survival** (H48b) | **[GeoTIFF](docs/downloads/gems45-h48b-structural-noflank-20261006.tif)** · [.zip](docs/downloads/gems45-h48b-structural-noflank-20261006-zeros.zip) | [site](docs/e45/index.html) · [how to submit](docs/e45/executive-summary.html) | candidate under HOLD, 40,000 dots, unique vs 69 prior rasters (max Jaccard 0.017) |
 | **Phase-parity fault detector** | [GeoTIFF](docs/downloads/gems45-phase-parity-20261006-362e1338f293-research.tif) · [.zip](docs/downloads/gems45-phase-parity-20261006-362e1338f293-research.zip) | [site](docs/phase-parity.html) · [summary](docs/executive-summary.html) | research artifact with spatial validation and a uniqueness audit |
 
 Reproduce every published number with **`./runner.sh`** (CPU only, no network, no credentials).
 The tables on the Kaplan–Meier site are *generated* from `evidence/*.json`, and
 `scripts/sync_site_tables.py --check` fails CI if they drift from it.
+
+---
+
+## H51 — Kaplan–Meier fault-zone emission (this session's submission)
+
+**[Download the GeoTIFF](docs/downloads/gems45-h51-km-faultzone-20261006-zeros.tif)** ·
+[all-finite twin](docs/downloads/gems45-h51-km-faultzone-20261006.tif) ·
+[.zip](docs/downloads/gems45-h51-km-faultzone-20261006-zeros.zip) ·
+[site](docs/h51/index.html) · [how to submit](docs/h51/executive-summary.html) ·
+[sources](docs/h51/sources.html)
+
+- Unique submission name: `gems45-h51-km-faultzone-20261006`.
+- **What is genuinely new here.** The extension beyond a mapped fault tip is drawn **per fault** by
+  inverse transform from a **Kaplan–Meier product-limit estimator** (Kaplan & Meier 1958) fitted to
+  the catalogue's own along-strike relay gaps — 3,163 events /
+  703 right-censored, median gap 9 px, restricted
+  mean 37.0 px, S(3 px) = 0.667. It is
+  a distribution, not a radius: **118 distinct drawn lengths** and
+  **30 distinct realised extensions** (3,636
+  of 3,866 tips carry at least one dot). The build and `tests/test_h51.py` both assert
+  this spread, so a constant-length collapse fails instead of shipping.
+- **Candidate set** = the organizers' own definition of a new fault ("any fault pixel not already
+  captured by USGS/INGENIOUS", "can include newly mapped geometry of an existing fault system"):
+  115,554 along-strike tip continuations + 236,798 splay /
+  parallel-strand positions at ±2 and ±3 px; 153,447 survive the corroboration and
+  catalogue-novelty gates; 28,853 tip + 8,801 strand dots
+  are emitted.
+- **Selection is the metric's own decision problem.** Because `TP_w` is a MAX over predictions near
+  each truth pixel and `FP_w` is a SUM over emitted mass, the optimal prediction is binary, and a
+  dot pays for itself exactly when its expected kernel weight exceeds `0.2·DTI`. The file is
+  therefore selected by greedy maximum expected coverage — the submodular (1 − 1/e) approximation of
+  the metric's own objective — stopped at the marginal bar evaluated at the portfolio's best
+  live-observed DTI (0.2778, bar 0.0556).
+- **Calibrated on live data, not on the catalogue.** The 2 px (200 m) catalogue exclusion is the
+  radius the family's live leaderboard actually validated. The three nested files
+  `dotted-h19-5-d2-8` (44,090 px → 0.2600) ⊃ `h27-4-solo-d28` (40,199 px → 0.2708) ⊃
+  `h33-2-b2` (37,654 px → 0.2778) were verified by **exact integer-coordinate set inclusion**, so
+  the live score rises monotonically as mass is removed. H51 adopts that radius and that mass
+  ceiling (37,654 dots).
+- **Format, re-read from disk.** All-finite twin: 142,899 B, sha256
+  `81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c`, 37,654 positive px, min 0.0, max
+  1.0, no NaN inside, no sentinel anywhere, single band float32, EPSG:32611,
+  3730 × 3292. NaN-outside twin: 185,873 B, sha256 `b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c`. ZIP: 108,324 B,
+  sha256 `5110361c2b2f3a6ba2015bd42ce06c790c5c6d23e893c02de867e73add22d989`.
+- **Uniqueness.** 309 fingerprinted prior rasters compared by
+  sha256 of the float32 bytes: **0 identical**. Largest Jaccard against any member of the family's
+  live ladder is 0.0074.
+- **What is NOT validated, stated plainly.** No instrument available here ranks this file against the
+  hidden new-fault truth. The catalogue-truth holdout is inverted by construction (IR-45-003); the
+  emission emulator that placed the dots correlates with live scores at only
+  **Pearson +0.176** (R² +0.031) over 46 live-scored rasters — it
+  predicts 0.575 where the live top is 0.3345, and it cannot even order `h33-2-b2` (live 0.2778)
+  above `h34-scatter` (live 0.0778). `slot_approved` is **false**. Read
+  [the limitations](docs/h51/index.html) before spending a weekly slot.
+- **Reproduce:** `.venv/bin/python scripts/build_h51_submission.py` (≈2 min with the tip cache;
+  ~18 min cold) then `scripts/validate_h51.py`.
 
 ---
 
@@ -368,6 +425,8 @@ site rather than buried: **the shipped file is a candidate under HOLD, not a val
 | IR-45-006 | **Poisson-disk thinning at the kernel radius is wrong for this metric.** A 1-px line at dot spacing 1/2/3/4 px scores DTI 1.000/0.862/0.813/0.712 — thinning *destroys* score, and a marginal dot in a 3-px lattice adds 0.222 credit for 0.044 denominator (ratio 5.0 > DTI), so the good dots are the ones already present. Two independent routines in `emission.py` are now quarantined behind `allow_thinning=False` | `emission.py` docstring, tests |
 | IR-45-007 | **A table published on the site was wrong, and the way it was wrong is instructive.** It attributed "23.2 % top-40k within 300 m" to the band `det_elev_slope`; that number belongs to `\|grad1.2\|_det_elev_slope`, and the band's own value scores 5.1 %, *below* the 8.6 % baseline. Its ρ and mean-\|grad\| cells also came from a later pipeline run than its percentage cell, and its class column contradicted the class rule in `bands.py` for three bands. Found by **regenerating** the table from evidence. Fixed by generation + `--check` | `evidence/band_screen.json`, `scripts/sync_site_tables.py` |
 | IR-45-008 | **Two bands look like excellent locators and are not.** `geod_2ndinv` (30.6 %) and `geod_shearrate` (27.7 %) post the two best raw-band fractions, yet each one's top 40,000 px form **a single connected component of 40,000 px**. They mark the fault-rich region, not faults. Their gradients change by 0.0023–0.0037 σ/px, so no ridge detector on them can place a dot inside a 300 m kernel. The `perimeter/area` test that exposes this is now published | `evidence/band_screen.json` |
+| IR-45-010 | **H51-C is in tension with H51's own novelty gate, and the tension is recorded rather than smoothed over.** The organizers' staff statement says a new-fault ground-truth pixel may lie within 300 m of a known trace as a *correction*; the file therefore emits strands at ±2 and ±3 px of the mapped skeleton — but the live-calibrated 2 px (200 m) catalogue exclusion removes the inner part of that same annulus. Both rules are evidence-backed; together they are inconsistent for the 0–200 m band. The artifact keeps the live-calibrated gate, and the correction annulus is declared partially untested | `evidence/h51_submission.json`, `research/hypotheses_h51.md` |
+| IR-45-011 | **The emission emulator is not a score, and saying so is not a disclaimer but a measurement.** Fitted to 46 live-scored rasters it reaches Pearson +0.176 / R² +0.031, predicts 0.575 where the live top is 0.3345, ranks the live-best file below a file scoring 0.0904, and cannot separate `h33-2-b2` (0.2778) from `h34-scatter` (0.0778). Every `dti_pred` value printed by the builder is therefore labelled `emulator_is_not_a_score` and no score claim is derived from it | `evidence/h51_live_fit.json`, `tests/test_h51.py` |
 | IR-45-009 | **My own holdout script was scoring a reconstruction and calling it the file.** `scripts/run_holdout.py` loaded the published GeoTIFF and never used it: each fold's `dti_mine` was a per-fold re-derivation, so passing a different file changed nothing (two different files returned an identical 0.000223 — the tell). Fixed: predictions are stripped of the training catalogue before scoring (the metric's own masking rule, applied to the incumbent files too), and `dti_file` / `dti_rebuild` are now separate keys. The previously published 0.006813 was correct and reproduces exactly | `evidence/holdout_h48.json`, `evidence/holdout_h48b.json` |
 
 ---

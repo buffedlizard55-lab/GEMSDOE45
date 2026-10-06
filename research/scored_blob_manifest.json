@@ -1,0 +1,392 @@
+[
+ {
+  "artifact": "gems6_hgb88-topk03_33cec71ff0",
+  "score": 0.0286,
+  "match": "exact",
+  "repo": "6GEMSDOE",
+  "path": "downloads/gems6_hgb88-topk03_33cec71ff0.tif",
+  "blob": "3957f33ad98537c14db71425667dcbf199629af2",
+  "status": "fingerprinted",
+  "positive_pixels": 155021
+ },
+ {
+  "artifact": "pindrop-v4-nodes-20260925T152420Z-f347b70daa",
+  "score": 0.1193,
+  "match": "exact",
+  "repo": "GEMSDOE3",
+  "path": "docs/downloads/pindrop-v4-nodes-20260925T152420Z-f347b70daa.tif",
+  "blob": "fdd931161c431a583cf7039362e51832e59d07ad",
+  "status": "fingerprinted",
+  "positive_pixels": 155021
+ },
+ {
+  "artifact": "pindrop-v4-discovery-20260925T152423Z-37f9d5b855",
+  "score": 0.083,
+  "match": "exact",
+  "repo": "GEMSDOE3",
+  "path": "docs/downloads/pindrop-v4-discovery-20260925T152423Z-37f9d5b855.tif",
+  "blob": "32a4a6d2d4df8ef8e880120f36d2a4d94f134f8a",
+  "status": "fingerprinted",
+  "positive_pixels": 155021
+ },
+ {
+  "artifact": "pindrop-v4-ridge-20260925T152422Z-4e03fc9705",
+  "score": 0.1152,
+  "match": "exact",
+  "repo": "GEMSDOE3",
+  "path": "docs/downloads/pindrop-v4-ridge-20260925T152422Z-4e03fc9705.tif",
+  "blob": "b298154c2e405095db5e58f9c5232618ef4827f1",
+  "status": "fingerprinted",
+  "positive_pixels": 155021
+ },
+ {
+  "artifact": "lidarscarp-ridge-top2pct-36c3a3f341c8",
+  "score": 0.1461,
+  "match": "substr",
+  "repo": "7GEMSDOE",
+  "path": "downloads/gems7-lidarscarp-ridge-top2pct-36c3a3f341c8.tif",
+  "blob": "887274b991d5fcff586207a4d0a29366a642e0aa",
+  "status": "fingerprinted",
+  "positive_pixels": 76859
+ },
+ {
+  "artifact": "2314b599",
+  "score": 0.0107,
+  "match": "substr",
+  "repo": "GEMSDOE9",
+  "path": "docs/downloads/gemsdoe9-PLACEHOLDER-2314b599.tif",
+  "blob": "8de2e9ba01c7a12e22b936075c83ec1c8aa36eea",
+  "status": "fingerprinted",
+  "positive_pixels": 147684
+ },
+ {
+  "artifact": "gems-structural-area06-v1",
+  "score": 0.0202,
+  "match": "exact",
+  "repo": "11GEMSDOE",
+  "path": "docs/downloads/gems-structural-area06-v1.tif",
+  "blob": "45289d81d5a3650837ce61187de7bde604f50da3",
+  "status": "fingerprinted",
+  "positive_pixels": 343526
+ },
+ {
+  "artifact": "r7-nms3-dem10-scarp_0c9199f14e62",
+  "score": 0.1294,
+  "match": "substr",
+  "repo": "12GEMSDOE",
+  "path": "docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62.tif",
+  "blob": "dd5dffe559c70eca07cd8498cd6c237691af83b3",
+  "status": "fingerprinted",
+  "positive_pixels": 103347
+ },
+ {
+  "artifact": "r7-nms3-dem10-scarp_0c9199f14e62",
+  "score": 0.1294,
+  "match": "substr",
+  "repo": "12GEMSDOE",
+  "path": "docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62_allfinite.tif",
+  "blob": "1e8dc5e350b90744b681282d0d4c77a8a0136210",
+  "status": "fingerprinted",
+  "positive_pixels": 103347
+ },
+ {
+  "artifact": "r7-nms3-dem10-scarp_0c9199f14e62_allfinite",
+  "score": 0.1294,
+  "match": "substr",
+  "repo": "12GEMSDOE",
+  "path": "docs/downloads/12GEMSDOE_r7-nms3-dem10-scarp_0c9199f14e62_allfinite.tif",
+  "blob": "1e8dc5e350b90744b681282d0d4c77a8a0136210",
+  "status": "fingerprinted",
+  "positive_pixels": 103347
+ },
+ {
+  "artifact": "gems-tso1-20260929T005627Z-conj_alteration_mag",
+  "score": 0.0782,
+  "match": "exact",
+  "repo": "15GEMSDOE",
+  "path": "docs/downloads/gems-tso1-20260929T005627Z-conj_alteration_mag.tif",
+  "blob": "dfcb9e6a0396dee4dc627719f16006100744d1b8",
+  "status": "fingerprinted",
+  "positive_pixels": 99999
+ },
+ {
+  "artifact": "GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f",
+  "score": 0.002,
+  "match": "exact",
+  "repo": "14GEMSDOE",
+  "path": "docs/downloads/GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif",
+  "blob": "7c12ed8a4164ce549fc8c3114eb30eb7f898af09",
+  "status": "different_grid_or_bands",
+  "positive_pixels": null
+ },
+ {
+  "artifact": "17GEMSDOE_F-ensemble-2pct_20260930T050626Z",
+  "score": 0.0187,
+  "match": "exact",
+  "repo": "17GEMSDOE",
+  "path": "docs/downloads/17GEMSDOE_F-ensemble-2pct_20260930T050626Z.tif",
+  "blob": "ab2cedff6f0a8b5c6ed8da1737ab000a9056725a",
+  "status": "fingerprinted",
+  "positive_pixels": 103347
+ },
+ {
+  "artifact": "H19-C_20260930T212401Z_c11e495e",
+  "score": 0.0297,
+  "match": "substr",
+  "repo": "18GEMSDOE",
+  "path": "docs/downloads/18GEMSDOE_H19-C_20260930T212401Z_c11e495e.tif",
+  "blob": "f2e3063e31af19d840cb25e45ba85f959544a59f",
+  "status": "fingerprinted",
+  "positive_pixels": 513786
+ },
+ {
+  "artifact": "h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan",
+  "score": 0.1894,
+  "match": "substr",
+  "repo": "GEMSDOE22",
+  "path": "docs/downloads/gems19-h19-4-multiline-corroborated-openness-thermal-pop-20260930-691e4dfa-nan.tif",
+  "blob": "7765426a0e903152d7bc02edcaf5e3c00351f0f3",
+  "status": "fingerprinted",
+  "positive_pixels": 123779
+ },
+ {
+  "artifact": "h16-continuation-20260927T065521077735Z-3431b83c7c",
+  "score": 0.0461,
+  "match": "substr",
+  "repo": "GEMSDOE10",
+  "path": "docs/downloads/gems10-h16-continuation-20260927T065521077735Z-3431b83c7c.tif",
+  "blob": "1f5cea384ad7d031e524a81db2d1a48352f58c12",
+  "status": "fingerprinted",
+  "positive_pixels": 310042
+ },
+ {
+  "artifact": "h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686",
+  "score": 0.0921,
+  "match": "substr",
+  "repo": "GEMSDOE10",
+  "path": "docs/downloads/gems10-h20-dem10-scarp-thin-20260927T155223039488Z-ffc91a1686.tif",
+  "blob": "186239efa0b2eb9f4c9b15dd50a7ff3063ffbfa3",
+  "status": "fingerprinted",
+  "positive_pixels": 153957
+ },
+ {
+  "artifact": "h28-dotted-ridge-20260928T020256236880Z-6452ae1d00",
+  "score": 0.1839,
+  "match": "substr",
+  "repo": "GEMSDOE10",
+  "path": "docs/downloads/gems10-h28-dotted-ridge-20260928T020256236880Z-6452ae1d00.tif",
+  "blob": "7b158eb8dc03955d27b2c4c14927ca98cfa4b090",
+  "status": "fingerprinted",
+  "positive_pixels": 69281
+ },
+ {
+  "artifact": "h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan",
+  "score": 0.1855,
+  "match": "substr",
+  "repo": "16GEMSDOE",
+  "path": "docs/downloads/gems16-h16-1-topo-geophys-baseline-ridges-20260930-df20f65e-nan.tif",
+  "blob": "2d4e3ae4ddc590b659f501b94ac7d6516cede538",
+  "status": "fingerprinted",
+  "positive_pixels": 123939
+ },
+ {
+  "artifact": "h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan",
+  "score": 0.0976,
+  "match": "substr",
+  "repo": "16GEMSDOE",
+  "path": "docs/downloads/gems16-h18-3a-topo-geophys-x-complexity-prior-20260930-c502dfab-nan.tif",
+  "blob": "b1fade8be27b393d1fac2813bb06d6c541980537",
+  "status": "fingerprinted",
+  "positive_pixels": 122120
+ },
+ {
+  "artifact": "h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan",
+  "score": 0.036,
+  "match": "substr",
+  "repo": "16GEMSDOE",
+  "path": "docs/downloads/gems16-h18-4-usgs-geologic-map-faults-gap-20260930-aef8f42c-nan.tif",
+  "blob": "4a0f0af3c8e03754a26a9205851f1d6bc4521403",
+  "status": "fingerprinted",
+  "positive_pixels": 57783
+ },
+ {
+  "artifact": "h19-4-reference-20260930-691e4dfa",
+  "score": 0.1894,
+  "match": "substr",
+  "repo": "GEMSDOE21",
+  "path": "docs/downloads/gems21-h19-4-reference-20260930-691e4dfa-masked-zero.tif",
+  "blob": "a7a49e41ad6c36ecb2851a10b791643f9b828d6b",
+  "status": "fingerprinted",
+  "positive_pixels": 123779
+ },
+ {
+  "artifact": "h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan",
+  "score": 0.189,
+  "match": "substr",
+  "repo": "20GEMSDOE",
+  "path": "submissions/gems20-h20-1-sarnnpu-powerlaw-pi0363-tilt-wingcrack-20260930-be0e8f6b-nan.tif",
+  "blob": "1a23117bf2d1e988fcddfe2841c9c02ce654e04a",
+  "status": "fingerprinted",
+  "positive_pixels": 123829
+ },
+ {
+  "artifact": "h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan",
+  "score": 0.1002,
+  "match": "substr",
+  "repo": "GEMSDOE22",
+  "path": "docs/downloads/gems22-h23-a-dti-optimal-emission-6pct-20261002-e2ec4b49-nan.tif",
+  "blob": "4934bb73380487247f9abc273bbc3bba7f5d83c1",
+  "status": "fingerprinted",
+  "positive_pixels": 335879
+ },
+ {
+  "artifact": "h23-b-dti-optimal-emission-10pct-20261002-86176698-nan",
+  "score": 0.0748,
+  "match": "substr",
+  "repo": "GEMSDOE22",
+  "path": "docs/downloads/gems22-h23-b-dti-optimal-emission-10pct-20261002-86176698-nan.tif",
+  "blob": "509be169fe6253f94bf8b7323398e1b80e972c96",
+  "status": "fingerprinted",
+  "positive_pixels": 516738
+ },
+ {
+  "artifact": "h30-arrangement-matched-habitat-20261002-0d4e02e8-nan",
+  "score": 0.1352,
+  "match": "substr",
+  "repo": "GEMSDOE23",
+  "path": "docs/downloads/gemsdoe23-h30-arrangement-matched-habitat-20261002-0d4e02e8-nan.tif",
+  "blob": "9def353346826fecb0d93da203c8159e7570d24c",
+  "status": "fingerprinted",
+  "positive_pixels": 91533
+ },
+ {
+  "artifact": "dotted-h19-5-d2-8-20261002-e56ea318af89-nan",
+  "score": 0.26,
+  "match": "substr",
+  "repo": "GEMSDOE32",
+  "path": "docs/downloads/gems25-dotted-h19-5-d2-8-20261002-e56ea318af89-nan.tif",
+  "blob": "c8d3a46481152bbdfd61b113484be979fde9d4c6",
+  "status": "fingerprinted",
+  "positive_pixels": 44090
+ },
+ {
+  "artifact": "dilcond-oof-v1-20261003-47629f496133-nan",
+  "score": 0.1223,
+  "match": "substr",
+  "repo": "GEMSDOE26",
+  "path": "docs/downloads/gems26-dilcond-oof-v1-20261003-47629f496133-nan.tif",
+  "blob": "edf393beee3321c45811bfc132456db5749cb018",
+  "status": "fingerprinted",
+  "positive_pixels": 60068
+ },
+ {
+  "artifact": "topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan",
+  "score": 0.2449,
+  "match": "substr",
+  "repo": "GEMSDOE28",
+  "path": "docs/downloads/gems27-topo-gap-closure-t-v2-on-d1-5-20261002-5512495c6bd1-nan.tif",
+  "blob": "c64e48b8bece14391fb59c1969c42c7efd718d39",
+  "status": "fingerprinted",
+  "positive_pixels": 61328
+ },
+ {
+  "artifact": "h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan",
+  "score": 0.2708,
+  "match": "substr",
+  "repo": "GEMSDOE28",
+  "path": "docs/downloads/gems28-h27-4-r1-solo-d2-8-20261003-8acb75e1f2cc-nan.tif",
+  "blob": "12b0a4ddf1cf76f2552621b8a8b1a1b88d783786",
+  "status": "fingerprinted",
+  "positive_pixels": 40199
+ },
+ {
+  "artifact": "h32-1-prethin-tip-euler-d2-8-20261003-31e35eee884e-nan",
+  "score": 0.2649,
+  "match": "substr",
+  "repo": "GEMSDOE28",
+  "path": "docs/downloads/gems28-h32-1-prethin-tip-euler-d2-8-20261003-31e35eee884e-nan.tif",
+  "blob": "6d9717d75f144ccbd3c8ec7886000fae95af312e",
+  "status": "fingerprinted",
+  "positive_pixels": 42294
+ },
+ {
+  "artifact": "repo-c0-habitat-emission-20261003-a4d439b07426-nan",
+  "score": 0.0041,
+  "match": "substr",
+  "repo": "GEMSDOE29",
+  "path": "docs/downloads/gemsdoe29-repo-c0-habitat-emission-20261003-a4d439b07426-nan.tif",
+  "blob": "d9fdbde16953ae6c75d87b7e76cf6126857c59a5",
+  "status": "fingerprinted",
+  "positive_pixels": 37913
+ },
+ {
+  "artifact": "d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca",
+  "score": 0.26,
+  "match": "substr",
+  "repo": "GEMSDOE30",
+  "path": "docs/downloads/gemsdoe30-d28-poisson300m-offcat-44090-20261003T233156Z-91eae1ca.tif",
+  "blob": "a59665a7fad659dcc6a45e5e7e71059586c3247a",
+  "status": "fingerprinted",
+  "positive_pixels": 44090
+ },
+ {
+  "artifact": "h27-4-solo-d28-20261004-8acb75e1-nan",
+  "score": 0.2708,
+  "match": "substr",
+  "repo": "GEMSDOE31",
+  "path": "docs/downloads/gemsdoe31-h27-4-solo-d28-20261004-8acb75e1-nan.tif",
+  "blob": "36c2aa32e0bba3d976d1ba76f3fb14903199262d",
+  "status": "fingerprinted",
+  "positive_pixels": 40199
+ },
+ {
+  "artifact": "h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros",
+  "score": 0.2778,
+  "match": "substr",
+  "repo": "GEMSDOE32",
+  "path": "docs/downloads/gemsdoe32-h33-h33-2-b2-20261004T220000Z-e5eb6e7e-zeros.tif",
+  "blob": "17a76895f68174cc93f3cb1597d25686f6d6bc67",
+  "status": "fingerprinted",
+  "positive_pixels": 37654
+ },
+ {
+  "artifact": "h33d-analog-tip-stepover-r30-20261004-cb490425926e",
+  "score": 0.2632,
+  "match": "substr",
+  "repo": "GEMSDOE33",
+  "path": "docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e-nanoutside.tif",
+  "blob": "c6e73d35a5ee8a36abdd06b7314bf79646c5d7f9",
+  "status": "fingerprinted",
+  "positive_pixels": 41865
+ },
+ {
+  "artifact": "h33d-analog-tip-stepover-r30-20261004-cb490425926e",
+  "score": 0.2632,
+  "match": "substr",
+  "repo": "GEMSDOE33",
+  "path": "docs/downloads/GEMSDOE33-h33d-analog-tip-stepover-r30-20261004-cb490425926e.tif",
+  "blob": "901d9db3f008f0f5c3be9c314524ccc8e95fb43e",
+  "status": "fingerprinted",
+  "positive_pixels": 41865
+ },
+ {
+  "artifact": "h34-scatter-q50-arr-matched-20261004T223317Z",
+  "score": 0.0778,
+  "match": "exact",
+  "repo": "GEMSDOE34",
+  "path": "docs/downloads/h34-scatter-q50-arr-matched-20261004T223317Z.tif",
+  "blob": "723c553aa9a701b9de1c96e8c50a515b9685b6e0",
+  "status": "fingerprinted",
+  "positive_pixels": 37654
+ },
+ {
+  "artifact": "h35-06-aaa86efb25-20261004T225420098147Z-candidate",
+  "score": 0.0418,
+  "match": "substr",
+  "repo": "GEMSDOE35",
+  "path": "docs/downloads/gemsdoe35-h35-06-aaa86efb25-20261004T225420098147Z-candidate.tif",
+  "blob": "cec679701bf88306d3255b5d8c57bcd333e744e6",
+  "status": "fingerprinted",
+  "positive_pixels": 39530
+ }
+]

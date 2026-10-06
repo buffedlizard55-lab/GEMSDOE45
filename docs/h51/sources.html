@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H51 sources — every claim checkable by hand</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;
+--acc:#4ea1ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+h1{font-size:1.5rem;margin:0;padding:22px 0 4px}
+h2{font-size:1.15rem;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h3{font-size:1rem;margin:22px 0 6px}
+a{color:var(--acc)}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.88em}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:.84rem}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.dl{background:linear-gradient(135deg,#12351f,#0d2417);border:1px solid #2ea043;border-radius:12px;padding:20px 22px;margin:20px 0}
+.btn{display:inline-block;background:var(--ok);color:#04170a;font-weight:700;text-decoration:none;padding:13px 22px;border-radius:9px;margin:8px 10px 4px 0}
+.btn.alt{background:#2b3444;color:var(--fg)}
+.small{color:var(--mut);font-size:.87rem}
+.note{border-left:3px solid var(--warn);background:#1c1a12;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.note.bad{border-left-color:var(--bad);background:#1e1214}
+.pill{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);background:#1c2230;color:var(--mut);margin-right:6px}
+nav a{margin-right:16px;font-size:.9rem;color:var(--mut);text-decoration:none}
+ol,ul{padding-left:22px}
+</style>
+</head>
+<body><main id="main"><div class="wrap">
+<p class="small"><a href="../index.html">← repository home</a> ·
+<a href="index.html">H51 landing</a> · <a href="executive-summary.html">how to submit</a> ·
+<a href="hypotheses.html">hypotheses</a> · <a href="sources.html">sources</a></p>
+<h1>Sources</h1>
+<table>
+<tr><th>Claim</th><th>Source</th></tr>
+<tr><td>Metric: distance-weighted Tversky index, α = 0.2, β = 0.8, triangular kernel R = 300 m, worked example 0.60, one float32 band in [0, 1], EPSG:32611, all-fault submission</td><td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">Official problem description</a></td></tr>
+<tr><td>"Portions of the existing fault data may be misaligned from the true location of the surface fault, which is the prediction target"</td><td>same page, Performance metric section</td></tr>
+<tr><td>Known USGS/INGENIOUS fault pixels are masked out of scoring in both rounds and the 300 m buffer does not apply to them; new-fault truth may lie within 300 m of a known trace as a correction</td><td><a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">Staff clarification, thread 11516</a> (chrisk-dd, 2026-09-16 and 2026-09-21)</td></tr>
+<tr><td>"New fault" includes newly mapped geometry of an existing fault system</td><td><a href="https://community.drivendata.org/t/where-do-you-draw-the-line/11536">Staff answer, thread 11536</a></td></tr>
+<tr><td>Product-limit estimator used for the extension lengths</td><td>Kaplan, E. L.; Meier, P. (1958), <i>JASA</i> 53(282) 457–481, <a href="https://doi.org/10.1080/01621459.1958.10501452">doi:10.1080/01621459.1958.10501452</a></td></tr>
+<tr><td>The GeoDAWN airborne magnetic/radiometric survey the feature stack comes from</td><td><a href="https://doi.org/10.5066/P93LGLVQ">doi:10.5066/P93LGLVQ</a></td></tr>
+<tr><td>USGS QFAULT — named as a free official independent fault inventory; <b>unreachable from this sandbox</b> (HTTP 000)</td><td><a href="https://earthquake.usgs.gov/ws/qfault/">earthquake.usgs.gov/ws/qfault</a></td></tr>
+<tr><td>USGS State Geologic Map Compilation — same status</td><td><a href="https://mrdata.usgs.gov/geology/state/">mrdata.usgs.gov/geology/state</a></td></tr>
+<tr><td>Reference solution (used only as a format sanity check)</td><td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></td></tr>
+<tr><td>Community thread where a professional engineering geologist offers to review candidate fault traces against lidar — the expert-review stage of this competition, which we cannot rehearse</td><td><a href="https://community.drivendata.org/t/looking-for-a-geologist-teammate-lidar-fault-mapping-basin-and-range-to-join-a-working-ml-pipeline/11531">thread 11531</a></td></tr>
+</table>
+<h2>Claims made on this site, and their class</h2>
+<table>
+<tr><th>Claim</th><th>Class</th></tr>
+<tr><td>File geometry, digests, dot counts, extension-length spread, gate counts</td><td><b>Observed</b> — re-read from the written bytes and re-checked in <code>tests/</code></td></tr>
+<tr><td>KM curve and its confidence interval</td><td><b>Estimated</b> from the shipped catalogue, with Greenwood variance</td></tr>
+<tr><td>0.2778 / 0.2708 / 0.2600 / 0.3345</td><td><b>Owner-reported or third-party snapshot</b>, no organizer receipt (IR-45-004)</td></tr>
+<tr><td>"The emulator's absolute DTI is not a score"</td><td><b>Measured</b> — +0.176 Pearson over 46 live-scored rasters</td></tr>
+<tr><td>That a ridge corroborated on topography or gravity and ≥200 m off the map is more likely a real unmapped fault</td><td><b>Hypothesis</b> — supported by catalogue-transfer enrichment, not established</td></tr>
+</table>
+<p class="small" style="margin-top:34px">Generated by <code>scripts/build_h51_site.py</code>.
+No score is claimed for any file in this repository.</p>
+</div></main></body></html>
