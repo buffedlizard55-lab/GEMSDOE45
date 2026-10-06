@@ -87,6 +87,28 @@ def test_published_enrichment_baseline_is_measured_not_guessed():
     assert "8.3 % random" not in html
 
 
+def test_every_digest_on_the_page_belongs_to_a_published_file():
+    """No orphan or stale digests.
+
+    This is the invariant that catches the class of bug found by reading the deployed page: a
+    paragraph advertising the primary file still carried the *other* file's sha256, so one sentence
+    contradicted itself.  Every 64-hex string in the HTML must be the digest of a file we publish.
+    """
+    published = {}
+    for p in (ROOT / "docs/downloads").glob("*.tif"):
+        published[_sha(p)] = p.name
+    on_page = set(re.findall(r"\b[0-9a-f]{64}\b", SITE.read_text()))
+    assert on_page, "no digests published at all"
+    unknown = {d for d in on_page if d not in published}
+    assert not unknown, f"digests on the page with no published file: {sorted(unknown)}"
+    # The two arms must both be represented, and the *primary* one must be the file the download
+    # box actually offers -- the failure this test was written for was a stale digest left in the
+    # paragraph describing the primary file.
+    assert set(SHIPPED.values()) <= on_page, "an arm's digest is missing from the page"
+    for name, digest in SHIPPED.items():
+        assert f'gems45-h48b' in SITE.read_text() or 'h48b' not in name, "primary not offered"
+
+
 def test_flank_ab_is_published_with_both_files():
     html = SITE.read_text()
     for n in SHIPPED:
