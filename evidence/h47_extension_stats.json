@@ -1,0 +1,48 @@
+{
+  "submission": "gems45-h47-km-pruned-variable-20261006.tif",
+  "created": "2026-10-06",
+  "method": "Kaplan-Meier survival function for fault tip extension",
+  "target_dti": 0.32,
+  "extension_lengths": {
+    "min": 2,
+    "max": 11,
+    "mean": 7.244,
+    "median": 6.0,
+    "n_distinct": 10,
+    "description": "Variable extension lengths per fault, derived from survival curve"
+  },
+  "positive_pixels": 24136,
+  "total_pixels": 12279160,
+  "coverage_fraction": 0.0019656067678896602,
+  "km_curve": {
+    "n_observations": 2127,
+    "n_events": 2127,
+    "n_censored": 0,
+    "s_max_px": 120.0,
+    "median_gap_px": 12.0,
+    "q25_gap_px": 5.0,
+    "q75_gap_px": 39.0,
+    "restricted_mean_gap_px": 26.893747061589092
+  },
+  "format": {
+    "dtype": "float32",
+    "crs": "EPSG:32611",
+    "transform": [
+      100.0,
+      0.0,
+      243350.0,
+      0.0,
+      -100.0,
+      4508550.0
+    ],
+    "band_count": 1,
+    "rows": 3730,
+    "cols": 3292
+  },
+  "validation": {
+    "inside_all_in_0_1": true,
+    "outside_all_nan": true,
+    "outside_all_in_0_1_or_nan": true,
+    "format_pass": true
+  }
+}
