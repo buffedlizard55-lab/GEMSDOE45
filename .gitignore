@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+data/*
+!data/README.md
+research/raw/
+*.partial
+
+research/*.log

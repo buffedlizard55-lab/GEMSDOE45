@@ -1,0 +1,83 @@
+{
+  "checked_at": "2026-10-06T09:16:47.600397+00:00",
+  "sources": [
+    {
+      "id": "task",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/",
+      "checked_at": "2026-10-06T09:16:47.341362+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.drivendata.org', port=443): Max retries exceeded with url: /competitions/306/competition-doe-gems/page/967/ (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "leaderboard",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/leaderboard/",
+      "checked_at": "2026-10-06T09:16:47.341795+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.drivendata.org', port=443): Max retries exceeded with url: /competitions/306/competition-doe-gems/leaderboard/ (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "data",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/data/",
+      "checked_at": "2026-10-06T09:16:47.342324+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.drivendata.org', port=443): Max retries exceeded with url: /competitions/306/competition-doe-gems/data/ (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "about",
+      "url": "https://www.drivendata.org/competitions/306/competition-doe-gems/page/968/",
+      "checked_at": "2026-10-06T09:16:47.345053+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.drivendata.org', port=443): Max retries exceeded with url: /competitions/306/competition-doe-gems/page/968/ (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "rules",
+      "url": "https://docs.nlr.gov/docs/fy26osti/96647.pdf",
+      "checked_at": "2026-10-06T09:16:47.439242+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='docs.nlr.gov', port=443): Max retries exceeded with url: /docs/fy26osti/96647.pdf (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "geodawn",
+      "url": "https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and",
+      "checked_at": "2026-10-06T09:16:47.452223+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.usgs.gov', port=443): Max retries exceeded with url: /data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "ingenious",
+      "url": "https://gdr.openei.org/submissions/1391",
+      "checked_at": "2026-10-06T09:16:47.453577+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='gdr.openei.org', port=443): Max retries exceeded with url: /submissions/1391 (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "reference",
+      "url": "https://github.com/drivendataorg/gems-prize-reference-solution",
+      "checked_at": "2026-10-06T09:16:47.455496+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='github.com', port=443): Max retries exceeded with url: /drivendataorg/gems-prize-reference-solution (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:992)')))"
+    },
+    {
+      "id": "usgs-granite",
+      "url": "https://www.usgs.gov/publications/a-geophysical-characterization-structure-and-geology-northern-granite-springs-valley",
+      "checked_at": "2026-10-06T09:16:47.511134+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.usgs.gov', port=443): Max retries exceeded with url: /publications/a-geophysical-characterization-structure-and-geology-northern-granite-springs-valley (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "doe-integration",
+      "url": "https://www.osti.gov/servlets/purl/1724108",
+      "checked_at": "2026-10-06T09:16:47.535817+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.osti.gov', port=443): Max retries exceeded with url: /servlets/purl/1724108 (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    },
+    {
+      "id": "usgs-scarps",
+      "url": "https://www.usgs.gov/observatories/yvo/news/using-modern-tools-look-past-earthquakes-how-lidar-data-help-better",
+      "checked_at": "2026-10-06T09:16:47.545110+00:00",
+      "status": "error",
+      "error": "HTTPSConnectionPool(host='www.usgs.gov', port=443): Max retries exceeded with url: /observatories/yvo/news/using-modern-tools-look-past-earthquakes-how-lidar-data-help-better (Caused by SSLError(SSLZeroReturnError(6, 'TLS/SSL connection has been closed (EOF) (_ssl.c:992)')))"
+    }
+  ],
+  "note": "Reachability is not independent verification of every source claim. Failed checks do not replace the dated research snapshot."
+}

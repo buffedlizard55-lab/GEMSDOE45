@@ -1,0 +1,47 @@
+{
+  "file": "gems45-phase-parity-20261006-362e1338f293-research.tif",
+  "sha256": "7cacff894c4444997e2ee8896582cda82ad34a43cf039cfb960befa20577d005",
+  "pixel_sha256": "362e1338f2934670a477ee2943985256b7d8d01325cc57393641f2eab541b825",
+  "shape": [
+    3730,
+    3292
+  ],
+  "crs": "EPSG:32611",
+  "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0,
+    0.0,
+    0.0,
+    1.0
+  ],
+  "count": 1,
+  "dtype": "float32",
+  "min": 0.0,
+  "max": 1.0,
+  "nonfinite": 0,
+  "positive_pixels": 82678,
+  "footprint_pixels": 5167373,
+  "nodata": null,
+  "internal_mask": true,
+  "bytes": 355972,
+  "local_format_pass": true,
+  "portal_acceptance": "unverified",
+  "slot_approved": false,
+  "method": "H45-PHASE",
+  "fraction": 0.016,
+  "training_samples": {
+    "positive": 30000,
+    "unlabelled": 120000,
+    "seed": 4506
+  },
+  "unique_name": "GEMS45-PHASE-362e1338f293",
+  "note": "H45 differential phase parity; 46 channels; nested geographic calibration; all-fault target. Research only; off-catalogue gate not passed.",
+  "preregistration_sha256": "387de3974626a2efec0a12e9c16540dba4c6ff4409cb2a16a66e6bd6bd5687ba",
+  "incumbent32_pixel_differences": 116332,
+  "incumbent32_sha256": "c55bafc470054e8271dcb89347a17e07fefe50de6af6e6ba6c4b169ef7ab6fa9",
+  "incumbent32_jaccard": 0.01690159889125511
+}

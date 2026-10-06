@@ -1,0 +1,49 @@
+Overview — GEMSDOE9 GEMSDOE9 — Geothermal Fault Discovery Beyond the Catalogue DOE GEMS Prize entry. Faults in the GeoDAWN region (northwestern Nevada, UTM 11N
+     EPSG:32611, 100 m) that are not in the USGS/INGENIOUS catalogue. GEMSDOE9 No model trained yet Submission file passes all 14 gates Overview How to submit Strategy & metric Hypotheses G-1..G-5 Official intel Data & access Verification & flags Leaderboard Research notes Sources ⬇ The file to submit DrivenData wants a single-band GeoTIFF (.tif) , or a .zip holding
+       one, matching the submission format: 3,292 × 3,730 px · EPSG:32611 ·
+       100 m · float32 · every value finite and in [0, 1] . ⬇ Download gemsdoe9-PLACEHOLDER-2314b599.tif Build in this browser (uniquely named) File gemsdoe9-PLACEHOLDER-2314b599.tif SHA256 2314b59920bfeeaf6a592d4868b25eca62212825620f9945723c2f6d0a2e5b22 Size 439,456 bytes Positive pixels 343,816 (2.80%) — the rest are 0.0, i.e. 'no fault' Note to paste GEMSDOE9 FORMAT-CHECK placeholder (no model, no GeoDAWN data) | band-pattern 2.8% | 2314b599 What it is PLACEHOLDER — not a prediction Upload page drivendata.org → Submissions → New submission Why this file cannot trigger “Predicted values must be in range [0, 1]” The error you hit on 2026-09-27 was not a NaN problem. The
+      previous version of this site's browser writer produced GeoTIFFs that GDAL could not
+      open at all — TIFFReadEncodedStrip() failed — and the platform surfaced
+      that unreadable file as a value-range error. Two changes fix it: The writer is rewritten and round-trip tested: write → parse the IFD back →
+            decode every strip → compare to the input, all element-for-element, before the
+            download is offered. Evidence → Every value is finite and inside [0, 1]; no NaN, no Inf, no nodata tag.
+            The spec says “data outside the bounds is null or nan”, but NaN is not in [0, 1],
+            so a 0.0 outside the footprint satisfies “null” in the scorer's sense and can
+            never trip a range check. We publish only the all-finite variant. Re-verify any file yourself: python scripts/validate_submission.py docs/downloads/gemsdoe9-PLACEHOLDER-2314b599.tif Full click-by-click instructions They are on their own page, with the unique-name rule, the Note text, the .zip
+         option, and what to do when a submission is rejected. How to submit → What the current file is, honestly The competition rasters live behind a DrivenData login and this environment has no
+       outbound network from the shell, so no model has been trained yet .
+       Rather than dress up a procedural pattern as a geological result — which is exactly
+       what the previous version of this site did — the downloadable file is a format-check placeholder : a fixed-seed band pattern whose only job
+       is to prove the GeoTIFF, the validator and the upload form work end to end. Its file name, its Note and this paragraph all say so. Upload it if you want to
+       validate the submission path; do not read a score into it. The real predictor is one command away, and it refuses to build a submission until
+       it beats a budget-matched random control and a catalogue-only baseline on a
+       spatially-blocked holdout: # 1. get the data (needs a DrivenData account, on an unrestricted machine)
+bash scripts/download_competition_data.sh     # → data/
+
+# 2. blocked holdout + submission gate
+python scripts/validate_holdout.py --holdout-gate
+python scripts/build_submission.py --holdout-gate
+
+# or just re-run the checks
+bash scripts/run_all_checks.sh Why 0.1563 keeps repeating Because it is an attractor of the metric , not a coincidence of tuning.
+       The published metric collapses to a closed form: FN_w = N − TP_w   (both are maxima of the same product)
+DTI  = T / (0.2·T + 0.2·F + 0.8·N) Solve it for zero false positives — which is exactly what a submission that paints
+       the known catalogue is, because those pixels are masked out of scoring: 0.1563 = ρ / (0.2·ρ + 0.8)   →   ρ = 0.1291 So 0.1563 is the fingerprint of a catalogue copy : 12.9% weighted
+       recall and not one unit of false-positive mass. Copy the catalogue and you get
+       0.1563; copy it slightly differently and you still get 0.1563. Three unrelated
+       accounts sitting on exactly that number is what that looks like from outside. Inverting the same equation for the current leaderboard top: 0.3049 → ρ ≥ 0.2598   (2.01× the 0.1563 recall) The top score is out of reach for catalogue copying. It needs a detector. Full derivation, the exchange rate, and the corridor
+       experiment → Measurement: what the submission shape is worth Independent of any geology: run the published DTI and the published masking rule over
+     phantoms whose ground truth follows the staff definition of “new fault”, and vary
+     only how the answer is drawn. Submission shape DTI vs free core Known catalogue, nothing else (φ = 0 exactly) 0.2544 — + a blind 3 px halo, no detector 0.2935 +0.0391 + a detector-gated halo, chance detector 0.3519 +0.0975 + a detector-gated halo, useful detector 0.4312 +0.1769 5 independent synthetic phantoms at 512×512 px, 2×2 spatial blocks, (halo, budget) chosen on the training blocks and scored on the held-out block. Median over phantoms. Going from a chance detector to a useful one, inside the same corridor, is worth +0.0793. That increment is the only part of this table attributable to detection. This prices the submission SHAPE, not the geology. Method and caveats → The one new piece of official intel DrivenData staff, 2026-09-22 · forum thread 11536 “For the purposes of this competition, “new fault” means “any fault pixel not already captured by USGS/INGENIOUS” and can include newly mapped geometry of an existing fault system.” Read it carefully. “New fault” includes newly mapped geometry of an existing
+       fault system — splays, parallel strands, continuations past mapped tips. Those
+       pixels are, by construction, next to and collinear with faults the catalogue already
+       has. And known-catalogue pixels are masked out of the false-positive term while still
+       counting toward true positives. So the catalogue is a pointer , not just a distractor. That inverts
+       the strategy the group has been running for three rounds. Detector G-1 is built on it → Where the group stands Submission Score What it was GEMSDOE1 0.1563 original artifact GEMSDOE2 0.1560 recall arm of the same artifact 5GEMSDOE 0.1563 same artifact, different repo 8GEMSDOE 0.1563 same artifact plus a catalogue union GEMSDOE3 a 0.1193 Pindrop nodes GEMSDOE3 b 0.0830 Pindrop catalogue-gap target GEMSDOE3 c 0.1152 Pindrop dense ridge control GEMSDOE4 0.0343 lineament + proxy labels 6GEMSDOE 0.0286 gradient boosting over 88 channels, top 3% Scores as reported by the team. Artifact hashes for the
+       sibling repos could not be checked from this environment, so no claim is made
+       here about which files were byte-identical — only about what the scores are and
+       what the closed form predicts they mean. The five detectors # Detector Layers Cost Validated? G-1 Catalogue geometry completion existing_faults.tif (as geometry); optional detrended-elevation slope + magnetic HGM modul… Low - no new data, pure raster geometry blocked on data G-2 Geodetic dilation-tendency ridge dilatation rate; second invariant of the strain rate tensor Low - both layers are already in training_feat… blocked on data G-3 Clay-cap conductivity edge surface conductivity; depth to conductive base Low - both layers are already in training_feat… blocked on data G-4 Magnetic contact edge reduced-to-pole magnetic anomaly; total magnetic intensity; horizontal and vertical slope … Low-Med - all four layers are in training_feat… blocked on data G-5 Fluvial knickpoint and drainage deflection detrended elevation; slope of detrended elevation; optional 10 m USGS 3DEP DEM (free, offi… Low with the competition's own detrended-eleva… blocked on data Each is implemented as an explicit function in src/gems/features.py with its layers, physical signature, and the reason
+     it should catch a fault the catalogue missed. None has been validated against
+     real rasters — that is the honest state, and the next session's first job. Full hypotheses → Maximise P(Win). Every number on this site is either quoted from a
+  linked primary source, read live on 2026-09-27, or computed by code in this
+  repository from the published metric. Nothing is estimated. Sources: Competition · Problem description · About · Leaderboard · Forum · Reference solution Built by python scripts/build_site.py . Sources of every claim: Sources . Problems found and fixed: Verification & flags .

@@ -1,0 +1,3 @@
+# Session entry point
+
+Before any work, read README.md including its Standing project prompt, research/analysis.md, research/review.md, and evidence/holdout.json. Work only on the session's assigned branch. Never promote a competition slot from a proxy-only or simulated-truth win. Do not edit a frozen hypothesis protocol after seeing its results; register an amendment or a new experiment. Preserve failures, evidence classes and source provenance. Regenerate docs via scripts/build_site.py; run pytest and scripts/verify_repo.py. Do not commit raw data or feature arrays. Do not use sample-submission positive values as predictions. No credentials in chat or files.

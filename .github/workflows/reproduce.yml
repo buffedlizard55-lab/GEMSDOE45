@@ -1,0 +1,32 @@
+name: Generate research TIF on CPU
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  reproduce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OMP_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: python -m venv .venv && .venv/bin/pip install -r requirements.txt
+      - run: bash scripts/download_competition_data.sh
+      - run: .venv/bin/python scripts/prepare_data.py
+      - run: .venv/bin/python scripts/run_experiment.py
+      - run: .venv/bin/python scripts/build_site.py
+      - run: .venv/bin/pytest -q && .venv/bin/python scripts/verify_repo.py
+      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5
+        with:
+          name: H45-research-TIF-and-evidence
+          path: |
+            docs/downloads/
+            evidence/
+          retention-days: 30
