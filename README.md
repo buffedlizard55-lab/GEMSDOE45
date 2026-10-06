@@ -68,6 +68,15 @@ The tables on the Kaplan–Meier site are *generated* from `evidence/*.json`, an
   [the limitations](docs/h51/index.html) before spending a weekly slot.
 - **Reproduce:** `.venv/bin/python scripts/build_h51_submission.py` (≈2 min with the tip cache;
   ~18 min cold) then `scripts/validate_h51.py`.
+- **Blocked-holdout screen, reported because the brief asks for it.** On the spatially blocked
+  catalogue-truth instrument (`scripts/run_holdout.py`, 11 folds, every file stripped of the
+  training catalogue first) the file's mean `dti_file` is **0.003603** against a
+  random baseline of 0.012517, beating random in
+  **0/11** folds. This instrument is **rejected as a
+  ranker** — IR-45-003 measured that it inverts the live order (`h33-2-b2`, live 0.2778, scores
+  0.002791 here; `d2.8`, live 0.2600, scores 0.0634) — so the only reading it supports is that H51
+  sits on the same side of the instrument as the family's live leader. It is **not** a promotion
+  gate and no slot is claimed (`slot_approved: false`).
 
 ---
 

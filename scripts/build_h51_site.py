@@ -75,6 +75,7 @@ def main() -> int:
     d = json.loads((EV / "h51_submission.json").read_text())
     km = json.loads((EV / "h51_km.json").read_text())
     fit = json.loads((EV / "h51_live_fit.json").read_text())
+    ho = json.loads((EV / "holdout_h51.json").read_text())["aggregate"]
     nan_, zf = d["files"]["nan_outside"], d["files"]["all_finite"]
     rules, cand, ext, g = d["rules"], d["candidates"], d["extension_lengths"], d["greedy"]
     comp = d["emission_composition"]
@@ -168,7 +169,7 @@ condition <code>w &gt; 0.2·DTI</code> evaluated at the portfolio's best live-ob
 <tr><td>Uniqueness vs prior artifacts</td><td>see <a href="../data/h51_validation.json">h51_validation.json</a></td><td><b>Strong</b> — pixel-for-pixel</td></tr>
 <tr><td>Live dose-response of this family</td><td>{d['live_evidence']}</td><td><b>Moderate</b> — owner-reported, no receipt; fixes the budget, cannot rank a new surface</td></tr>
 <tr><td>Expected-coverage emulator</td><td>best grid point {best['a_tip']}·tip / r_zero {best['r_zero']} / K {best['K']}: RMSE {best['rmse']:.4f}, Pearson {best['pearson']:+.3f}, Spearman {best.get('spearman', float('nan')):+.3f}</td><td><b>Weak</b> — used only to rank marginal gains, never as a score</td></tr>
-<tr><td>Catalogue-truth holdout</td><td>inverts the live order (IR-45-003)</td><td><b>Rejected</b> — measures the wrong population</td></tr>
+<tr><td>Spatially blocked holdout (catalogue truth)</td><td>mean <code>dti_file</code> <b>{ho['mean_dti_file']:.6f}</b> vs random {ho['mean_dti_random']:.6f} over {ho['n_folds']} folds; the file beats random in <b>{ho['folds_file_beats_random']}/{ho['n_folds']}</b></td><td><b>Rejected as a ranker, reported for the record</b> — this instrument inverts the live order (IR-45-003): the family's live leader <code>h33-2-b2</code> scores 0.002791 here while <code>d2.8</code> scores 0.0634, and the live order is the opposite. H51's {ho['mean_dti_file']:.6f} sits on the <i>same side</i> of the instrument as the live leader, which is the only reading this number supports</td></tr>
 </table>
 
 <h2>Limitations</h2>

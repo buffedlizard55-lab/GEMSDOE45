@@ -116,7 +116,7 @@ condition <code>w &gt; 0.2·DTI</code> evaluated at the portfolio's best live-ob
 <tr><td>Uniqueness vs prior artifacts</td><td>see <a href="../data/h51_validation.json">h51_validation.json</a></td><td><b>Strong</b> — pixel-for-pixel</td></tr>
 <tr><td>Live dose-response of this family</td><td>Within this family the public leaderboard shows a monotone dose-response as mass is removed: 44,090 px -> 0.2600, 40,199 px -> 0.2708, 37,654 px -> 0.2778 (research/live_score_features.csv). Those are owner-reported scores with no organizer receipt.</td><td><b>Moderate</b> — owner-reported, no receipt; fixes the budget, cannot rank a new surface</td></tr>
 <tr><td>Expected-coverage emulator</td><td>best grid point 2.0·tip / r_zero 1.0 / K 10000: RMSE 0.1374, Pearson +0.176, Spearman +nan</td><td><b>Weak</b> — used only to rank marginal gains, never as a score</td></tr>
-<tr><td>Catalogue-truth holdout</td><td>inverts the live order (IR-45-003)</td><td><b>Rejected</b> — measures the wrong population</td></tr>
+<tr><td>Spatially blocked holdout (catalogue truth)</td><td>mean <code>dti_file</code> <b>0.003603</b> vs random 0.012517 over 11 folds; the file beats random in <b>0/11</b></td><td><b>Rejected as a ranker, reported for the record</b> — this instrument inverts the live order (IR-45-003): the family's live leader <code>h33-2-b2</code> scores 0.002791 here while <code>d2.8</code> scores 0.0634, and the live order is the opposite. H51's 0.003603 sits on the <i>same side</i> of the instrument as the live leader, which is the only reading this number supports</td></tr>
 </table>
 
 <h2>Limitations</h2>
