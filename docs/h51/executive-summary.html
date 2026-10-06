@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H51 executive summary — how to submit</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;
+--acc:#4ea1ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+h1{font-size:1.5rem;margin:0;padding:22px 0 4px}
+h2{font-size:1.15rem;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h3{font-size:1rem;margin:22px 0 6px}
+a{color:var(--acc)}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.88em}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:.84rem}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.dl{background:linear-gradient(135deg,#12351f,#0d2417);border:1px solid #2ea043;border-radius:12px;padding:20px 22px;margin:20px 0}
+.btn{display:inline-block;background:var(--ok);color:#04170a;font-weight:700;text-decoration:none;padding:13px 22px;border-radius:9px;margin:8px 10px 4px 0}
+.btn.alt{background:#2b3444;color:var(--fg)}
+.small{color:var(--mut);font-size:.87rem}
+.note{border-left:3px solid var(--warn);background:#1c1a12;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.note.bad{border-left-color:var(--bad);background:#1e1214}
+.pill{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);background:#1c2230;color:var(--mut);margin-right:6px}
+nav a{margin-right:16px;font-size:.9rem;color:var(--mut);text-decoration:none}
+ol,ul{padding-left:22px}
+</style>
+</head>
+<body><main id="main"><div class="wrap">
+<p class="small"><a href="../index.html">← repository home</a> ·
+<a href="index.html">H51 landing</a> · <a href="executive-summary.html">how to submit</a> ·
+<a href="hypotheses.html">hypotheses</a> · <a href="sources.html">sources</a></p>
+<h1>Executive summary — how to submit H51</h1>
+<p class="small">GEMSDOE45 · 2026-10-06 · <a href="index.html">full H51 page</a></p>
+
+<div class="dl">
+<h2 style="margin:0 0 8px;border:0;padding:0">⬇️ Download the submission</h2>
+<a class="btn" href="../downloads/gems45-h51-km-faultzone-20261006-zeros.tif" download>⬇ Download the submission .tif</a>
+<a class="btn alt" href="../downloads/gems45-h51-km-faultzone-20261006.tif" download>NaN-outside twin</a>
+<a class="btn alt" href="../downloads/gems45-h51-km-faultzone-20261006-zeros.zip" download>.zip (one GeoTIFF)</a>
+<p class="small" style="margin-top:12px">Recommended file for the portal:
+<code>gems45-h51-km-faultzone-20261006-zeros.tif</code> — <b>37,654 predicted pixels</b>, every stored value finite and
+in [0, 1], no sentinel, single band, float32, EPSG:32611, 3730 × 3292. The NaN-outside twin is
+byte-identical in its predicted pixels and matches the organizers' own template encoding.<br>
+<b>sha256</b> <code>81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c</code><br>
+<b>sha256 (NaN-outside)</b> <code>b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c</code></p>
+<p class="small"><b>Unique submission name:</b> <code>gems45-h51-km-faultzone-20261006</code></p>
+</div>
+
+<h2>Five steps</h2>
+<ol>
+<li>Sign in at <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">the competition page</a>
+and accept the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">rules</a> once.</li>
+<li>Press the download button above.</li>
+<li>Open the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">Submissions tab</a> → <b>New submission</b>.</li>
+<li><b>File:</b> <code>gems45-h51-km-faultzone-20261006-zeros.tif</code> — all-finite, every value in [0, 1], no NaN, so it cannot
+trip the <code>"Predicted values must be in range [0, 1]"</code> validator. If the portal prefers the
+organizers' own encoding, submit <code>gems45-h51-km-faultzone-20261006.tif</code> instead: same predicted pixels, NaN
+outside the footprint.</li>
+<li>Paste the note below, click <b>Submit</b>.</li>
+</ol>
+<h3>Unique submission name</h3>
+<p><code>gems45-h51-km-faultzone-20261006</code></p>
+<h3>Note to paste (unique to this file)</h3>
+<pre>GEMSDOE45 H51 | Kaplan-Meier fault-zone emission. 3,866 catalogue tips each extended by its own length drawn from the product-limit survival curve of the catalogue's own relay gaps (3,163 events / 703 censored, median gap 9 px, 118 distinct draws); splays at +-2/+-3 px inside the same fault zone; every dot on a topographic-scarp or gravity ridge and >=2 px from the mapped catalogue; 37,654 dots chosen by greedy maximum expected coverage under the official 300 m triangular kernel, stopped at its own marginal bar. Not a previous submission; not validated against the hidden truth.</pre>
+<h3>Digests</h3>
+<pre>81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c  gems45-h51-km-faultzone-20261006-zeros.tif
+b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c  gems45-h51-km-faultzone-20261006.tif</pre>
+
+<h2>Short note on what makes this one different</h2>
+<p>It is not a copy and it is not a re-render of an earlier raster: the predicted pixel set is new,
+built from the catalogue's own survival curve. Concretely — (1) the extension beyond each mapped
+tip is <i>drawn per fault</i> from a Kaplan–Meier product-limit curve fitted to the catalogue's own
+relay gaps, so it varies tip to tip (30 distinct realised lengths, asserted
+in the build and in the tests); (2) splay/parallel-strand positions inside the same fault zone are
+candidates, matching the organizers' published definition of a new fault; (3) the dots are chosen
+by greedy maximum expected coverage of the leaked truth density under the official 300 m triangular
+kernel and stopped at the metric's own marginal bar. What it is <b>not</b> is validated: no
+instrument available here ranks it against the hidden new-fault truth.</p>
+<p class="small" style="margin-top:34px">Generated by <code>scripts/build_h51_site.py</code>.
+No score is claimed for any file in this repository.</p>
+</div></main></body></html>

@@ -1,0 +1,266 @@
+{
+ "name": "gems45-h51-km-faultzone-20261006",
+ "artifact": "H51 Kaplan-Meier fault-zone emission",
+ "created": "2026-10-06",
+ "seed": 4506,
+ "status": "UNSCORED CANDIDATE",
+ "slot_approved": false,
+ "emulator_is_not_a_score": true,
+ "score_claim": null,
+ "km": {
+  "n_events": 3163,
+  "n_censored": 703,
+  "median_gap_px": 9.0,
+  "restricted_mean_gap_px": 37.05,
+  "survival_at": {
+   "1": 0.89628,
+   "2": 0.73202,
+   "3": 0.6671,
+   "5": 0.57372,
+   "8": 0.50388,
+   "12": 0.45396,
+   "20": 0.3924,
+   "30": 0.34584
+  }
+ },
+ "candidates": {
+  "tips": 3866,
+  "skeleton_px": 59209,
+  "tip_candidates": 115554,
+  "strand_candidates": 236798,
+  "after_gates": 153447,
+  "candidate_cells": 133010
+ },
+ "rules": {
+  "marginal_bar": 0.05556,
+  "dti_target": 0.2778,
+  "dti_operating": 0.2778,
+  "r_zero_px": 2.0,
+  "k_model": 12000.0,
+  "max_dots": 37654,
+  "length_gain": 0.35,
+  "strand_offsets_px": [
+   -3,
+   -2,
+   2,
+   3
+  ],
+  "stopping": "greedy max-coverage; keep while expected marginal gain clears dT*(1-0.2*DTI_op) > 0.2*DTI_op*(1-own)"
+ },
+ "greedy": {
+  "n_candidates": 114842,
+  "n_selected": 37654,
+  "dti_operating": 0.2778,
+  "dti_pred": 0.57834,
+  "t_pred": 9152.16,
+  "f_pred": 21972.174,
+  "k_pred": 12000.0,
+  "round_size": 1000,
+  "stopped_by": "cap",
+  "history": [
+   {
+    "n": 5000,
+    "T": 2447.85,
+    "F": 911.46,
+    "dti": 0.238307
+   },
+   {
+    "n": 10000,
+    "T": 4239.75,
+    "F": 3415.13,
+    "dti": 0.380896
+   },
+   {
+    "n": 15000,
+    "T": 5631.2,
+    "F": 6541.1,
+    "dti": 0.467923
+   },
+   {
+    "n": 20000,
+    "T": 6729.39,
+    "F": 9938.93,
+    "dti": 0.5203
+   },
+   {
+    "n": 25000,
+    "T": 7622.67,
+    "F": 13431.48,
+    "dti": 0.551934
+   },
+   {
+    "n": 30000,
+    "T": 8335.65,
+    "F": 16842.02,
+    "dti": 0.569549
+   },
+   {
+    "n": 35000,
+    "T": 8899.56,
+    "F": 20220.2,
+    "dti": 0.576996
+   }
+  ]
+ },
+ "n_dots": 37654,
+ "corridor_covered_fraction": 0.7998,
+ "emission_composition": {
+  "tip_continuation": 28853,
+  "strand_offset": 8801
+ },
+ "live_anchored_ceiling_dots": 37654,
+ "live_evidence": "Within this family the public leaderboard shows a monotone dose-response as mass is removed: 44,090 px -> 0.2600, 40,199 px -> 0.2708, 37,654 px -> 0.2778 (research/live_score_features.csv). Those are owner-reported scores with no organizer receipt.",
+ "extension_lengths": {
+  "n_tips": 3866,
+  "drawn_mean": 36.412,
+  "drawn_median": 8.0,
+  "drawn_distinct": 118,
+  "drawn_histogram": {
+   "1": 291,
+   "2": 154,
+   "3": 557,
+   "4": 229,
+   "5": 156,
+   "6": 160,
+   "7": 92,
+   "8": 73,
+   "9": 82,
+   "10": 71,
+   "11": 61,
+   "12": 43,
+   "13": 37,
+   "14": 34,
+   "15": 34,
+   "16": 32,
+   "17": 21,
+   "18": 23,
+   "19": 28,
+   "20": 19,
+   "21": 23,
+   "22": 17,
+   "23": 18,
+   "24": 20,
+   "25": 22,
+   "26": 24,
+   "27": 23,
+   "28": 21,
+   "29": 18,
+   "30": 1483
+  },
+  "realised_mean": 25.019,
+  "realised_median": 28.0,
+  "realised_distinct": 30,
+  "realised_histogram": {
+   "0": 230,
+   "2": 1,
+   "3": 13,
+   "4": 15,
+   "5": 9,
+   "6": 11,
+   "7": 7,
+   "8": 13,
+   "9": 21,
+   "10": 19,
+   "11": 12,
+   "12": 22,
+   "13": 24,
+   "14": 20,
+   "15": 26,
+   "16": 26,
+   "17": 47,
+   "18": 29,
+   "19": 34,
+   "20": 42,
+   "21": 46,
+   "22": 49,
+   "23": 58,
+   "24": 49,
+   "25": 58,
+   "26": 88,
+   "27": 285,
+   "28": 836,
+   "29": 1296,
+   "30": 480
+  },
+  "n_tips_with_realised_extension": 3636,
+  "first_hit_median": 4.0
+ },
+ "model_caveat": "T/F/DTI in `greedy` are outputs of the expected-coverage emulator under an UNVALIDATED candidate density field. They are NOT score predictions: the field was measured to have no usable rank correlation with live scores (Pearson +0.176 over 46 live-scored owner rasters, evidence/h51_live_fit.json).",
+ "files": {
+  "nan_outside": {
+   "filename": "gems45-h51-km-faultzone-20261006.tif",
+   "bytes": 185873,
+   "sha256": "b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c",
+   "shape": [
+    3730,
+    3292
+   ],
+   "count": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": "nan",
+   "bytes_match": 185873,
+   "finite_inside": 5167373,
+   "nan_inside": 0,
+   "sentinel_anywhere": 0,
+   "inside_min": 0.0,
+   "inside_max": 1.0,
+   "inside_all_in_0_1": true,
+   "outside_all_nan": true,
+   "outside_all_in_0_1_or_nan": true,
+   "n_positive": 37654,
+   "n_at_one": 37654
+  },
+  "all_finite": {
+   "filename": "gems45-h51-km-faultzone-20261006-zeros.tif",
+   "bytes": 142899,
+   "sha256": "81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c",
+   "shape": [
+    3730,
+    3292
+   ],
+   "count": 1,
+   "dtype": "float32",
+   "crs": "EPSG:32611",
+   "transform": [
+    100.0,
+    0.0,
+    243350.0,
+    0.0,
+    -100.0,
+    4508550.0
+   ],
+   "nodata": "nan",
+   "bytes_match": 142899,
+   "finite_inside": 5167373,
+   "nan_inside": 0,
+   "sentinel_anywhere": 0,
+   "inside_min": 0.0,
+   "inside_max": 1.0,
+   "inside_all_in_0_1": true,
+   "outside_all_nan": false,
+   "outside_all_in_0_1_or_nan": true,
+   "n_positive": 37654,
+   "n_at_one": 37654
+  },
+  "zip": {
+   "name": "gems45-h51-km-faultzone-20261006-zeros.zip",
+   "bytes": 108324,
+   "sha256": "5110361c2b2f3a6ba2015bd42ce06c790c5c6d23e893c02de867e73add22d989"
+  }
+ },
+ "provenance": {
+  "catalogue": "data/labels.tif sha256 7ba308ccdc4418b31a178f4f1ef21aaa6e152e4028f2f6f64b01f7eb25ae4093",
+  "features": "data/training_features.tif sha256 4371c82e3b8339b807bdffcf4ef59a225520fe2988d521be208ae33743123bc5",
+  "template": "data/sample_submission.tif sha256 2176d08e485aa2cd2860ce8df539db4faf4d76163b38a4dd8c30a40454d35cbc"
+ },
+ "runtime_seconds": 78.1
+}

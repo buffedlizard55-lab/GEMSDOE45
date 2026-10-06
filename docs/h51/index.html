@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H51 — Kaplan–Meier fault-zone emission submission</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;
+--acc:#4ea1ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 80px}
+h1{font-size:1.5rem;margin:0;padding:22px 0 4px}
+h2{font-size:1.15rem;margin:34px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h3{font-size:1rem;margin:22px 0 6px}
+a{color:var(--acc)}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.88em}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:.84rem}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2)}
+.dl{background:linear-gradient(135deg,#12351f,#0d2417);border:1px solid #2ea043;border-radius:12px;padding:20px 22px;margin:20px 0}
+.btn{display:inline-block;background:var(--ok);color:#04170a;font-weight:700;text-decoration:none;padding:13px 22px;border-radius:9px;margin:8px 10px 4px 0}
+.btn.alt{background:#2b3444;color:var(--fg)}
+.small{color:var(--mut);font-size:.87rem}
+.note{border-left:3px solid var(--warn);background:#1c1a12;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.note.bad{border-left-color:var(--bad);background:#1e1214}
+.pill{display:inline-block;font-size:.72rem;padding:2px 9px;border-radius:99px;border:1px solid var(--line);background:#1c2230;color:var(--mut);margin-right:6px}
+nav a{margin-right:16px;font-size:.9rem;color:var(--mut);text-decoration:none}
+ol,ul{padding-left:22px}
+</style>
+</head>
+<body><main id="main"><div class="wrap">
+<p class="small"><a href="../index.html">← repository home</a> ·
+<a href="index.html">H51 landing</a> · <a href="executive-summary.html">how to submit</a> ·
+<a href="hypotheses.html">hypotheses</a> · <a href="sources.html">sources</a></p>
+<h1>H51 — Kaplan–Meier fault-zone emission</h1>
+<p class="small">GEMS Prize Challenge · GeoDAWN, northwestern Great Basin, Nevada · EPSG:32611,
+100 m, 3730 × 3292 · built 2026-10-06 · seed 4506</p>
+<p><span class="pill">unique build</span><span class="pill">format-audited</span><span class="pill">UNSCORED CANDIDATE</span></p>
+
+<div class="dl">
+<h2 style="margin:0 0 8px;border:0;padding:0">⬇️ Download the submission</h2>
+<a class="btn" href="../downloads/gems45-h51-km-faultzone-20261006-zeros.tif" download>⬇ Download the submission .tif</a>
+<a class="btn alt" href="../downloads/gems45-h51-km-faultzone-20261006.tif" download>NaN-outside twin</a>
+<a class="btn alt" href="../downloads/gems45-h51-km-faultzone-20261006-zeros.zip" download>.zip (one GeoTIFF)</a>
+<p class="small" style="margin-top:12px">Recommended file for the portal:
+<code>gems45-h51-km-faultzone-20261006-zeros.tif</code> — <b>37,654 predicted pixels</b>, every stored value finite and
+in [0, 1], no sentinel, single band, float32, EPSG:32611, 3730 × 3292. The NaN-outside twin is
+byte-identical in its predicted pixels and matches the organizers' own template encoding.<br>
+<b>sha256</b> <code>81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c</code><br>
+<b>sha256 (NaN-outside)</b> <code>b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c</code></p>
+<p class="small"><b>Unique submission name:</b> <code>gems45-h51-km-faultzone-20261006</code></p>
+</div>
+
+<div class="note bad"><b>Read this before spending a weekly slot.</b> This file is an
+<b>unscored candidate</b>; <code>slot_approved</code> is <b>false</b>. No instrument available in
+this environment ranks it against the hidden new-fault truth: the catalogue-truth holdout is
+measured to invert the live order (<code>IR-45-003</code>), and the expected-coverage emulator that
+placed the dots predicts 0.575 where the live top is 0.3345 and correlates only
+<b>Pearson r = +0.176</b> with 46 live-scored rasters
+(<a href="../data/h51_live_fit.json">evidence/h51_live_fit.json</a>). The honest claim is therefore
+narrow: <i>a new, previous-map-independent candidate whose geometry follows the organizers'
+published definition of a new fault, whose extension lengths are drawn per fault from the
+catalogue's own survival curve, and whose format has been audited</i>. Its rank is unknown.</div>
+
+<h2>What it is</h2>
+<p>Every one of the catalogue's <b>3,866</b> mapped fault tips is extended by its
+<b>own</b> length, drawn by inverse transform from a Kaplan–Meier product-limit estimate
+(Kaplan &amp; Meier 1958) of the catalogue's own along-strike relay gaps. The file adds nothing on
+the mapped catalogue and nothing within 2 px (200 m) of it — the exclusion
+radius that the family's live leaderboard calibrated — and then keeps only the dots that pay for
+themselves under the metric's own marginal rule.</p>
+
+<h2>The numbers</h2>
+<table>
+<tr><th>Stage</th><th>Measured</th><th>Why that number</th></tr>
+<tr><td>Catalogue segments / tips</td><td>3,199 / 3,866</td><td>8-connected components of <code>labels.tif</code>; tips from a thinned skeleton</td></tr>
+<tr><td>KM relay-gap sample</td><td>3,163 events, 703 censored, median 9 px, restricted mean 37.0 px</td><td>tip-to-nearest-other-segment along strike, censored at 120 px</td></tr>
+<tr><td>Survival S(d)</td><td>S(1) 0.896 · S(2) 0.732 · S(3) 0.667 · S(8) 0.504 · S(20) 0.392 · S(30) 0.346</td><td>the probability the fault is still going d px past its mapped tip</td></tr>
+<tr><td>Per-tip drawn extension</td><td>118 distinct draws · median 8 px · mean 36.4 px</td><td>inverse transform, one uniform per tip; heavy tail is the curve's, not a parameter</td></tr>
+<tr><td>Realised extension</td><td><b>30 distinct values</b> · median 28 px · 3,636 of 3,866 tips carry a dot</td><td>measured after selection along each tip's own ray — this is the "not constant" requirement</td></tr>
+<tr><td>Candidate positions</td><td>115,554 tip continuations + 236,798 strand offsets (±2, ±3 px)</td><td>the organizers' own definition of a new fault</td></tr>
+<tr><td>After gates</td><td>153,447 candidates / 133,010 distinct cells</td><td>ridge corroboration + ≥2 px from the map</td></tr>
+<tr><td>Emitted</td><td><b>37,654 dots</b> = 28,853 tip continuations + 8,801 strand offsets</td><td>greedy max expected coverage, stopped at the cap (37,654 = the largest count ever observed optimal in this family)</td></tr>
+<tr><td>Corridor coverage</td><td>80% of candidate cells sit inside the 300 m kernel of a dot</td><td>geometry diagnostic only</td></tr>
+</table>
+
+<h2>Why this design, in one paragraph each</h2>
+<h3>Why a survival function and not a radius</h3>
+<p>A fixed radius asserts that every fault extends the same distance past its mapped tip. The
+catalogue itself refutes that: measured over its own tips, the along-strike distance to the nearest
+other mapped segment has median 9 px and a heavy tail
+(S(1) = 0.896 but S(30) = 0.346). The product-limit estimator is the
+non-parametric answer to "how far does a fault run on past where the mapper stopped", and it is
+fitted from data this competition ships, not from an assumption. Each tip gets its own draw, so the
+extension length is a random variable per fault — which the build asserts
+(<code>realised_distinct &gt;= 5</code>) rather than claims.</p>
+<h3>Why splays and parallel strands are in the candidate set</h3>
+<p>DrivenData staff defined a new fault as "any fault pixel not already captured by
+USGS/INGENIOUS", explicitly including "newly mapped geometry of an existing fault system". A splay
+or a parallel strand drawn between grid nodes is exactly that, and it is where a reconnaissance
+compilation is thinnest.</p>
+<h3>Why the dots are binary and why they are chosen greedily</h3>
+<p>Because <code>TP_w</code> is a maximum over predictions near each truth pixel while
+<code>FP_w</code> is a sum over emitted mass, scaling a prediction down can only hurt: the optimal
+emission is binary. Selection is then budgeted maximum coverage with a submodular objective, for
+which greedy is the standard (1 − 1/e) approximation, stopped by the metric's own marginal
+condition <code>w &gt; 0.2·DTI</code> evaluated at the portfolio's best live-observed DTI
+(0.2778).</p>
+
+<h2>What is and is not validated</h2>
+<table>
+<tr><th>Instrument</th><th>Result</th><th>Weight it carries</th></tr>
+<tr><td>Format audit on the written bytes</td><td>142,899 B, sha256 <code>81c90dedb7f775aa…</code>, min 0.0, max 1.0, no sentinel, single band float32, template CRS/transform</td><td><b>Strong</b> — re-read from disk</td></tr>
+<tr><td>Uniqueness vs prior artifacts</td><td>see <a href="../data/h51_validation.json">h51_validation.json</a></td><td><b>Strong</b> — pixel-for-pixel</td></tr>
+<tr><td>Live dose-response of this family</td><td>Within this family the public leaderboard shows a monotone dose-response as mass is removed: 44,090 px -> 0.2600, 40,199 px -> 0.2708, 37,654 px -> 0.2778 (research/live_score_features.csv). Those are owner-reported scores with no organizer receipt.</td><td><b>Moderate</b> — owner-reported, no receipt; fixes the budget, cannot rank a new surface</td></tr>
+<tr><td>Expected-coverage emulator</td><td>best grid point 2.0·tip / r_zero 1.0 / K 10000: RMSE 0.1374, Pearson +0.176, Spearman +nan</td><td><b>Weak</b> — used only to rank marginal gains, never as a score</td></tr>
+<tr><td>Catalogue-truth holdout</td><td>inverts the live order (IR-45-003)</td><td><b>Rejected</b> — measures the wrong population</td></tr>
+</table>
+
+<h2>Limitations</h2>
+<ol>
+<li><b>It is not validated against the hidden truth</b>, and no such validation is possible here.</li>
+<li><b>The 1 m lidar DEM was not used</b>; the download links are behind the competition login and
+the hosts are unreachable from this sandbox (HTTP 000).</li>
+<li><b>No independent off-catalogue fault inventory.</b> The two free official candidates —
+USGS QFAULT (<a href="https://earthquake.usgs.gov/ws/qfault/">earthquake.usgs.gov/ws/qfault</a>) and
+the USGS State Geologic Map Compilation
+(<a href="https://mrdata.usgs.gov/geology/state/">mrdata.usgs.gov/geology/state</a>) — were checked
+for obtainability and <b>failed</b> here. This is the single most valuable missing input.</li>
+<li><b>The candidate field is a corroboration product, not a trained detector.</b> It was measured
+against the live ladder and does not predict it; the honest reading is that the evidence planes
+supplied for this competition do not separate mapped from unmapped faults at the kernel's scale.</li>
+<li><b>Owner-reported scores only.</b> 0.2778, 0.3345 and every other leaderboard figure quoted here
+are claims from the GEMSDOE family or a third-party snapshot; none has an organizer receipt.</li>
+</ol>
+<p class="small" style="margin-top:34px">Generated by <code>scripts/build_h51_site.py</code>.
+No score is claimed for any file in this repository.</p>
+</div></main></body></html>

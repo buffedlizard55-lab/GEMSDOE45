@@ -1,0 +1,100 @@
+{
+ "artifact": "gems45-h51-km-faultzone-20261006-zeros.tif",
+ "n_dots": 37654,
+ "v1_live_dose_response": {
+  "instrument": "owner-reported public-leaderboard scores of unique rasters (no organizer receipt)",
+  "nested_family": [
+   {
+    "name": "dotted-h19-5-d2-8",
+    "claims": 1
+   },
+   {
+    "name": "h27-4-solo-d28",
+    "claims": 1
+   },
+   {
+    "name": "h33-2-b2",
+    "claims": 1
+   }
+  ],
+  "measured": "44,090 px -> 0.2600 ; 40,199 px -> 0.2708 ; 37,654 px -> 0.2778. The three files were verified to be nested pixel sets (h33 subset h27 subset d28) by exact integer-coordinate inclusion, so the score rises monotonically as mass is removed.",
+  "what_it_licenses": "the statement 'do not emit more mass than the 37,654-dot member of this family'. It does NOT license any prediction for a candidate built on a different candidate set, and it does not license a rank."
+ },
+ "v2_format": {
+  "nan_outside": {
+   "filename": "gems45-h51-km-faultzone-20261006.tif",
+   "bytes": 185873,
+   "sha256": "b8d0bdc55b8ef20ba7ccf5a2d43773092663f4477967891ab1aab9327c80a69c",
+   "n_positive": 37654,
+   "inside_min": 0.0,
+   "inside_max": 1.0,
+   "nan_inside": 0,
+   "sentinel_anywhere": 0
+  },
+  "all_finite": {
+   "filename": "gems45-h51-km-faultzone-20261006-zeros.tif",
+   "bytes": 142899,
+   "sha256": "81c90dedb7f775aa6e1731088be90e2f9f63a7ac0a9c979638abdf5a842e2a0c",
+   "n_positive": 37654,
+   "inside_min": 0.0,
+   "inside_max": 1.0,
+   "nan_inside": 0,
+   "sentinel_anywhere": 0
+  },
+  "zip": {
+   "name": "gems45-h51-km-faultzone-20261006-zeros.zip",
+   "bytes": 108324,
+   "sha256": "5110361c2b2f3a6ba2015bd42ce06c790c5c6d23e893c02de867e73add22d989"
+  },
+  "extension_lengths_realised_distinct": 30,
+  "extension_lengths_drawn_distinct": 118
+ },
+ "v3_uniqueness": {
+  "compared": 309,
+  "identical_float32_sha256": 0,
+  "candidate_pixel_sha256": "30eb0794981d19f5ef004541d3a50374b784450cada00f3200223a0eb60c457a",
+  "overlap_with_ladder": {
+   "h33-2-b2 (live 0.2778, 37,654 px)": {
+    "shared_px": 412,
+    "jaccard": 0.0055,
+    "file_px": 37654
+   },
+   "h25-1-dotted-d1-5 live 0.2477": {
+    "shared_px": 634,
+    "jaccard": 0.0065,
+    "file_px": 60069
+   },
+   "dotted-h19-5-d2-8-20261002-e56ea318af8 live 0.26": {
+    "shared_px": 412,
+    "jaccard": 0.0051,
+    "file_px": 44090
+   },
+   "topo-gap-closure-t-v2-on-d1-5-20261002 live 0.2449": {
+    "shared_px": 731,
+    "jaccard": 0.0074,
+    "file_px": 61328
+   },
+   "h27-4-r1-solo-d2-8-20261003-8acb75e1f2 live 0.2708": {
+    "shared_px": 412,
+    "jaccard": 0.0053,
+    "file_px": 40199
+   },
+   "h32-1-prethin-tip-euler-d2-8-20261003- live 0.2649": {
+    "shared_px": 421,
+    "jaccard": 0.0053,
+    "file_px": 42294
+   },
+   "h27-4-solo-d28-20261004-8acb75e1-nan live 0.2708": {
+    "shared_px": 412,
+    "jaccard": 0.0053,
+    "file_px": 40199
+   },
+   "h33-h33-2-b2-20261004T220000Z-e5eb6e7e live 0.2778": {
+    "shared_px": 412,
+    "jaccard": 0.0055,
+    "file_px": 37654
+   }
+  }
+ },
+ "verdict": "No instrument available in this environment ranks this artifact against the hidden new-fault truth. V1 fixes the mass budget from live evidence and cannot rank a different candidate set; the catalogue-truth holdout is inverted by construction (IR-45-003); the emission emulator is measured not to predict live scores (Pearson +0.176, evidence/h51_live_fit.json). The artifact is therefore published as an UNSCORED CANDIDATE and no submission slot is claimed."
+}

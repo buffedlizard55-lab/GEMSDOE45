@@ -1,0 +1,36 @@
+{
+ "tips": 3866,
+ "events": 3163,
+ "censored": 703,
+ "curve": {
+  "n_observations": 3866,
+  "n_events": 3163,
+  "n_censored": 703,
+  "s_max_px": 120.0,
+  "median_gap_px": 9.0,
+  "q25_gap_px": 2.0,
+  "q75_gap_px": 70.0,
+  "restricted_mean_gap_px": 37.04966373512673,
+  "survival_at": {
+   "1": 0.8962752198654941,
+   "2": 0.7320227625452664,
+   "3": 0.6670977754785308,
+   "5": 0.5737196068287636,
+   "8": 0.5038799793067771,
+   "12": 0.45395757889291266,
+   "20": 0.39239524055871694,
+   "40": 0.3137609932747024
+  },
+  "max_greenwood_se": 0.008041295155039081
+ },
+ "catalogue": {
+  "fault_px": 60988,
+  "components": 3199,
+  "components_ge_12px": 1662,
+  "largest_component_px": 360,
+  "component_size_median": 12.0,
+  "skeleton_px": 59788,
+  "endpoints": 6904
+ },
+ "components": 3199
+}
