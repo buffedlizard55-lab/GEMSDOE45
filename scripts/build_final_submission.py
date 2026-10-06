@@ -51,6 +51,12 @@ def main() -> int:
     ap.add_argument("--target-mass", type=int, default=40000)
     ap.add_argument("--target-dti", type=float, default=0.30)
     ap.add_argument("--bridge-max-gap", type=int, default=50)
+    # Minimum distance from a mapped catalogue pixel.  The published masking rule excludes
+    # catalogue pixels themselves from scoring, so a dot ON the catalogue is free but earns
+    # nothing.  A dot just OFF it sits in the highest-risk ring: it cannot earn credit for a
+    # mapped fault (that is masked) yet it pays the full FP penalty if no hidden fault is near.
+    # 2 px was chosen for that reason.  --flank-px 0 disables the ring and is the A/B control.
+    ap.add_argument("--flank-px", type=float, default=FLANK_PX)
     ap.add_argument("--name", default="gems45-h48-kmtip-structural-20261006.tif")
     ap.add_argument("--out-json", default="evidence/final_submission.json")
     a = ap.parse_args()
@@ -111,7 +117,7 @@ def main() -> int:
     # Candidates must be (a) outside the catalogue flank, (b) inside the all-band data footprint,
     #    and (c) inside the sample submission's own finite mask -- the writer NaNs everything else,
     #    so a candidate there would silently consume budget and be dropped.
-    flank_ok = (d2cat >= FLANK_PX) & foot & tmpl
+    flank_ok = (d2cat >= a.flank_px) & foot & tmpl
     priority = np.maximum(np.where(km_mask, km_pri, 0.0), field)
     priority = np.where(flank_ok, priority, -1.0).astype(np.float32)
     flat = priority.ravel()
@@ -136,7 +142,7 @@ def main() -> int:
     rr, cc = np.nonzero(final)
     dd = d2cat[rr, cc]
     res = {
-        "name": a.name, "target_mass": a.target_mass,
+        "name": a.name, "target_mass": a.target_mass, "flank_px": a.flank_px,
         "n_positive": int(audit["n_positive"]), "n_selected_pre_write": n_final,
         "candidates_available": int(n_ok),
         "components": {
@@ -146,7 +152,7 @@ def main() -> int:
             "km_overlapping_structural_px": int((km_mask & struct).sum()),
         },
         "catalogue_flank": {
-            "rule": f"distance_to_mapped_fault >= {FLANK_PX} px ({FLANK_PX*100:.0f} m)",
+            "rule": f"distance_to_mapped_fault >= {a.flank_px} px ({a.flank_px*100:.0f} m)",
             "min_distance_px": float(dd.min()), "median_distance_px": float(np.median(dd)),
             "p10_px": float(np.percentile(dd, 10)), "p90_px": float(np.percentile(dd, 90)),
             "frac_within_300m_px": float((dd <= 3).mean()),

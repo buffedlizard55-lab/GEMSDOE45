@@ -1,0 +1,26 @@
+{
+ "planes": [
+  "|grad1.2|_det_elev_slope",
+  "|grad2.5|_det_elev_slope",
+  "|grad2.5|_iso_grav_anom_hg",
+  "|grad2.5|_iso_grav_anom_slope",
+  "|grad2.5|_iso_grav_anom",
+  "|grad2.5|_det_elev",
+  "|grad2.5|_geod_dilaterate",
+  "val_geod_2ndinv",
+  "|laplace|_det_elev_slope"
+ ],
+ "n_planes": 9,
+ "seconds": 34.6,
+ "shape": [
+  3730,
+  3292
+ ],
+ "field_percentiles": {
+  "50": 0.4995,
+  "90": 0.6839,
+  "99": 0.8117,
+  "99.9": 0.8894
+ },
+ "combination": "mean of per-plane percentile ranks, no fitting on labels"
+}

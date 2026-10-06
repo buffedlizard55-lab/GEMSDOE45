@@ -1,0 +1,117 @@
+{
+ "target_dti": 0.3,
+ "bridge_max_gap_px": 50,
+ "e_star_px": 11,
+ "marginal_bar": 0.06,
+ "extension_lengths": {
+  "min": 2,
+  "max": 11,
+  "mean": 7.244,
+  "median": 6.0,
+  "n_distinct": 10,
+  "histogram": {
+   "0": 0,
+   "1": 0,
+   "2": 612,
+   "3": 102,
+   "4": 226,
+   "5": 48,
+   "6": 1159,
+   "7": 35,
+   "8": 90,
+   "9": 23,
+   "10": 77,
+   "11": 1494
+  }
+ },
+ "tip_px": 26124,
+ "bridge_px": 13367,
+ "union_before_catalogue_mask_px": 34001,
+ "n_positive": 32182,
+ "mass": 32182,
+ "audit": {
+  "filename": "gems45-h46-kmtip-survival-20261006.tif",
+  "bytes": 160355,
+  "sha256": "8029a741b44a14125656288f5b885166af17458eff1e9b3bd1bb0fff4f0b6ea5",
+  "shape": [
+   3730,
+   3292
+  ],
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": "nan",
+  "bytes_match": 160355,
+  "finite_inside": 5167373,
+  "nan_inside": 0,
+  "sentinel_anywhere": 0,
+  "inside_min": 0.0,
+  "inside_max": 1.0,
+  "inside_all_in_0_1": true,
+  "outside_all_nan": true,
+  "outside_all_in_0_1_or_nan": true,
+  "n_positive": 32182,
+  "n_at_one": 32182
+ },
+ "zeros_twin": {
+  "filename": "gems45-h46-kmtip-survival-20261006-zeros.tif",
+  "bytes": 118854,
+  "sha256": "17ef72fbbdb42cbc207f78dc1c9ffbd34ce7266bc7128ebbd626c160280e47c4",
+  "shape": [
+   3730,
+   3292
+  ],
+  "count": 1,
+  "dtype": "float32",
+  "crs": "EPSG:32611",
+  "transform": [
+   100.0,
+   0.0,
+   243350.0,
+   0.0,
+   -100.0,
+   4508550.0
+  ],
+  "nodata": "nan",
+  "bytes_match": 118854,
+  "finite_inside": 5167373,
+  "nan_inside": 0,
+  "sentinel_anywhere": 0,
+  "inside_min": 0.0,
+  "inside_max": 1.0,
+  "inside_all_in_0_1": true,
+  "outside_all_nan": false,
+  "outside_all_in_0_1_or_nan": true,
+  "n_positive": 32182,
+  "n_at_one": 32182
+ },
+ "km_genuine": {
+  "n_observations": 2127,
+  "n_events": 2127,
+  "n_censored": 0,
+  "s_max_px": 120.0,
+  "median_gap_px": 12.0,
+  "q25_gap_px": 5.0,
+  "q75_gap_px": 39.0,
+  "restricted_mean_gap_px": 26.893747061589092,
+  "survival_at": {
+   "1": 1.0,
+   "2": 1.0,
+   "3": 0.8819934179595674,
+   "5": 0.7122708039492243,
+   "8": 0.5853314527503526,
+   "12": 0.4945933239304184,
+   "20": 0.38269863657733894,
+   "40": 0.23977433004231316
+  },
+  "max_greenwood_se": 0.010840788390432222
+ }
+}

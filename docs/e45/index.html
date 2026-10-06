@@ -61,18 +61,31 @@ GEMS Prize Challenge · GeoDAWN region, Nevada · EPSG:32611, 100 m, 3730 × 329
 <div class="dl" id="download">
 <h2>⬇️ Download the submission — one click</h2>
 <p><b>Primary file.</b> Single-band float32 GeoTIFF, same grid as the training data, NaN outside the
-footprint — exactly the encoding of the organizers' own <code>sample_submission.tif</code>.</p>
-<a class="btn" href="../downloads/gems45-h48-kmtip-structural-20261006.tif" download>⬇ Download the submission .tif</a>
-<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.tif" download>.tif, all-finite twin</a>
-<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.zip" download>.zip (one GeoTIFF)</a>
+footprint — exactly the encoding of the organizers' own <code>sample_submission.tif</code>.
+This is the <b>no-flank</b> variant (H48b): it beat the flanked variant
+<b>4.4×</b> on leakage-controlled spatial validation (0.0302 vs 0.0068, winning 9 of 11 blocks
+against random versus 2 of 11), so it is the better-evidenced of the two. Neither is validated
+against a live score — read <a href="#holdout">§Holdout</a> before spending a slot.</p>
+<a class="btn" href="../downloads/gems45-h48b-structural-noflank-20261006.tif" download>⬇ Download the submission .tif</a>
+<a class="btn alt" href="../downloads/gems45-h48b-structural-noflank-20261006-zeros.tif" download>.tif, all-finite twin</a>
+<a class="btn alt" href="../downloads/gems45-h48b-structural-noflank-20261006-zeros.zip" download>.zip (one GeoTIFF)</a>
+<p class="small" style="margin-top:14px"><b>The other arm, kept for the record
+(<a href="#flank">§The flank decision</a>):</b>
+<a href="../downloads/gems45-h48-kmtip-structural-20261006.tif" download>H48 — with the 200 m flank
+exclusion</a> ·
+<a href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.tif">all-finite twin</a> ·
+<a href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.zip">.zip</a>.
+It is published because it is the file that was shipped first and its numbers are quoted throughout
+the evidence; it is <b>not</b> the recommendation.</p>
 <p class="small" style="margin-top:14px">
-File <code>gems45-h48-kmtip-structural-20261006.tif</code> · 138,260 bytes · 40,000 predicted pixels
+File <code>gems45-h48b-structural-noflank-20261006.tif</code> · 138,304 bytes · sha256 <code>be7915f2f68bb077b486a3c210c6fe6ee6c831f5bc21a56761613906f532ea8c</code>
+· the flanked arm is 138,260 bytes · 40,000 predicted pixels
 · <b>every finite value in [0, 1]</b> · <b>no sentinel anywhere</b> · sha256<br>
 <code>40eb32bf995433b15052745c7ea647ed344dc4d56ca9356f8b843a4c1466a402</code></p>
 <p class="small"><b>Note to paste into the submission form:</b><br>
-<code>The submission note: GEMSDOE45 H48 | KM tip-survival extension (3866 catalogue tips,
-product-limit gap curve, per-tip lengths 2-11 px) unioned with a 9-plane rank-ensemble structural
-field; 40,000 dots at the metric's own marginal bar, all &gt;=200 m from the mapped catalogue</code></p>
+<code>GEMSDOE45 H48b | KM tip-survival extension of 3866 catalogue tips with per-tip lengths drawn
+from a product-limit gap curve, unioned with a 9-plane rank-ensemble structural field; 40,000 dots
+chosen at the metric's own marginal bar</code></p>
 <p class="small"><b>Status: candidate under HOLD.</b> It passes every format check on its published
 bytes and its per-fault extension lengths provably vary. It has <b>not</b> beaten the incumbent on
 the only spatially-blocked instrument this environment can run, and no organizer score is known for
@@ -88,7 +101,7 @@ before your first submission.</li>
 <li>Click the <b>Download the submission .tif</b> button at the top of this page.</li>
 <li>Go to the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">Submissions tab</a>
 and choose <b>New submission</b>.</li>
-<li><b>File to submit:</b> pick the downloaded <code>gems45-h48-kmtip-structural-20261006.tif</code>.
+<li><b>File to submit:</b> pick the downloaded <code>gems45-h48b-structural-noflank-20261006.tif</code>.
 (The portal accepts a single GeoTIFF or a .zip containing one — either button above will work.)</li>
 <li><b>Note (optional):</b> paste the note string from the download box. It fits the portal's length
 limit and tells your own files apart later.</li>
@@ -210,40 +223,108 @@ ten levels, driven by each tip's own measured relay geometry and capped by the m
 A constant-radius emitter would place all 3,866 tips at a single value; this does not.</p>
 
 <!-- ===================== BANDS ===================== -->
+<!-- BEGIN GENERATED: band tables (scripts/sync_site_tables.py) -->
 <h2 id="bands">Which of the 19 bands can actually see a fault?</h2>
+
 <p>Answered by measurement, because the answer is not obvious and it rules out a whole family of
 ideas. <code>ρ(1 km)</code> is the correlation between a pixel and the pixel 1 km away: a plane with
 ρ near 1 is regionally smooth and physically <i>cannot</i> satisfy a 300 m kernel.
-The right-hand column is the fraction of the top-40,000 pixels of that plane's gradient magnitude
-that land within 300 m of a mapped fault, versus an 8.3 % random baseline.</p>
-<table>
-<tr><th>Band</th><th class="n">ρ(1 km)</th><th class="n">mean |grad| (σ/px)</th><th class="n">top-40k within 300 m</th><th>Class</th></tr>
-<tr><td>det_elev_slope (19)</td><td class="n">0.722</td><td class="n">0.167</td><td class="n ok">23.2 %</td><td><b>LOCATOR</b></td></tr>
-<tr><td>iso_grav_anom_hg (18)</td><td class="n">0.952</td><td class="n">0.022</td><td class="n">13.6 %</td><td>LOCATOR</td></tr>
-<tr><td>iso_grav_anom_slope (5)</td><td class="n">0.910</td><td class="n">0.032</td><td class="n">13.5 %</td><td>LOCATOR</td></tr>
-<tr><td>geod_2ndinv (4)</td><td class="n">0.984</td><td class="n">0.0023</td><td class="n">12.1 %</td><td>WEIGHT only</td></tr>
-<tr><td>iso_grav_anom (13)</td><td class="n">0.979</td><td class="n">0.013</td><td class="n">11.6 %</td><td>WEIGHT only</td></tr>
-<tr><td>geod_dilaterate (8)</td><td class="n">0.986</td><td class="n">0.0035</td><td class="n">11.9 %</td><td>WEIGHT only</td></tr>
-<tr><td>ieq_n100a15 (16)</td><td class="n">0.979</td><td class="n">0.0027</td><td class="n">11.9 %</td><td>WEIGHT only</td></tr>
-<tr><td>tmi_hg (3)</td><td class="n">0.592</td><td class="n">0.103</td><td class="n">9.6 %</td><td>LOCATOR</td></tr>
-<tr><td>rtp (2)</td><td class="n">0.730</td><td class="n">0.051</td><td class="n">9.0 %</td><td>LOCATOR</td></tr>
-<tr><td>tmi_vg (9)</td><td class="n">0.047</td><td class="n">0.131</td><td class="n">9.0 %</td><td>LOCATOR</td></tr>
-<tr><td>mag_anom (1)</td><td class="n">0.944</td><td class="n">0.021</td><td class="n bad">5.4 % — worse than random</td><td>rejected</td></tr>
-<tr><td>depth_to_base_surf (15)</td><td class="n">0.974</td><td class="n">0.012</td><td class="n bad">5.6 %</td><td>rejected</td></tr>
+<code>mean |∂/∂y|</code> is the mean forward difference along the north axis, in units of the band's
+own standard deviation per pixel. Every mass column is the fraction of that plane's strongest 40,000
+pixels — the same mass the shipped submission emits — that land within 300 m of a mapped fault,
+against a <b>measured</b> random baseline of 8.6 % (the fraction of the footprint within 300 m of
+the catalogue).</p>
+
+<h3>Table 1 — the raw bands, as supplied</h3>
+<table><tr><th>Band</th><th class="n">ρ(1 km)</th><th class="n">mean |∂/∂y| (σ/px)</th><th class="n">top-40k within 300 m</th><th class="n">vs random</th><th class="n">components</th><th class="n">perimeter/area</th><th>Measured class</th></tr>
+<tr><td>geod_2ndinv (4)</td><td class="n">0.989</td><td class="n">0.0027</td><td class="n ok">30.6 %</td><td class="n">3.56×</td><td class="n">1</td><td class="n">0.02</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>geod_shearrate (7)</td><td class="n">0.988</td><td class="n">0.0032</td><td class="n ok">27.7 %</td><td class="n">3.22×</td><td class="n">1</td><td class="n">0.03</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>iso_grav_anom_hg (18)</td><td class="n">0.955</td><td class="n">0.0223</td><td class="n ok">11.8 %</td><td class="n">1.37×</td><td class="n">135</td><td class="n">0.17</td><td>WEIGHT</td></tr>
+<tr><td>iso_grav_anom (13)</td><td class="n">0.981</td><td class="n">0.0131</td><td class="n ok">11.7 %</td><td class="n">1.36×</td><td class="n">14</td><td class="n">0.05</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>iso_grav_anom_slope (5)</td><td class="n">0.910</td><td class="n">0.0323</td><td class="n">10.5 %</td><td class="n">1.22×</td><td class="n">61</td><td class="n">0.14</td><td>intermediate · value not mass-eligible</td></tr>
+<tr><td>geod_dilaterate (8)</td><td class="n">0.989</td><td class="n">0.0037</td><td class="n">10.3 %</td><td class="n">1.19×</td><td class="n">3</td><td class="n">0.04</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>cond_surf (17)</td><td class="n">0.965</td><td class="n">0.0078</td><td class="n">10.2 %</td><td class="n">1.19×</td><td class="n">6</td><td class="n">0.05</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>tmi_vg (9)</td><td class="n">0.046</td><td class="n">0.1389</td><td class="n">9.4 %</td><td class="n">1.10×</td><td class="n">3,061</td><td class="n">0.65</td><td><b>LOCATOR</b></td></tr>
+<tr><td>tmi (14)</td><td class="n">0.711</td><td class="n">0.0548</td><td class="n">9.2 %</td><td class="n">1.07×</td><td class="n">468</td><td class="n">0.28</td><td><b>LOCATOR</b></td></tr>
+<tr><td>iso_grav_anom_vg (11)</td><td class="n">0.837</td><td class="n">0.0422</td><td class="n">9.0 %</td><td class="n">1.05×</td><td class="n">159</td><td class="n">0.19</td><td><b>LOCATOR</b></td></tr>
+<tr><td>tmi_hg (3)</td><td class="n">0.567</td><td class="n">0.1155</td><td class="n">8.8 %</td><td class="n">1.03×</td><td class="n">1,637</td><td class="n">0.57</td><td><b>LOCATOR</b></td></tr>
+<tr><td>mag_anom (1)</td><td class="n">0.947</td><td class="n">0.0210</td><td class="n bad">8.5 %</td><td class="n">0.98×</td><td class="n">54</td><td class="n">0.11</td><td>intermediate</td></tr>
+<tr><td>ieq_n100a15 (16)</td><td class="n">0.981</td><td class="n">0.0031</td><td class="n bad">7.9 %</td><td class="n">0.92×</td><td class="n">1</td><td class="n">0.03</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>rtp (2)</td><td class="n">0.729</td><td class="n">0.0520</td><td class="n bad">7.9 %</td><td class="n">0.92×</td><td class="n">492</td><td class="n">0.29</td><td><b>LOCATOR</b></td></tr>
+<tr><td>tc (6)</td><td class="n">0.875</td><td class="n">0.0621</td><td class="n bad">7.4 %</td><td class="n">0.87×</td><td class="n">694</td><td class="n">0.33</td><td><b>LOCATOR</b></td></tr>
+<tr><td>det_elev_slope (19)</td><td class="n">0.693</td><td class="n">0.2667</td><td class="n bad">5.1 %</td><td class="n">0.60×</td><td class="n">12,715</td><td class="n">0.97</td><td><b>LOCATOR</b></td></tr>
+<tr><td>depth_to_base_surf (15)</td><td class="n">0.977</td><td class="n">0.0120</td><td class="n bad">3.2 %</td><td class="n">0.38×</td><td class="n">15</td><td class="n">0.06</td><td>WEIGHT · value not mass-eligible</td></tr>
+<tr><td>deq_n100a15 (10)</td><td class="n">0.859</td><td class="n">0.0017</td><td class="n bad">3.2 %</td><td class="n">0.37×</td><td class="n">2</td><td class="n">0.03</td><td><b>LOCATOR</b> · value not mass-eligible</td></tr>
+<tr><td>det_elev (12)</td><td class="n">0.954</td><td class="n">0.0329</td><td class="n bad">0.1 %</td><td class="n">0.01×</td><td class="n">226</td><td class="n">0.24</td><td>WEIGHT · value not mass-eligible</td></tr>
 </table>
+
+<h3>Table 2 — derived planes, ranked by localisation not by score</h3>
+<p><code>top-40k within 300 m</code> alone is not enough to call a plane a fault detector. A smooth
+regional field can post a respectable fraction simply because its highest values sit over the
+fault-rich part of the map — its top-40k is then <i>one large connected blob</i>, which is regional
+information a 300 m kernel cannot use. The <code>perimeter/area</code> column separates the two: a
+kernel-scale localiser paints many small elongated pieces, a regional field paints one fat blob.</p>
+<table><tr><th>Derived plane (canonical definition from <code>detfeatures</code>)</th><th class="n">top-40k within 300 m</th><th class="n">vs random</th><th class="n">components</th><th class="n">median px</th><th class="n">perimeter/area</th><th>Verdict</th></tr>
+<tr><td><code>|grad2.5|_det_elev_slope</code></td><td class="n ok">42.1 %</td><td class="n">4.89×</td><td class="n">1,162</td><td class="n">13</td><td class="n">0.60</td><td><b>localiser</b></td></tr>
+<tr><td><code>val_geod_2ndinv</code></td><td class="n">30.6 %</td><td class="n">3.56×</td><td class="n">1</td><td class="n">40,000</td><td class="n">0.02</td><td>regional blob</td></tr>
+<tr><td><code>|grad1.2|_det_elev_slope</code></td><td class="n ok">23.2 %</td><td class="n">2.70×</td><td class="n">4,817</td><td class="n">4</td><td class="n">0.91</td><td><b>localiser</b></td></tr>
+<tr><td><code>val_cond_surf</code></td><td class="n">17.8 %</td><td class="n">2.07×</td><td class="n">5</td><td class="n">4,319</td><td class="n">0.05</td><td>regional blob</td></tr>
+<tr><td><code>|grad2.5|_iso_grav_anom_hg</code></td><td class="n ok">14.4 %</td><td class="n">1.68×</td><td class="n">315</td><td class="n">56</td><td class="n">0.34</td><td><b>localiser</b></td></tr>
+<tr><td><code>|grad2.5|_iso_grav_anom_slope</code></td><td class="n">13.9 %</td><td class="n">1.61×</td><td class="n">211</td><td class="n">79</td><td class="n">0.30</td><td>regional blob</td></tr>
+<tr><td><code>|grad1.2|_iso_grav_anom_hg</code></td><td class="n ok">13.5 %</td><td class="n">1.57×</td><td class="n">363</td><td class="n">57</td><td class="n">0.41</td><td><b>localiser</b></td></tr>
+<tr><td><code>|grad1.2|_iso_grav_anom_slope</code></td><td class="n ok">13.4 %</td><td class="n">1.56×</td><td class="n">381</td><td class="n">30</td><td class="n">0.38</td><td><b>localiser</b></td></tr>
+<tr><td><code>|grad2.5|_geod_dilaterate</code></td><td class="n ok">13.2 %</td><td class="n">1.53×</td><td class="n">137</td><td class="n">37</td><td class="n">0.50</td><td><b>localiser</b></td></tr>
+<tr><td><code>|grad2.5|_geod_2ndinv</code></td><td class="n">13.0 %</td><td class="n">1.51×</td><td class="n">69</td><td class="n">4</td><td class="n">0.47</td><td>mixed</td></tr>
+<tr><td><code>|grad2.5|_iso_grav_anom</code></td><td class="n ok">13.0 %</td><td class="n">1.51×</td><td class="n">114</td><td class="n">149</td><td class="n">0.40</td><td><b>localiser</b></td></tr>
+<tr><td><code>val_iso_grav_anom</code></td><td class="n">12.0 %</td><td class="n">1.39×</td><td class="n">21</td><td class="n">494</td><td class="n">0.06</td><td>regional blob</td></tr>
+<tr><td><code>|grad1.2|_geod_2ndinv</code></td><td class="n ok">11.9 %</td><td class="n">1.39×</td><td class="n">111</td><td class="n">38</td><td class="n">0.68</td><td><b>localiser</b></td></tr>
+<tr><td><code>|grad1.2|_geod_dilaterate</code></td><td class="n ok">11.8 %</td><td class="n">1.37×</td><td class="n">153</td><td class="n">45</td><td class="n">0.66</td><td><b>localiser</b></td></tr>
+</table>
+
 <div class="note">
-<b>Two results worth more than the ones above.</b>
-<br>1. <b>The geodetic strain-rate bands cannot do the job.</b> <code>geod_2ndinv</code>,
-<code>geod_shearrate</code> and <code>geod_dilaterate</code> have ρ(1 km) = 0.984, 0.983 and 0.986 and
-change by only 0.0023–0.0035 σ per pixel — they are regional fields from a coarse deformation model.
-A "strain-rate ridge detector" for faults is therefore not a hard idea that failed; it is an idea
-that <i>cannot</i> work at 300 m with these inputs. The same is true of <code>ieq</code>/<code>deq</code>
-(ρ(3 km) = 0.994 / 0.841): the earthquake-density band is constant by construction at the metric's
-scale. This is why the family record's seismicity and strain families under-perform.
-<br>2. <b>The best single plane is topographic slope, not magnetics.</b> <code>det_elev_slope</code>
-reaches 2.8× the background rate; <code>mag_anom</code> is <i>anti</i>-correlated with the catalogue
-(AUC 0.46). A magnetics-first design is measurably the wrong instinct on this dataset.
+<b>Three results worth more than the ranking itself.</b>
+<br>1. <b>Score-without-fragmentation is a trap, and the two strain-rate values demonstrate it.</b>
+<code>geod_2ndinv</code> and <code>geod_shearrate</code> post 30.6 %
+and 27.7 % within 300 m — better than every derivative plane but
+one — yet each one's top-40,000 pixels form a <i>single connected component of 40,000 px</i>
+(perimeter/area 0.02). They are reporting "the faults
+live in the deformation-model anomaly", not "there is a fault here". Their <i>gradients</i> change by
+only 0.0023–0.0037 σ per pixel (Table 1), so a strain-rate ridge detector cannot place a dot inside a
+300 m kernel. Both halves of that sentence are now measured rather than asserted.
+<br>2. <b>The genuine localiser is the topographic-slope gradient, and it is strong.</b>
+<code>|grad2.5|_det_elev_slope</code> puts 42.1 % of its top
+40,000 within 300 m — 4.89× the random baseline —
+while fragmenting into 1,162 components of median
+13 px. It is the plane the shipped field leans on,
+and this is the evidence that it deserves to be.
+<br>3. <b>Magnetics-first is measurably the wrong instinct here.</b> <code>mag_anom</code> places
+8.5 %
+within 300 m — <i>below</i> the 8.6 % baseline — and the magnetic gradient planes sit at the bottom
+of Table 2.
 </div>
+
+<div class="note">
+<b>An irregularity caught by regenerating this table, kept visible on purpose.</b> The first version
+of these tables was typed by hand and had drifted. It attributed a
+"23.2 % top-40k within 300 m" to the band <code>det_elev_slope</code>; that number actually belongs to
+<code>|grad1.2|_det_elev_slope</code> (Table 2) — the band's <i>value</i> scores
+5.1 %, which is
+below random. Its ρ and mean-|grad| cells came from a later pipeline run than its percentage cell, and
+its class column contradicted the rule in <code>bands.py</code> for three bands. The tables are now
+generated by <code>scripts/sync_site_tables.py</code> from <code>evidence/band_screen.json</code>,
+which <code>scripts/screen_bands.py</code> writes; <code>--check</code> fails if they diverge.
+</div>
+
+<div class="note">
+<b>Where the two class statements in <code>bands.py</code> disagree</b>, published rather than
+smoothed over. The measured rule is <code>LOCATOR</code> when ρ(1 km) &lt; 0.90, <code>WEIGHT</code>
+when ρ ≥ 0.95, <code>INTERMEDIATE</code> between. Three bands disagree with the explicit
+mass-placement lists:
+<code>mag_anom</code> (measured INTERMEDIATE, mass-eligible True, 8.5 % within 300 m), <code>deq_n100a15</code> (measured LOCATOR, mass-eligible False, 3.2 % within 300 m), <code>iso_grav_anom_hg</code> (measured WEIGHT, mass-eligible True, 11.8 % within 300 m).
+The mass-placement lists govern the shipped artifact and were <b>not</b> changed after the fact;
+the disagreement is recorded so the design decision is visible instead of implicit.
+</div>
+<!-- END GENERATED: band tables -->
 
 <!-- ===================== HYPOTHESES ===================== -->
 <h2 id="hypotheses">The hypothesis set, ranked, with verdicts</h2>
@@ -269,8 +350,11 @@ blank ground, and the extension zone's uncertainty is 1-D rather than a 2-D sear
 <td>The catalogue over-represents faults mappable in <i>one</i> dataset; demanding that several
 independent physics agree on a strike selects what single-dataset mapping under-represents.</td>
 <td>Partly — GEMSDOE32's H33-A proposed the same object.</td>
-<td class="bad"><b>Tested and rejected.</b> 9.9 % of top-40k within 300 m vs 8.3 % random — only 1.2×,
-<i>worse</i> than the single best plane (2.8×). The geometric mean over 16 terms is too brittle.</td></tr>
+<td class="bad"><b>Tested and rejected.</b> 9.9 % of top-40k within 300 m against the measured
+8.6 % baseline — 1.15×, on an instrument that is generous (no false-positive penalty; proximity to
+mapped faults only). For scale, the single best plane reaches 4.89× and the H48 ensemble 2.83× at the
+same mass. The geometric mean over 16 terms is too brittle, and demanding four-physics agreement at
+100 m sparsifies the field below its own signal.</td></tr>
 
 <tr><td><b>H48</b></td>
 <td>Rank ensemble of the measured-informative planes, no fitting on labels</td>
@@ -308,6 +392,51 @@ obtainability from this sandbox <b>unverified</b>.</td></tr>
 cost. H46 and H48 are implemented and shipped; H47 was killed by its own measurement; H49 and H50 are
 blocked on network access and are therefore not proposed as viable until their sources can be fetched.</p>
 
+<!-- ===================== FLANK DECISION ===================== -->
+<h2 id="flank">The flank decision: two files, one switch, and no instrument that can judge it</h2>
+<p>The shipped file excludes every pixel within 200 m of a mapped catalogue fault. That is a
+scientific claim, not a detail: it says a hidden fault is <i>not</i> in the immediate neighbourhood of
+an already-mapped one. The alternative claim is equally defensible — hidden faults are commonly
+parallel splays, unmapped strands inside a mapped corridor, or tip zones, all of which live in that
+very ring. So the switch was built as a parameter (<code>--flank-px</code>) and both settings were
+measured at the identical 40,000-pixel mass.</p>
+<table>
+<tr><th>File</th><th class="n">mass</th><th class="n">top-40k within 300 m</th><th class="n">vs random</th>
+<th class="n">components</th><th class="n">median px</th><th class="n">median distance</th></tr>
+<tr><td><code>gems45-h48-…</code> <span class="small">(flank ≥ 200 m, as shipped)</span></td>
+<td class="n">40,000</td><td class="n">11.9 %</td><td class="n">1.38×</td><td class="n">4,118</td>
+<td class="n">2</td><td class="n">11.4 px</td></tr>
+<tr><td><code>gems45-h48b-…</code> <span class="small">(no flank rule)</span></td>
+<td class="n">40,000</td><td class="n ok">26.3 %</td><td class="n ok">3.06×</td><td class="n">4,347</td>
+<td class="n">2</td><td class="n">7.3 px</td></tr>
+<tr><td><span class="small">the H48 rank ensemble itself, its own best 40,000</span></td>
+<td class="n">40,000</td><td class="n">24.4 %</td><td class="n">2.83×</td><td class="n">1,510</td>
+<td class="n">3</td><td class="n">—</td></tr>
+</table>
+<div class="note">
+<b>Resolved, by a different instrument than the one in this table.</b> The proximity column above
+suggested H48b (26.3 % vs 11.9 %), but that instrument is at its most wrong exactly where the two
+files differ, so it could not decide. The leakage-controlled blocked holdout in §Holdout could, and
+it agreed with a much larger margin: <b>H48b 0.030215 vs H48 0.006813</b>, beating the random control
+in 9 of 11 blocks against 2 of 11. Excluding the 200 m ring around every mapped fault — a rule that
+looked prudent because catalogue pixels are masked and the penumbra is where false positives are
+charged — removed the field's strongest pixels and cost 4.4×. The rule is documented and kept as
+<code>--flank-px</code>, not deleted.
+<br><br><b>The reading of this table that would have been wrong.</b> The instrument's truth <i>is</i> the
+mapped catalogue — and the mapped catalogue is the one thing the organizers <b>mask out of the real
+score</b> (official clarification, thread 11516). The instrument is therefore at its most wrong
+exactly where these two files differ: it rewards proximity to mapped faults, while the real metric
+neither rewards nor punishes the mapped pixels themselves and charges a false-positive penalty
+precisely in the 0–300 m penumbra where H48b places more mass. A 14-point gap on an instrument with
+a known, measured inversion against live leaderboard order (see §Holdout) is not evidence that H48b
+scores better in the competition. It is evidence that the two files differ.
+<br><br>What <i>is</i> established: both are format-valid, both are unique against the 69 earlier
+rasters available for comparison (max support-Jaccard 0.016 and 0.017), and they agree on 33,628 of
+40,000 pixels, so the choice is a genuine 6,372-pixel decision rather than a different project.
+Publishing both, with the switch documented, is the honest move; picking one and claiming the
+instrument had chosen would not be.
+</div>
+
 <!-- ===================== HOLDOUT ===================== -->
 <h2 id="holdout">Validation — and why the result is a refusal, not a win</h2>
 <p>Per the brief, the top candidate must be validated on a spatially-blocked holdout before a
@@ -318,17 +447,21 @@ and the emission is still painted over the <b>whole</b> map, because that is the
 you do not know where the scored faults are.</p>
 <table>
 <tr><th>Arm</th><th class="n">Mean DTI over 11 truth-bearing blocks</th><th>Live score (owner claim)</th></tr>
-<tr><td><b>Shipped H48</b></td><td class="n">0.006813</td><td class="mut">unknown</td></tr>
+<tr><td><b>H48b</b> — no flank exclusion, now the primary file</td><td class="n ok">0.030215</td><td class="mut">unknown</td></tr>
+<tr><td><b>H48</b> — with the 200 m flank exclusion</td><td class="n bad">0.006813</td><td class="mut">unknown</td></tr>
 <tr><td>Uniform random control, matched mass</td><td class="n">0.012654</td><td class="mut">—</td></tr>
 <tr><td><code>dotted-h19-5-d2-8</code></td><td class="n">0.063400</td><td class="n">0.2600</td></tr>
 <tr><td><code>h33-2-b2</code> (the best known artifact)</td><td class="n">0.002791</td><td class="n">0.2778</td></tr>
 </table>
 <div class="badnote">
 <b>Two findings, and both matter more than the score.</b>
-<br><br><b>1. The shipped file did not beat the holdout best.</b> It scores below the random control
-and far below <code>d2.8</code>. By this repository's own rule it is therefore published as a
-<b>candidate under HOLD</b>. It is available to download because the brief requires a downloadable
-artifact, and because the second finding changes what "did not beat the holdout" means.
+<br><br><b>1. Neither arm beat the holdout best, so both are published under HOLD.</b>
+<code>d2.8</code> sits at 0.0634 and neither file reaches it (0 of 11 blocks won). What the run
+<i>did</i> decide is the choice <i>between</i> the two arms: the flanked H48 beat random in only
+2 of 11 blocks, the unflanked H48b in 9 of 11, a 4.4× gap in mean DTI. H48b is therefore promoted to
+the primary download and H48 is kept only as the record of the first attempt. This is a reversal of
+the initial choice, made because the leakage-controlled run contradicted it — not because a
+narrative needed one.
 <br><br><b>2. The instrument cannot rank candidates at all — and this is measured, not asserted.</b>
 On the catalogue-truth holdout <code>d2.8</code> (live 0.2600) scores <b>23×</b> higher than
 <code>h33-2-b2</code> (live 0.2778), <b>inverting the live order</b>: 0.0634 vs 0.0028, while live
@@ -339,7 +472,14 @@ a different, sparser set of unmapped faults. Sibling repositories reach the same
 different route, reporting a leave-one-out Spearman of <b>−0.897</b> between such a proxy and 16
 live scores.
 <br><br>So the honest statement is not "this file failed validation" but "no file can be validated
-with the instruments available in this environment". Note the ordering does leave one weak,
+with the instruments available in this environment". One nuance cuts the other way and is worth
+stating precisely, because it is the reason the H48/H48b comparison is reported at all: in the
+<i>blocked</i> protocol every prediction is stripped of the block-free catalogue first, so the
+held-out truth behaves like a genuinely unmapped fault set rather than like the masked catalogue —
+a closer analogue of the live problem than the whole-map screen is. That makes a same-method,
+same-style comparison (H48 vs H48b, which agree on 33,628 of 40,000 pixels) more informative than
+any cross-style comparison here. It does not make it conclusive: the 4.4× gap points in exactly the
+direction this instrument is biased, so it is strong evidence and not proof. Note the ordering does leave one weak,
 explicitly non-conclusive signal: the live-best artifact scores <i>lowest</i> on this proxy, and the
 shipped file scores second-lowest.
 </div>
@@ -374,6 +514,35 @@ lattice adds 0.222 of credit for 0.044 of denominator (ratio 5.0 &gt; DTI), so i
 was changed accordingly; the finding is recorded because sibling repositories use hard Poisson-disk
 thinning at R.</td><td>site §Why; <code>src/gems45/emission.py</code></td></tr>
 </table>
+<tr><td>IR-45-009</td><td><b>My own holdout script was scoring a reconstruction and labelling it
+as the file.</b> <code>scripts/run_holdout.py</code> loaded the published GeoTIFF into a variable and
+then never used it: each fold's <code>dti_mine</code> was the score of a per-fold re-derivation of the
+method, so the published file was not actually being tested, and passing a different file changed
+nothing (two different files returned an identical 0.000223). Found by running the A/B and noticing
+the identical result. Fixed: predictions are now stripped of the training catalogue before scoring
+(the metric-faithful masking rule, applied to the incumbent files too), the file and the rebuild are
+reported as separate keys <code>dti_file</code> / <code>dti_rebuild</code>, and
+<code>--pred</code> selects the file. The originally published 0.006813 was correct — it came from a
+separate script that did score the bytes — and it reproduces exactly under the fixed script.</td>
+<td><code>evidence/holdout_h48.json</code>, <code>evidence/holdout_h48b.json</code></td></tr>
+<tr><td>IR-45-007</td><td><b>A published table on this very page was wrong, and the way it was
+wrong is instructive.</b> It attributed "23.2 % top-40k within 300 m" to the band
+<code>det_elev_slope</code>. That number belongs to <code>|grad1.2|_det_elev_slope</code>; the band's
+own <i>value</i> scores 5.1 %, <i>below</i> the 8.6 % baseline. Its ρ and mean-|grad| cells had also
+been taken from a later pipeline run than its percentage cell, and its class column contradicted the
+class rule in <code>bands.py</code> for three bands. Found by regenerating the table from evidence
+rather than by re-reading it. The tables are now generated by
+<code>scripts/sync_site_tables.py</code>, which <code>--check</code> fails on divergence.</td>
+<td><code>evidence/band_screen.json</code></td></tr>
+<tr><td>IR-45-008</td><td><b>Two raw bands look like excellent fault locators and are not.</b>
+<code>geod_2ndinv</code> and <code>geod_shearrate</code> post the two best "top-40k within 300 m"
+fractions of all 19 supplied bands (30.6 % and 27.7 %) yet each one's top 40,000 pixels form
+<b>a single connected component of 40,000 px</b> (perimeter/area 0.02–0.03). They are marking the
+fault-rich region of the map, not individual faults — regional information a 300 m kernel cannot use.
+Their gradients change by only 0.0023–0.0037 σ per pixel, so no ridge detector built on them can
+place a dot inside the kernel. Both halves are now measured rather than asserted, and the
+perimeter/area test that exposes this is published in §Bands.</td>
+<td><code>evidence/band_screen.json</code></td></tr>
 
 <!-- ===================== LIMITS ===================== -->
 <h2>Limitations and what would actually move the needle</h2>

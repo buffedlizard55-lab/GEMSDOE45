@@ -15,6 +15,19 @@ rebuilt without them:
     know where the scored faults are), so every dot outside the block is charged as false-positive
     mass exactly as it would be live.
 
+Every prediction -- the published file and the incumbents alike -- is stripped of the *training*
+catalogue (``known & ~block``) before scoring, because the organizers mask catalogue pixels out of
+the live score entirely.  Applying that rule to one file and not another is the easiest way to make
+this instrument lie.
+
+Two quantities are reported per fold and they are NOT interchangeable:
+
+  * ``dti_file``    -- the score of the bytes in the published GeoTIFF.  This is the number that
+    means something for a submission decision.
+  * ``dti_rebuild`` -- the score of a per-fold re-derivation of the same method (tips, Kaplan-Meier
+    curve, extension lengths and emission all re-fitted without the block).  It tests the *method*
+    under leakage control; it is not the file.
+
 WHY THE RESULT IS A SCREEN AND NOT A PROMOTION GATE
 ---------------------------------------------------
 The truth of this proxy is the visible catalogue, and the organizers mask that catalogue out of the
@@ -70,6 +83,9 @@ def main() -> int:
     ap.add_argument("--blocks", type=int, default=4)
     ap.add_argument("--target-dti", type=float, default=0.30)
     ap.add_argument("--out", default="evidence/holdout_final.json")
+    # Which published file to score.  The protocol is identical for every file, so the A/B
+    # between H48 (200 m flank exclusion) and H48b (no flank rule) is run on one instrument.
+    ap.add_argument("--pred", default=str(PRED_PATH))
     a = ap.parse_args()
 
     known = grid.read_labels(ROOT / "data" / "labels.tif")
@@ -81,7 +97,7 @@ def main() -> int:
     comp = lab[rows, cols]
     rng = np.random.default_rng(45)
 
-    mine = load_pred(str(PRED_PATH), tmpl)
+    mine = load_pred(a.pred, tmpl)
     inc = {k: load_pred(v, tmpl) for k, v in INCUMBENTS.items()}
     inc = {k: v for k, v in inc.items() if v is not None}
 
@@ -125,16 +141,24 @@ def main() -> int:
             pred_fold[known] = 0.0
             pred_fold = np.clip(pred_fold, 0, 1).astype(np.float32)
 
+            def strip_train(p):
+                """Organizers mask catalogue pixels out of scoring; apply that to every file."""
+                q = p.copy()
+                q[train_cat] = 0.0
+                return q
+
             res = {"fold": f"{bi}_{bj}", "truth_px": int(truth.sum()),
                    "emitted_px_global": int((pred_fold > 0).sum()),
                    "e_star_px": budget["e_star_px"],
                    "km_median_gap_px": km.quantile(0.5),
                    "ext_len_mean": round(float(L.mean()), 3),
-                   "dti_mine": round(metric.score(pred_fold, truth).dti, 6),
+                   "dti_file": round(metric.score(strip_train(mine), truth).dti, 6),
+                   "dti_rebuild": round(metric.score(pred_fold, truth).dti, 6),
                    "random_dti": round(metric.score(
-                       (rng.random(known.shape) < (pred_fold > 0).mean()).astype(np.float32),
+                       (rng.random(known.shape) < (mine > 0).mean()).astype(np.float32),
                        truth).dti, 6),
-                   "incumbents": {k: round(metric.score(v, truth).dti, 6) for k, v in inc.items()},
+                   "incumbents": {k: round(metric.score(strip_train(v), truth).dti, 6)
+                                  for k, v in inc.items()},
                    "incumbent_mass": {k: int((v > 0).sum()) for k, v in inc.items()},
                    }
             folds.append(res)
@@ -143,12 +167,14 @@ def main() -> int:
     if folds:
         agg = {
             "n_folds": len(folds),
-            "mean_dti_mine": round(float(np.mean([f["dti_mine"] for f in folds])), 6),
+            "pred": str(a.pred),
+            "mean_dti_file": round(float(np.mean([f["dti_file"] for f in folds])), 6),
+            "mean_dti_rebuild": round(float(np.mean([f["dti_rebuild"] for f in folds])), 6),
             "mean_dti_random": round(float(np.mean([f["random_dti"] for f in folds])), 6),
             "mean_dti_incumbents": {k: round(float(np.mean([f["incumbents"][k] for f in folds])), 6)
                                     for k in inc},
-            "folds_mine_beats_random": int(sum(f["dti_mine"] > f["random_dti"] for f in folds)),
-            "folds_mine_beats_incumbents": {k: int(sum(f["dti_mine"] > f["incumbents"][k]
+            "folds_file_beats_random": int(sum(f["dti_file"] > f["random_dti"] for f in folds)),
+            "folds_file_beats_incumbents": {k: int(sum(f["dti_file"] > f["incumbents"][k]
                                                        for f in folds)) for k in inc},
             "truth_px_total": int(sum(f["truth_px"] for f in folds)),
             "caveat": ("Catalogue-truth proxy; the organizers mask the catalogue out of scoring, so "
