@@ -16,6 +16,8 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from conftest import require_competition_data
+
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "docs/e45/index.html"
 
@@ -51,6 +53,7 @@ def test_every_published_digest_is_the_real_one(name):
 @pytest.mark.parametrize("name", list(SHIPPED))
 def test_submission_is_metric_legal(name):
     rasterio = pytest.importorskip("rasterio")
+    require_competition_data()
     p = ROOT / "docs/downloads" / name
     if not p.exists():
         pytest.skip(f"{name} not present")
