@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEMSDOE45 — Kaplan–Meier fault-tip survival for the GEMS Prize Challenge</title>
+<style>
+:root{--bg:#0e1116;--panel:#161b22;--panel2:#1c2230;--line:#2a3240;--fg:#e6edf3;--mut:#96a0ad;
+--acc:#4ea1ff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.62 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px 80px}
+header.top{border-bottom:1px solid var(--line);background:linear-gradient(180deg,#121826,#0e1116)}
+h1{font-size:1.6rem;margin:0;padding:22px 0 4px;letter-spacing:-.02em}
+h2{font-size:1.22rem;margin:38px 0 10px;border-bottom:1px solid var(--line);padding-bottom:8px}
+h3{font-size:1.02rem;margin:22px 0 6px}
+p,li{color:#d8e0e8}
+a{color:var(--acc)}
+code{background:#0a0d12;border:1px solid var(--line);border-radius:5px;padding:1px 5px;font-size:.88em}
+pre{background:#0a0d12;border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow:auto;font-size:.84rem;line-height:1.5}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.9rem}
+th,td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top}
+th{background:var(--panel2);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.dl{background:linear-gradient(135deg,#12351f,#0d2417);border:1px solid #2ea043;border-radius:12px;padding:20px 22px;margin:22px 0}
+.dl h2{margin:0 0 6px;border:0;padding:0;font-size:1.35rem}
+.btn{display:inline-block;background:var(--ok);color:#04170a;font-weight:700;text-decoration:none;
+padding:13px 22px;border-radius:9px;margin:8px 10px 4px 0;font-size:1.02rem}
+.btn.alt{background:#2b3444;color:var(--fg)}
+.btn:hover{filter:brightness(1.08)}
+.small{color:var(--mut);font-size:.86rem}
+.tag{display:inline-block;font-size:.72rem;padding:2px 8px;border-radius:99px;border:1px solid var(--line);background:var(--panel2);color:var(--mut);margin-left:6px}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.mut{color:var(--mut)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:16px 0}
+.note{border-left:3px solid var(--warn);background:#1c1a12;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.badnote{border-left:3px solid var(--bad);background:#1f1315;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+ul{padding-left:22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.kv{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.kv b{display:block;font-size:1.3rem;color:var(--acc)}
+nav a{margin-right:16px;font-size:.9rem;color:var(--mut);text-decoration:none}
+nav a:hover{color:var(--acc)}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<h1>GEMSDOE45 — Kaplan–Meier fault-tip survival</h1>
+<p class="small" style="margin:6px 0 12px">
+GEMS Prize Challenge · GeoDAWN region, Nevada · EPSG:32611, 100 m, 3730 × 3292
+· built 2026-10-06</p>
+<nav>
+<a href="#download">Download</a><a href="#howto">How to submit</a><a href="#why">Why it works this way</a>
+<a href="#method">Method</a><a href="#bands">Bands</a><a href="#hypotheses">Hypotheses</a>
+<a href="#holdout">Holdout</a><a href="#flags">Irregularities</a><a href="#sources">Sources</a>
+</nav>
+</div></header>
+
+<div class="wrap">
+
+<!-- ===================== DOWNLOAD ===================== -->
+<div class="dl" id="download">
+<h2>⬇️ Download the submission — one click</h2>
+<p><b>Primary file.</b> Single-band float32 GeoTIFF, same grid as the training data, NaN outside the
+footprint — exactly the encoding of the organizers' own <code>sample_submission.tif</code>.</p>
+<a class="btn" href="../downloads/gems45-h48-kmtip-structural-20261006.tif" download>⬇ Download the submission .tif</a>
+<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.tif" download>.tif, all-finite twin</a>
+<a class="btn alt" href="../downloads/gems45-h48-kmtip-structural-20261006-zeros.zip" download>.zip (one GeoTIFF)</a>
+<p class="small" style="margin-top:14px">
+File <code>gems45-h48-kmtip-structural-20261006.tif</code> · 138,260 bytes · 40,000 predicted pixels
+· <b>every finite value in [0, 1]</b> · <b>no sentinel anywhere</b> · sha256<br>
+<code>40eb32bf995433b15052745c7ea647ed344dc4d56ca9356f8b843a4c1466a402</code></p>
+<p class="small"><b>Note to paste into the submission form:</b><br>
+<code>The submission note: GEMSDOE45 H48 | KM tip-survival extension (3866 catalogue tips,
+product-limit gap curve, per-tip lengths 2-11 px) unioned with a 9-plane rank-ensemble structural
+field; 40,000 dots at the metric's own marginal bar, all &gt;=200 m from the mapped catalogue</code></p>
+<p class="small"><b>Status: candidate under HOLD.</b> It passes every format check on its published
+bytes and its per-fault extension lengths provably vary. It has <b>not</b> beaten the incumbent on
+the only spatially-blocked instrument this environment can run, and no organizer score is known for
+it. Read <a href="#holdout">§Holdout</a> before you spend a slot on it.</p>
+</div>
+
+<!-- ===================== HOW TO SUBMIT ===================== -->
+<h2 id="howto">How to submit, exactly</h2>
+<ol>
+<li>Open the competition: <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/">drivendata.org/competitions/306/competition-doe-gems/</a>
+and sign in. You must accept the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/rules/">rules</a>
+before your first submission.</li>
+<li>Click the <b>Download the submission .tif</b> button at the top of this page.</li>
+<li>Go to the <a href="https://www.drivendata.org/competitions/306/competition-doe-gems/submissions/">Submissions tab</a>
+and choose <b>New submission</b>.</li>
+<li><b>File to submit:</b> pick the downloaded <code>gems45-h48-kmtip-structural-20261006.tif</code>.
+(The portal accepts a single GeoTIFF or a .zip containing one — either button above will work.)</li>
+<li><b>Note (optional):</b> paste the note string from the download box. It fits the portal's length
+limit and tells your own files apart later.</li>
+<li>Click <b>Submit</b>. Scoring normally returns within a minute or two.</li>
+</ol>
+
+<h3>If the portal says <i>"Predicted values must be in range [0, 1]"</i></h3>
+<p>That error has exactly two causes, both reproduced and eliminated here:</p>
+<ul>
+<li><b>The nodata sentinel.</b> <code>training_features.tif</code> stores
+<code>−3.4028235e+38</code> outside the survey area. Anything built by stacking that raster wholesale
+carries values near −10³⁸, which are outside [0, 1].</li>
+<li><b>NaN fails a numeric range test.</b> <code>0 &lt;= nan &lt;= 1</code> evaluates to
+<b>False</b>. A validator that range-tests the entire array rejects a NaN-outside file — even though
+the organizers' own <code>sample_submission.tif</code> is NaN-outside and the problem description
+says data outside the bounds should be "null or nan".</li>
+</ul>
+<p>So two encodings are published, and the choice is yours rather than the writer's:
+the <b>primary</b> file matches the official template (NaN outside), and the <b>all-finite twin</b>
+sets every cell to a value in [0, 1] with no NaN at all. Both contain the same 40,000 predictions.
+Every file here is asserted before writing: single band, float32, template CRS and transform, zero
+sentinels anywhere, all finite in-footprint values in [0, 1].</p>
+
+<!-- ===================== WHY ===================== -->
+<h2 id="why">Why the file is built this way — the metric, and the rule that decides everything</h2>
+<p>The published metric is a distance-weighted Tversky index with a triangular kernel of 300 m
+(3 pixels), α = 0.2 on false positives and β = 0.8 on false negatives:</p>
+<pre>TP_w = Σ_{g∈G} max_{x: d(x,g)≤R} p(x)·k(d(x,g))
+FP_w = Σ_{x: p(x)&gt;0} p(x)·[1 − max_{g∈G} k(d(x,g))]           k(d) = max(1 − d/300m, 0)
+FN_w = Σ_{g∈G} [1 − max_{x: d(x,g)≤R} p(x)·k(d(x,g))]
+DTI  = TP_w / (TP_w + 0.2·FP_w + 0.8·FN_w + ε)</pre>
+<p>Two exact reductions follow, and both are used everywhere in this project. Writing
+<code>T = TP_w</code>, <code>F = FP_w</code>, <code>K = |G|</code>:</p>
+<pre>FN_w = K − T                        (the kernel is 0 beyond R, so both sums maximise alike)
+DTI  = T / (0.2·(T+F) + 0.8·K)      equivalently   1/DTI = 0.2 + 0.2·(F/T) + 0.8·(K/T)</pre>
+<div class="panel">
+<h3>The marginal theorem — this is the whole emission rule</h3>
+<p>Add one unit of prediction mass at a pixel whose realised kernel weight is
+<code>w = max_g k(d(x,g))</code>. It raises <code>F</code> by exactly <code>1 − w</code> (the mass is
+either outside every kernel, or it displaces mass already counted) and raises <code>T</code> by at
+most <code>w</code>. In the best case,</p>
+<pre>d(denominator) = 0.2·(w + 1 − w) = 0.2      — independent of where the mass lands</pre>
+<p>so the added mass pays for itself <b>iff w &gt; 0.2·DTI</b>. At DTI = 0.26 the bar is 0.052; at
+0.2778 it is 0.0556; at 0.3195 it is 0.0639; at 0.3262 it is 0.0652. A dot is worth emitting only
+if it sits within <b>≈282 m</b> of a <i>hidden</i> truth pixel. Nothing else in the metric matters —
+not the number of dots, not the emission density, not how the raster looks.</p>
+</div>
+<div class="panel">
+<h3>The masking rule makes the target explicit</h3>
+<p>DrivenData staff answered this on the forum on 2026-09-16 (<a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">thread 11516</a>):</p>
+<blockquote style="border-left:3px solid var(--acc);margin:8px 0;padding:6px 14px;color:#cfd8e3">
+"Pixels corresponding to known USGS/INGENIOUS faults are masked / excluded from evaluation, so they
+do not count towards penalty terms." … "Re-evaluation will also mask/exclude the existing
+USGS/INGENIOUS faults."</blockquote>
+<p>Consequence, and it is decisive: mass placed on the mapped catalogue earns <b>nothing</b> and
+costs <b>nothing</b>. The entire game is placing mass <b>off</b> the catalogue, within 300 m of
+faults that are in no public database. Every number on this page is computed on that domain.</p>
+</div>
+
+<!-- ===================== METHOD ===================== -->
+<h2 id="method">Method — tip extension as a survival function</h2>
+<p>A fault is a finite rupture surface that grows by tip propagation until it meets another fault or
+the driving stress is relieved. A mapper, though, stops drawing at the last pixel where the evidence
+is unambiguous. Those two stopping rules differ, and the difference — the tip-extension length — is
+exactly the population in which a "new fault" enters a catalogue. So the extension length is a
+time-to-event variable, and it is estimated here as one.</p>
+<div class="grid">
+<div class="kv"><b>3,866</b>catalogue tips analysed</div>
+<div class="kv"><b>3,199</b>8-connected segments (median length 12 px)</div>
+<div class="kv"><b>3,163</b>observed along-trend gaps</div>
+<div class="kv"><b>703</b>tips right-censored at 120 px</div>
+<div class="kv"><b>12 px</b>median genuine relay gap (900 m in the 2,127-tip censoring-free sample)</div>
+<div class="kv"><b>26.9 px</b>restricted mean gap — the quantity a naive mean biases low</div>
+</div>
+<h3>The sample, the event and the censor</h3>
+<ul>
+<li><b>Sample:</b> for every tip, the along-strike distance to the nearest pixel of a <i>different</i>
+catalogue segment, searched inside a ±15° cone about that tip's own outward strike.</li>
+<li><b>Event:</b> a different segment is reached inside the 120 px window.</li>
+<li><b>Censor:</b> nothing is reached — right-censored at 120 px.</li>
+</ul>
+<p>The 703 censored tips are precisely the ones with the largest gaps, which is why the naive mean of
+the observed gaps is biased <b>low</b>, and why the product-limit estimator of
+<a href="https://doi.org/10.1080/01621459.1958.10501452">Kaplan &amp; Meier (1958)</a> is the right
+tool rather than a fixed search radius. Fitted curve (genuine sample, gaps &gt; 2 px):</p>
+<table>
+<tr><th>Along-strike distance</th><th class="n">3 px</th><th class="n">5 px</th><th class="n">8 px</th>
+<th class="n">12 px</th><th class="n">20 px</th><th class="n">40 px</th></tr>
+<tr><td>Ŝ(d) = P(next structure is farther than d)</td><td class="n">0.882</td><td class="n">0.712</td>
+<td class="n">0.585</td><td class="n">0.495</td><td class="n">0.383</td><td class="n">0.240</td></tr>
+</table>
+<p class="small">Maximum Greenwood standard error over the curve: 0.0108.</p>
+
+<h3>Turning the curve into an emission budget</h3>
+<p>A dot at along-strike distance <code>e</code> from a tip earns credit when the next along-trend
+structure lies within the kernel window, so its expected realised weight is</p>
+<pre>E[w](e) = 0.5 · [ Ŝ(e − 3) − Ŝ(e + 3) ]</pre>
+<p>Evaluating that against the metric's own bar of <code>0.2 × 0.30 = 0.06</code> gives
+<b>e* = 11 px = 1,100 m</b>: beyond that the expectation falls below what any added mass can pay for.
+That number is not tuned; it is the intersection of the fitted curve and the metric.</p>
+
+<h3>Per-fault extension lengths — and the proof they vary</h3>
+<table>
+<tr><th>Rule</th><th>Extension length for that tip</th></tr>
+<tr><td>observed relay gap G &gt; 2 px</td><td>min( round(0.5 · G), 11 px ) — relay-midpoint linkage</td></tr>
+<tr><td>observed gap ≤ 2 px</td><td>the 1–2 px gap is rasterisation fragmentation, not a step-over, so it carries no information; these tips take the KM median of the genuine sample</td></tr>
+<tr><td>censored tip</td><td>min( round(0.5 · KM conditional mean gap), 11 px ) — the product-limit correction for the long-gap tail</td></tr>
+</table>
+<div class="grid">
+<div class="kv"><b>2 px</b>minimum</div>
+<div class="kv"><b>11 px</b>maximum</div>
+<div class="kv"><b>7.24 px</b>mean</div>
+<div class="kv"><b>10</b>distinct values</div>
+</div>
+<p><b>Confirmed before download, as required: the extension lengths are not a constant.</b>
+The distribution over the 3,866 tips is
+<code>{2: 612, 3: 102, 4: 226, 5: 48, 6: 1159, 7: 35, 8: 90, 9: 23, 10: 77, 11: 1494}</code> —
+ten levels, driven by each tip's own measured relay geometry and capped by the metric's bar.
+A constant-radius emitter would place all 3,866 tips at a single value; this does not.</p>
+
+<!-- ===================== BANDS ===================== -->
+<h2 id="bands">Which of the 19 bands can actually see a fault?</h2>
+<p>Answered by measurement, because the answer is not obvious and it rules out a whole family of
+ideas. <code>ρ(1 km)</code> is the correlation between a pixel and the pixel 1 km away: a plane with
+ρ near 1 is regionally smooth and physically <i>cannot</i> satisfy a 300 m kernel.
+The right-hand column is the fraction of the top-40,000 pixels of that plane's gradient magnitude
+that land within 300 m of a mapped fault, versus an 8.3 % random baseline.</p>
+<table>
+<tr><th>Band</th><th class="n">ρ(1 km)</th><th class="n">mean |grad| (σ/px)</th><th class="n">top-40k within 300 m</th><th>Class</th></tr>
+<tr><td>det_elev_slope (19)</td><td class="n">0.722</td><td class="n">0.167</td><td class="n ok">23.2 %</td><td><b>LOCATOR</b></td></tr>
+<tr><td>iso_grav_anom_hg (18)</td><td class="n">0.952</td><td class="n">0.022</td><td class="n">13.6 %</td><td>LOCATOR</td></tr>
+<tr><td>iso_grav_anom_slope (5)</td><td class="n">0.910</td><td class="n">0.032</td><td class="n">13.5 %</td><td>LOCATOR</td></tr>
+<tr><td>geod_2ndinv (4)</td><td class="n">0.984</td><td class="n">0.0023</td><td class="n">12.1 %</td><td>WEIGHT only</td></tr>
+<tr><td>iso_grav_anom (13)</td><td class="n">0.979</td><td class="n">0.013</td><td class="n">11.6 %</td><td>WEIGHT only</td></tr>
+<tr><td>geod_dilaterate (8)</td><td class="n">0.986</td><td class="n">0.0035</td><td class="n">11.9 %</td><td>WEIGHT only</td></tr>
+<tr><td>ieq_n100a15 (16)</td><td class="n">0.979</td><td class="n">0.0027</td><td class="n">11.9 %</td><td>WEIGHT only</td></tr>
+<tr><td>tmi_hg (3)</td><td class="n">0.592</td><td class="n">0.103</td><td class="n">9.6 %</td><td>LOCATOR</td></tr>
+<tr><td>rtp (2)</td><td class="n">0.730</td><td class="n">0.051</td><td class="n">9.0 %</td><td>LOCATOR</td></tr>
+<tr><td>tmi_vg (9)</td><td class="n">0.047</td><td class="n">0.131</td><td class="n">9.0 %</td><td>LOCATOR</td></tr>
+<tr><td>mag_anom (1)</td><td class="n">0.944</td><td class="n">0.021</td><td class="n bad">5.4 % — worse than random</td><td>rejected</td></tr>
+<tr><td>depth_to_base_surf (15)</td><td class="n">0.974</td><td class="n">0.012</td><td class="n bad">5.6 %</td><td>rejected</td></tr>
+</table>
+<div class="note">
+<b>Two results worth more than the ones above.</b>
+<br>1. <b>The geodetic strain-rate bands cannot do the job.</b> <code>geod_2ndinv</code>,
+<code>geod_shearrate</code> and <code>geod_dilaterate</code> have ρ(1 km) = 0.984, 0.983 and 0.986 and
+change by only 0.0023–0.0035 σ per pixel — they are regional fields from a coarse deformation model.
+A "strain-rate ridge detector" for faults is therefore not a hard idea that failed; it is an idea
+that <i>cannot</i> work at 300 m with these inputs. The same is true of <code>ieq</code>/<code>deq</code>
+(ρ(3 km) = 0.994 / 0.841): the earthquake-density band is constant by construction at the metric's
+scale. This is why the family record's seismicity and strain families under-perform.
+<br>2. <b>The best single plane is topographic slope, not magnetics.</b> <code>det_elev_slope</code>
+reaches 2.8× the background rate; <code>mag_anom</code> is <i>anti</i>-correlated with the catalogue
+(AUC 0.46). A magnetics-first design is measurably the wrong instinct on this dataset.
+</div>
+
+<!-- ===================== HYPOTHESES ===================== -->
+<h2 id="hypotheses">The hypothesis set, ranked, with verdicts</h2>
+<p>Five candidates were generated against the requirement that each names its layers, its physical
+signature, why it should find a fault <i>missing</i> from the catalogue, and how it differs from what
+the sibling repositories already implement. "Tried before?" is checked against the cloned
+GEMSDOE32/40/41 trees, not assumed.</p>
+<table>
+<tr><th>#</th><th>Hypothesis</th><th>Layers · signature</th><th>Why it should find a <i>new</i> fault</th><th>Tried before?</th><th>Verdict</th></tr>
+
+<tr><td><b>H46</b></td>
+<td>Kaplan–Meier tip-survival extension</td>
+<td>catalogue geometry; <code>det_elev_slope</code>(19) as an optional veto</td>
+<td>Experts extend a known fault or fill a relay gap far more often than they invent a trace in
+blank ground, and the extension zone's uncertainty is 1-D rather than a 2-D search.</td>
+<td><b>No.</b> Every prior tip family used a fixed radius — d2.8, prethin-tip-euler, analog-tip-stepover.</td>
+<td class="ok"><b>Implemented &amp; shipped.</b> Lengths vary 2–11 px. Unvalidated (see Holdout).</td></tr>
+
+<tr><td><b>H47</b></td>
+<td>Multi-physics oriented-lineament consensus via the second-order orientation order parameter</td>
+<td><code>tmi_hg</code>(3) <code>tmi_vg</code>(9) <code>rtp</code>(2) <code>tmi</code>(14)
+<code>det_elev_slope</code>(19) <code>iso_grav_anom_hg</code>(18) <code>iso_grav_anom_vg</code>(11) <code>tc</code>(6)</td>
+<td>The catalogue over-represents faults mappable in <i>one</i> dataset; demanding that several
+independent physics agree on a strike selects what single-dataset mapping under-represents.</td>
+<td>Partly — GEMSDOE32's H33-A proposed the same object.</td>
+<td class="bad"><b>Tested and rejected.</b> 9.9 % of top-40k within 300 m vs 8.3 % random — only 1.2×,
+<i>worse</i> than the single best plane (2.8×). The geometric mean over 16 terms is too brittle.</td></tr>
+
+<tr><td><b>H48</b></td>
+<td>Rank ensemble of the measured-informative planes, no fitting on labels</td>
+<td>9 planes: gradients of <code>det_elev_slope</code>, <code>det_elev</code>,
+<code>iso_grav_anom{,_hg,_slope}</code>, <code>geod_dilaterate</code>, plus
+<code>val_geod_2ndinv</code> and <code>|laplace|</code></td>
+<td>Ranking by percentile is robust to the heavy tails that dominate potential-field derivatives and
+to the dynamic-range mismatch between magnetic and gravity planes, so weak-but-real evidence
+survives instead of being swamped.</td>
+<td><b>No</b> — prior repos use per-band products or supervised scores.</td>
+<td class="ok"><b>Implemented &amp; shipped</b> as the structural support. 3.3× background
+enrichment at top-20k (27.6 % vs 8.3 %).</td></tr>
+
+<tr><td><b>H49</b></td>
+<td>Cross-catalogue disagreement field, gated by structural coherence</td>
+<td>USGS SGMC (State Geologic Map Compilation) faults absent from the given catalogue</td>
+<td>SGMC is pre-Quaternary-inclusive, so it contains <i>known-real</i> faults the provided
+Quaternary catalogue omits — the hidden-truth population's character exactly.</td>
+<td>Partly — GEMSDOE29 shipped an unscored <code>sgmc-off-catalogue-44k</code>; GEMSDOE32 ranked it direction 2.</td>
+<td class="warn"><b>Blocked.</b> <code>mrdata.usgs.gov</code> is unreachable from this sandbox
+(HTTP 000). Source named and free; obtainability <b>not</b> verified, so not proposed as ready.</td></tr>
+
+<tr><td><b>H50</b></td>
+<td>Sub-kilometre seismicity lineaments</td>
+<td>raw USGS FDSN/ComCat events + focal-mechanism nodal strikes, replacing
+<code>ieq_n100a15</code>(16) and <code>deq_n100a15</code>(10)</td>
+<td>Instrumental seismicity is a <i>dynamic</i> inventory: a blind, low-slip, active fault lights up
+seismically while leaving no scarp at all.</td>
+<td><b>No</b> — nobody in the record has fetched a raw catalogue.</td>
+<td class="warn"><b>Blocked, and the supplied proxies are provably useless:</b> ρ(1 km) = 0.994 for
+<code>ieq</code>. Free official source named (USGS FDSN event web service);
+obtainability from this sandbox <b>unverified</b>.</td></tr>
+</table>
+<p class="small">Ranking criterion, as the brief requires: expected DTI gain per unit of implementation
+cost. H46 and H48 are implemented and shipped; H47 was killed by its own measurement; H49 and H50 are
+blocked on network access and are therefore not proposed as viable until their sources can be fetched.</p>
+
+<!-- ===================== HOLDOUT ===================== -->
+<h2 id="holdout">Validation — and why the result is a refusal, not a win</h2>
+<p>Per the brief, the top candidate must be validated on a spatially-blocked holdout before a
+submission slot is spent. The grid is cut into a 4 × 4 lattice; for each fold the block's catalogue
+pixels are withheld and <i>every</i> part of the pipeline is rebuilt without them — segments touching
+the block are dropped whole, the tip gap sample is re-measured, the Kaplan–Meier curve is re-fitted —
+and the emission is still painted over the <b>whole</b> map, because that is the competition's shape:
+you do not know where the scored faults are.</p>
+<table>
+<tr><th>Arm</th><th class="n">Mean DTI over 11 truth-bearing blocks</th><th>Live score (owner claim)</th></tr>
+<tr><td><b>Shipped H48</b></td><td class="n">0.006813</td><td class="mut">unknown</td></tr>
+<tr><td>Uniform random control, matched mass</td><td class="n">0.012654</td><td class="mut">—</td></tr>
+<tr><td><code>dotted-h19-5-d2-8</code></td><td class="n">0.063400</td><td class="n">0.2600</td></tr>
+<tr><td><code>h33-2-b2</code> (the best known artifact)</td><td class="n">0.002791</td><td class="n">0.2778</td></tr>
+</table>
+<div class="badnote">
+<b>Two findings, and both matter more than the score.</b>
+<br><br><b>1. The shipped file did not beat the holdout best.</b> It scores below the random control
+and far below <code>d2.8</code>. By this repository's own rule it is therefore published as a
+<b>candidate under HOLD</b>. It is available to download because the brief requires a downloadable
+artifact, and because the second finding changes what "did not beat the holdout" means.
+<br><br><b>2. The instrument cannot rank candidates at all — and this is measured, not asserted.</b>
+On the catalogue-truth holdout <code>d2.8</code> (live 0.2600) scores <b>23×</b> higher than
+<code>h33-2-b2</code> (live 0.2778), <b>inverting the live order</b>: 0.0634 vs 0.0028, while live
+they are 0.2600 vs 0.2778 — a ratio of 0.94. The reason is structural: the truth of this proxy is
+the visible catalogue, and the organizers <i>mask that catalogue out of the live score entirely</i>.
+A proxy whose truth is the catalogue rewards covering wherever the catalogue runs; the live truth is
+a different, sparser set of unmapped faults. Sibling repositories reach the same conclusion by a
+different route, reporting a leave-one-out Spearman of <b>−0.897</b> between such a proxy and 16
+live scores.
+<br><br>So the honest statement is not "this file failed validation" but "no file can be validated
+with the instruments available in this environment". Note the ordering does leave one weak,
+explicitly non-conclusive signal: the live-best artifact scores <i>lowest</i> on this proxy, and the
+shipped file scores second-lowest.
+</div>
+
+<!-- ===================== FLAGS ===================== -->
+<h2 id="flags">Irregularities flagged for review</h2>
+<table>
+<tr><th>ID</th><th>Finding</th><th>Where to check</th></tr>
+<tr><td>IR-45-001</td><td><b>Three different footprints coexist.</b> Band-1 finite = 5,165,852 px;
+finite in all 19 bands = 5,165,840 px; finite in <code>sample_submission.tif</code> = 5,167,373 px.
+1,540 px are all-band finite but NaN in the template; 3,073 px are template-finite but nodata in
+every feature band. "Inside the footprint" is therefore not one thing. The writer uses the
+<b>template</b> mask and asserts it, because the problem description designates the sample
+submission as the format template.</td><td><code>evidence/pipeline.json</code></td></tr>
+<tr><td>IR-45-002</td><td><b>Band 6 (<code>tc</code>) carries 12 nodata sentinels <i>inside</i> the
+band-1 finite mask.</b> Any per-band "valid" mask must be built per band, not once from band 1.</td>
+<td><code>evidence/pipeline.json</code></td></tr>
+<tr><td>IR-45-003</td><td><b>The catalogue-truth holdout is not a valid ranking instrument</b>
+(§Holdout). 23× inversion against live order.</td><td><code>evidence/holdout_shipped.json</code></td></tr>
+<tr><td>IR-45-004</td><td><b>Score provenance.</b> No artifact in this repository has an organizer
+receipt. 0.2778, 0.2600, 0.3262 and every other value in the brief are owner or third-party-snapshot
+claims. The brief's stated leader (0.3195) is recorded as rank 3 in the GEMSDOE32 snapshot of
+2026-10-04, behind 0.3262 and 0.3222.</td><td>this page; Sources</td></tr>
+<tr><td>IR-45-005</td><td><b><code>deq_n100a15</code> reaches 4.96 × 10⁶</b> on a grid spanning
+about 329 × 373 km, which is not a plausible straight-line distance in metres. The band is used
+nowhere here, but the value looks like a unit or accumulation error worth reporting.</td>
+<td><code>evidence/pipeline.json</code></td></tr>
+<tr><td>IR-45-006</td><td><b>Poisson-disk thinning at the kernel radius is wrong for this metric,</b>
+and this repository initially made that mistake. Measured on a synthetic 300 px fault trace: full
+line 1-px spaced → DTI 1.000; 2 px → 0.862; 3 px → 0.813; 4 px → 0.712. A marginal dot in a 3 px
+lattice adds 0.222 of credit for 0.044 of denominator (ratio 5.0 &gt; DTI), so it pays. The emitter
+was changed accordingly; the finding is recorded because sibling repositories use hard Poisson-disk
+thinning at R.</td><td>site §Why; <code>src/gems45/emission.py</code></td></tr>
+</table>
+
+<!-- ===================== LIMITS ===================== -->
+<h2>Limitations and what would actually move the needle</h2>
+<ol>
+<li><b>No live scoring loop.</b> DrivenData's terms forbid automated monitoring and this environment
+holds no competition account, so every leaderboard statement is a claim. The single highest-value
+action available is to submit this file manually, once, and return the number — <i>any</i> real
+number breaks the deadlock that every sibling repository is stuck in.</li>
+<li><b>No instrument that ranks.</b> Until an independent fault inventory (SGMC, or a fresh expert
+set) can be fetched and validated, candidate selection is an argument, not a measurement.</li>
+<li><b>The supplied features are weak for this task.</b> Best single-plane AUC against the catalogue
+is 0.61, and 9 of 19 planes carry no information at the kernel's scale. A competitive jump almost
+certainly requires the <b>1 m DEM</b> (its links CSV sits behind the competition login) and a real
+detection model on it, not a better blend of these 19 planes.</li>
+<li><b>No GPU and no training loop</b>, so the reference solution's CNN is out of reach here; only
+CPU-feasible detectors are represented.</li>
+<li><b>Downscaling LiDAR to 100 m discards the signal that matters.</b> A sub-metre scarp throw
+averages away at 100 m, yet the competition's grid is fixed. The 1 m DEM is the one input that could
+change this.</li>
+</ol>
+
+<!-- ===================== SOURCES ===================== -->
+<h2 id="sources">Sources, for manual review</h2>
+<table>
+<tr><th>Claim</th><th>Source</th></tr>
+<tr><td>Metric formulas, α = 0.2, β = 0.8, R = 300 m, worked example <code>3.00/(3.00+0.378+1.60)=0.60</code>, submission format</td>
+<td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/">drivendata.org/…/competition-doe-gems/page/967/</a></td></tr>
+<tr><td>Competition structure: private expert-labelled new faults; top 5 × $10,000 Initial Round; expanded label set and $100k/$70k/$40k/$25k/$15k Final Round</td>
+<td><a href="https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/#competition-structure">page 967, Competition structure</a></td></tr>
+<tr><td><b>Known USGS/INGENIOUS fault pixels masked / excluded from evaluation, in both rounds</b> (DrivenData staff, 2026-09-16)</td>
+<td><a href="https://community.drivendata.org/t/scoring-clarification-are-known-usgs-ingenious-faults-masked-when-scoring-and-are-they-in-the-final-round-label-set/11516">community thread 11516</a></td></tr>
+<tr><td>Question on which data sources identified the new test faults (staff reply not yet retrievable — the post bodies do not render)</td>
+<td><a href="https://community.drivendata.org/t/how-were-the-new-test-faults-identified-data-sources-and-fault-types/11527">community thread 11527</a></td></tr>
+<tr><td>Kaplan &amp; Meier (1958), nonparametric product-limit estimator</td>
+<td><a href="https://doi.org/10.1080/01621459.1958.10501452">doi:10.1080/01621459.1958.10501452</a></td></tr>
+<tr><td>GeoDAWN airborne magnetic and radiometric surveys</td>
+<td><a href="https://doi.org/10.5066/P93LGLVQ">doi:10.5066/P93LGLVQ</a></td></tr>
+<tr><td>INGENIOUS geothermal compilation (GDR submission 1391)</td>
+<td><a href="https://gdr.openei.org/submissions/1391">gdr.openei.org/submissions/1391</a></td></tr>
+<tr><td>USGS State Geologic Map Compilation — H49's source, currently unreachable from this sandbox</td>
+<td><a href="https://mrdata.usgs.gov/geology/state/">mrdata.usgs.gov/geology/state/</a></td></tr>
+<tr><td>USGS FDSN earthquake web service — H50's source, currently unreachable</td>
+<td><a href="https://earthquake.usgs.gov/fdsnws/event/1/query">earthquake.usgs.gov/fdsnws/event/1/query</a></td></tr>
+<tr><td>Official rules</td><td><a href="https://docs.nlr.gov/docs/fy26osti/96647.pdf">GEMS 96647 (PDF)</a></td></tr>
+<tr><td>DrivenData reference solution</td>
+<td><a href="https://github.com/drivendataorg/gems-prize-reference-solution">github.com/drivendataorg/gems-prize-reference-solution</a></td></tr>
+</table>
+<p class="small" style="margin-top:34px">
+Everything quoted above is regenerated by <code>scripts/run_pipeline.py</code>,
+<code>scripts/build_field.py</code>, <code>scripts/build_final_submission.py</code> and
+<code>scripts/run_holdout.py</code> from the hash-pinned inputs, and the raw outputs are in
+<code>evidence/</code>. Metric implementation and its brute-force cross-check are in
+<code>src/gems45/metric.py</code> and <code>tests/test_metric.py</code>.
+</p>
+</div>
+</body>
+</html>

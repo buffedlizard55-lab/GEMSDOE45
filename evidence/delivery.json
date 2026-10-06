@@ -1,0 +1,15 @@
+{
+  "recorded_at": "2026-10-06",
+  "pull_request": "https://github.com/buffedlizard55-lab/GEMSDOE45/pull/1",
+  "branch": "arena/afe95da3-gemsdoe45",
+  "site": "https://buffedlizard55-lab.github.io/GEMSDOE45/",
+  "preview_http_status": 200,
+  "preview_download_hash_verified": true,
+  "initial_ci_run": "https://github.com/buffedlizard55-lab/GEMSDOE45/actions/runs/37442788071",
+  "initial_ci_result": "success: 31 tests and independent release verifier",
+  "actions_hardening": "After initial CI, pinned action versions to verified Git commit SHAs, selected current Node-24-era releases, and pinned runner to ubuntu-24.04. Subsequent checks visible on PR.",
+  "pages_configuration": "Existing legacy main/root; API configuration change denied with 403. Root redirect fallback committed. Workflow deployment outcome must be checked separately.",
+  "browser_visual_test": "not run: Chromium CDN download blocked by sandbox networking",
+  "submission_slot_used": false,
+  "merge_and_deployment_status": "See linked PR and Actions for current status; this evidence record was written before merge."
+}

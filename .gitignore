@@ -1,12 +1,21 @@
-# Competition data (~420 MB) is mirrored publicly and reproduced by data/README.md -- not tracked.
-data/*.tif
-data/*.zip
+# ---- shared ----
 __pycache__/
 *.pyc
 .pytest_cache/
 .venv/
+*.partial
+
+# ---- GEMSDOE45 phase-parity session ----
+data/*
+!data/README.md
+research/*.log
+research/raw/
+
+# ---- GEMSDOE45 KM tip-survival session ----
+data/*.tif
+data/*.zip
 evidence/*.npy
+evidence/_*.npy
 evidence/tips.npz
 evidence/km.npz
 evidence/catalogue_cache.npz
-evidence/_*.npy

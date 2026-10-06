@@ -1,0 +1,9 @@
+{
+  "candidate_pixel_sha256": "362e1338f2934670a477ee2943985256b7d8d01325cc57393641f2eab541b825",
+  "compared": 309,
+  "different_grid_or_bands": 2,
+  "unavailable": 0,
+  "identical_predictions": 0,
+  "scope": "All unique Git blobs ending .tif in paths containing download, submission or artifact, from accessible prior main trees; not all releases or unlinked files",
+  "not_claimed": "Exhaustive uniqueness across every historical release, inaccessible file or private artifact"
+}

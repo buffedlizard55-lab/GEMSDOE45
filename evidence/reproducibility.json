@@ -1,0 +1,8 @@
+{
+  "repeat_artifact_sha256_identical": true,
+  "repeat_prediction_sha256_identical": true,
+  "repeat_folds_identical": true,
+  "first_run_at": "2026-10-06T09:14:06.853416+00:00",
+  "repeat_run_at": "2026-10-06T09:24:03.422441+00:00",
+  "scope": "Independent repeat of frozen training, calibration, holdout and inference on the same prepared features; not new statistical evidence."
+}

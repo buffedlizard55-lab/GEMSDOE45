@@ -1,0 +1,36 @@
+# Preregistered hypotheses — GEMSDOE45
+
+Registered 2026-10-06, before feature implementation or holdout evaluation. Initial checkout: README title only. No inherited holdout best, model, scripts, or data existed. Prior landing-source review: 41 accessible repositories; 42GEMSDOE–44GEMSDOE names unavailable at first check. See `evidence/prior_inventory.json`. Novelty below is relative to reviewed descriptions and this empty checkout, NOT a proof that no prior private or unreviewed code uses these ideas.
+
+## Ranked scientific experiments
+
+Expected improvement is an ordinal research judgment, not a forecast of leaderboard points. Each hypothesis can fail. All four use already-restored supplied feature layers; no new external dataset is required. These are hypotheses about **faults**, not verified geothermal vents or reservoirs.
+
+|Rank / ID|Specific layers|Physical signature and transform|Why potentially missing from catalogue|Difference from reviewed work|Expected DTI / cost|
+|---|---|---|---|---|---|
+|1 / H45-PHASE|Detrended elevation (12), RTP (2), isostatic gravity anomaly (13)|Odd/even differential energy at 200 m and 500 m Gaussian scales: scale-normalized gradient magnitude versus Frobenius Hessian magnitude, signed trace phase, and cross-scale phase agreement. A local step has a strong odd component near its center; a symmetric crest has a larger even component. Learn the discrimination jointly across three physical fields.|A weak surface scarp with a subsurface step may be unmapped; parity can suppress symmetric ridge/valley false positives without requiring proximity to a mapped trace.|Not another dot spacing/buffer tweak. Explicit bounded phase-parity features and signed cross-scale phase persistence, ablated against the identical raw/gradient/Hessian classifier. Prior H12 scarp polarity, H15 boundary coincidence, H35 cross-gradient and H29 worm survival are related, but do not establish this exact experiment was run.|Highest plausible information gain; medium CPU cost. No numeric improvement asserted. Risk: lithologic contacts can also be steps.|
+|2 / H45-RELIEF-CONDITIONAL|12, 19, 2, 13|Estimate local elevation interquartile relief and compare potential-field edges against relief-matched neighborhoods, rather than global rank thresholds.|Low-relief covered basin faults are underrepresented in surface mapping; relief-conditional anomalies could recover weak basin edges.|Conditional nuisance normalization, not simple slope, openness, or a universal multiphysics threshold. Distinct from H45-PHASE; not implemented.|Medium possible gain; low-medium cost. Risk: normalization amplifies noise on flat ground.|
+|3 / H45-SIDE-DISTRIBUTIONS|2, 13, 17; normals from 12|Compare robust distributions in paired strips on opposite sides of a candidate line using Wasserstein-1 distance at matched along-strike intervals; require signed continuity.|Covered lithologic displacements may persist statistically where a single-pixel edge is weak or broken.|Distributional side contrast, not cross-gradient collinearity, H13 zero-lag strip correlation, Euler depth, or catalogue-tip extension. Not implemented.|Medium uncertain gain; high cost. Risk: intrusive contacts and interpolation boundaries.|
+|4 / H45-SURVEY-NEGATIVE-CONTROL|1, 2, 14 and 12/13|Estimate local 4-pixel east–west acquisition periodicity in magnetic residuals; downweight candidate structure only if it lacks topographic/gravity corroboration.|Removing acquisition-related false positives reallocates confidence to genuine weak off-catalogue structures; does not itself discover faults.|Local phase-coherent acquisition-noise veto, not the global lattice spectral diagnosis in GEMSDOE23. Not implemented.|Low-medium gain; medium cost. Risk: real east–west faults must not be discarded merely for orientation.|
+
+## Freeze: top candidate only
+
+- Baseline: supplied 19 raw bands plus gradient magnitude and Hessian energy for the same 3 fields at the same 2 scales (31 channels).
+- Candidate: identical baseline plus 15 phase-parity channels (two odd fractions and two signed trace phases plus phase agreement per field; 46 channels).
+- No catalogue distances, absolute pixel coordinates, sample-submission prediction values, earlier predictions, or holdout labels in feature construction.
+- Feature transforms use Gaussian scales 2 and 5 pixels, nearest valid fill, and normalized derivatives. No fitted statistics over holdout labels.
+- Four geographic quadrants. Outer test quadrant q; next quadrant calibration; remaining two train. Exclude 3 km on both sides of central split lines from all fitting and scoring. Thus adjacent train/cal/test domains are at least 6 km apart, beyond filter support and the 300 m scoring kernel.
+- Seed 4506. HistGradientBoostingClassifier: max_iter=120, max_leaf_nodes=15, learning_rate=0.08, l2_regularization=10, min_samples_leaf=50; no internal random validation. At most 30,000 catalogue-positive and 120,000 unlabelled training cells. Unlabelled does NOT mean verified non-fault. No class probability calibration claim.
+- Fit exact labels, not distance labels. Rank predictions, greedy 2.8-pixel separation. Tune only emitted fraction {0.004, 0.008, 0.016} on calibration quadrant DTI, then evaluate once on the test quadrant.
+- Report per-fold TP/FP/FN and DTI, paired candidate-minus-baseline differences. Positive in all 4 folds and positive mean required for a local proxy pass. Four folds are too few for a reliable asymptotic confidence interval; report range, not a spurious significance claim.
+- Earlier H33-2-B2 is measured as a diagnostic only: it was explicitly pruned away from the visible labels, so comparing its score on those same labels is unfair. Its artifact cannot establish an inherited holdout-best detector here.
+- **Competition-slot gate remains CLOSED** unless comparable incumbent holdout evidence and independently labelled off-catalogue validation exist. Even a local proxy pass is not evidence of DTI >0.2778 or >0.3345.
+- Generate the requested unique research TIF even on failure, clearly marked not slot-approved. No submission API is used. Full-data training uses median calibration-selected fraction; no tuning on outer-test outcomes. No copying/blending prior submissions.
+
+## Official physical/data basis (checked 2026-10-06)
+
+- USGS GeoDAWN release: https://www.usgs.gov/data/geodawn-airborne-magnetic-and-radiometric-surveys-northwestern-great-basin-nevada-and and https://doi.org/10.5066/P93LGLVQ — magnetic data support subsurface structural mapping; coordinated lidar supports topography; Area 2 traverse spacing 400 m at azimuth 90°. This supports data interpretation, not the efficacy of H45 transforms.
+- GDR INGENIOUS: https://gdr.openei.org/submissions/1391 — describes geophysical, detrended elevation, and geothermal layers, CC BY 4.0. Regional layer smoothing limits localization to 100 m.
+- Official task/metric: https://www.drivendata.org/competitions/306/competition-doe-gems/page/967/ — hidden new faults, alpha=.2 beta=.8, triangular 300 m kernel, all-fault submission target.
+
+Implementation of mathematical features is original here. Geological discrimination remains falsifiable. No external scientific source is claimed to have validated this detector.

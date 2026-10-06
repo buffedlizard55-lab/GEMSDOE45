@@ -1,0 +1,107 @@
+14GEMSDOE — GEMS Prize submission builder 14GEMSDOE GEMS PRIZE Executive summary How to submit Strategy Hypotheses (round 1) Hypotheses (round 2) Hypotheses (round 3) Hypotheses (round 4) Hypotheses (round 5) Hypotheses (round 6) Hypotheses (round 7) Artifact audit Data & sources Leaderboard Methods Find the faults nobody has mapped yet. The GEMS Prize (US DOE Office of Geothermal) pays for algorithms that surface
+geological faults missing from the public USGS/INGENIOUS catalogue — faults that
+indicate geothermal resources in the GeoDAWN region of Nevada and eastern California.
+Score: a distance-weighted Tversky index that punishes missed faults
+four times harder than false alarms. Competition closes Dec 3, 2026 23:59 UTC ; prize pool $300,000 (verified on the official page — see Data & sources ). ⬇ The file to submit — build & download it here 1 · Download the finished submission file ⬇ Download GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0_site_e96e942f.tif 259,215 B · float32 [0,1], no NaN · EPSG:32611 · 3,292 × 3,730 px · 116,225 px above 0.0 file sha256 ccbe1de0cfd70cbe… · pixels sha256 e96e942f… · manifest · checksum This is the real prediction field, not a placeholder: it is the same pixel array the in-browser builder produces — verified bit-for-bit against docs/js/payload.js by scripts/build_site_download.py and tests/test_site_build.py , and passed through the repository's own submission gate ( scripts/validate_submission.py ). Nothing to install, no JavaScript required. Click it and go to step 2. Note to paste beside it 14GEMSDOE · GEMS_r5-geom-horse-ensemble_20260929T154852Z_ccbe1de0 · site download · file sha8=ccbe1de0 · pixels sha8=e96e942f · 116,225 px > 0 · finite [0,1] no-NaN The DrivenData File to submit dialog takes a single-band GeoTIFF
+  (or a .zip containing one) on the competition grid: float32, every value finite in [0, 1] . The official format
+  page also permits NaN outside the footprint, but a real upload attempt
+  (2026-09-28) shows the form's checker rejects NaN files with
+  “Predicted values must be in range [0, 1]” — so the default download is the finite variant (0.0 outside
+  the footprint, which cannot change the score: no labels exist there and 0.0
+  is below any threshold). There are two routes to the same
+  file : 1 — download the finished GeoTIFF that ships with
+  this page (one click, no JavaScript, nothing to install); 2 — rebuild
+  the identical pixel field in your browser from the payload shipped with the
+  page, which re-verifies it against its pinned hash as it goes. Nothing is
+  ever uploaded. Both carry a name and a Note unique to the
+  build so your team's submissions can be told apart later. DEMO payload loaded. The competition data sits behind a
+    DrivenData login and is not in this repository yet, so the pixels below come
+    from the synthetic test region — the container, validation, naming and note
+    flow are exactly the real ones, but do not upload this file . Once scripts/build_submission.py has run on real data, scripts/build_site_payload.py swaps in the real field and this
+    banner disappears. Build state decoding… download buttons enable only after every self-check passes Grid 3,292 × 3,730 · EPSG:32611 100 m pixels · float32 · 1 band · no NaN (0.0 outside,
+      no GDAL_NODATA tag — the variant the submission form accepts) What gets scored off-catalogue faults only known USGS/INGENIOUS fault pixels are masked from evaluation
+      (official staff ruling) Weekly budget 3 submissions one final selection is scored in both prize rounds Or build the identical file yourself, in this browser Build submission.tif Build submission.zip Max-compat .tif (0.0 outside, no NaN) filename: … initializing… 2 · Paste the Note next to the file (note appears here after the payload decodes) 3 · Upload Open the competition submission page → Submit → Make new submission → choose the file you just downloaded → paste the Note → confirm.
+  Full click-by-click walkthrough, including what to do if the form says “Predicted values must be in range [0, 1]” : How to submit → 2026-09-29 — the site could not produce a submission file. Fixed, and now covered by a test. What was wrong. docs/js/site.js assigned tifBytesNan without declaring it. The file is a strict-mode IIFE, so the
+assignment threw ReferenceError: tifBytesNan is not defined inside the
+promise chain; .catch() swallowed it and every download button stayed
+disabled. The page reached FAILED: tifBytesNan is not defined and offered no
+file — exactly the reported symptom. The Python suite could not see it, because nothing
+in the suite executed the site's JavaScript. Reproduced, not guessed. node scripts/check_site_build.mjs now runs the real payload.js , tif_writer.js and site.js under a DOM shim. Against the unfixed file it prints buildState = "FAILED: tifBytesNan is not defined" and none enabled . Against the fixed file it prints verdict: PASS (20/20 steps) . Three fixes, not one. tifBytesNan is declared, and the optional NaN-nodata variant is built in
+its own guarded function — a failure in the optional variant can no longer block the
+required file . The built file is now deflate-compressed in the browser, so the download is ~107 KB instead of ~47 MB and matches the container shape the Python
+pipeline writes ( rasterio compress="deflate" ). A finished .tif now ships in docs/downloads/ and is linked
+from the top of this page, so a visitor with JavaScript disabled — or with a browser that
+cannot run the builder — still has a file to submit. This is the pattern the sibling team
+sites use. Covered by tests/test_site_build.py (16 tests) in both routes, and run for two browsers in each — one with CompressionStream and one without:
+the browser build is read back with rasterio and compared to the shipped payload
+bit-for-bit, and both files must pass gems.raster.check_submission — the same
+gate that refuses a file the form would reject with "Predicted values must be in range [0, 1]" . Incident recorded as FLAG #14 in research/limitations_and_next.md . Why the team kept scoring 0.1563 — and what changes now Evidence check (2026-09-28/29). The published GEMSDOE1 and
+5GEMSDOE pages display the same truncated artifact-hash prefix
+( 7f00890a… ), run-length count ( 259,495 ) and histogram.
+That strongly suggests their public builders encode the same field, but the
+original uploads and DrivenData submission IDs are absent, so upload identity is
+not proven. A repeated four-decimal leaderboard score — including 0.1563 — does not prove identical predictions. We now hash prediction arrays
+separately from TIFF containers and treat score ties as provenance warnings.
+No candidate is eligible for a slot until it beats the real spatially-blocked
+holdout. Round 6 breaks the plateau: three arms now meet the
+promote rule on real data — R6-1 horsetail splay (4/4 sparse & far),
+R6-5 paleo-shoreline (4/4 both, far ≈ 13× baseline) and R6-3 conductive-base
+step (3/4 & 4/4). The validated field is built
+as submissions/GEMS_r5-geom-horse-ensemble_… .tif (finite, 0 outside,
+passes format gate); the all6 ensemble gate is finishing before the next slot
+goes to the best field. Strategy · Round-6 validated hypotheses → · Round-7 hypotheses → . Round 6 — three real-data promotions (2026-09-29) Five new hypotheses distinct from R1–R5 (see round-6 page ). Validated on real rasters, component protocol 4 folds, emission calibrated on hidden CALIB only; promote rule = beat geom on sparse AND far in ≥3/4 folds: Winner geom_horse (R6-1) dense 0.0385→0.0624 (+0.0239), sparse 0.0151→0.0217 (+0.0066), far 0.0003→0.0040 (+0.0037), 4/4 folds wins on both sparse and far — first arm to meet the promote rule on real data Also promoted geom_shore (R6-5) · geom_condbase (R6-3) shore 0.0452/0.0191/0.0038 (4/4 sparse & far — far ≈ 13× baseline, strongest far arm of the project); condbase 0.0397/0.0166/0.0022 (3/4 sparse, 4/4 far). R6-2 xsec killed by rule (sparse 2/4) despite far 4/4 Runner-up all6 (R5+R6 ensemble) interim 2-fold: 0.0675/0.0212/0.0068 (fold0) and 0.0767/0.0268/0.0095 (fold1) — beats horse and curvature single arms on all three protocols; full 4-fold re-running after an OOM at fold 2 (the first two folds reproduced exactly) Full gates: artifacts/holdout_round6_horse.json , artifacts/holdout_round6_rest.json , fields in artifacts/real_fields/ , submission GEMS_r5-geom-horse-ensemble_20260929T080858Z_76116a29.tif (finite, [0,1], EPSG:32611, official-economics budget q 0.0225). No slot spent yet — the artifact is the single upload candidate. External slip/dilation source verified: DOI 10.5066/P9YL58W6 (USGS ScienceBase, 27 MB shapefile, public domain). Round 7 — the problem statement told us where the truth is (2026-09-29) Two official statements reframe the hidden truth: C28 — "portions of the existing fault data may be misaligned from the true location of the surface fault, which is the prediction target" — and C21 — continuations past mapped tips and splays are scoring truth. No R1–R6 arm models misregistration or buried continuation. Five candidates pre-registered ( round-7 page ): R7-1 expression-aligned traces (misregistration correction, validated via a new --misreg-px stress protocol), R7-2 buried continuation stitching , R7-3 gravity-gradient termination/intersection topology (the label producers' own basin playbook — KB S11 — re-tested on real data after a synthetic-only kill), R7-4 strain-budget deficit , R7-5 transtensional coupling . R7-3/R7-5/R7-1 operators implemented with 20 unit tests; gated this session: R7-1, R7-2, R7-3, R7-5 PROMOTED (far 4/4 each; R7-1 also wins the δ=2 stress 4/4; R7-2's bridge lifts the isolated subset +19 %), R7-4 killed by the prior. Three ensemble attempts (all6, horse7 v1, horse7 v2 at 0.0721/0.0224/0.0075 — far nearly double horse) all fail the fold-wise sparse rule (2/4 each) — the horse arm keeps the weekly slot, at the official-marginal-economics budget (q 0.0225; TEST dense 0.0699). Round 2 — the blocked holdout has already decided (2026-09-28) Nine feature arms, one model, one spatially-blocked holdout
+( scripts/validate_round2.py ). No submission slot was
+spent. Two outcomes matter: Winner classifier × (1 + 0.5·geophysics) +0.0979 combined holdout DTI over the baseline, and the only
+    blend form that improves both recovery (0.3073 → 0.3673) and
+    discovery (0.0081 → 0.0612, 7.5×). Additive and max blends smear probability
+    mass and pay false positives without lifting the per-truth-pixel maximum. Killed by the gate gravity-gradient edge terminations the literature-ranked top candidate — a verbatim statement from
+    the INGENIOUS authors that gravity-gradient terminations defined fault tips and crossings — still made the holdout worse (−0.0059). This is
+    the gate doing its job: an idea with the best published support and the
+    lowest cost was rejected on evidence. The structural insight behind both results: the baseline is a catalogue-trained model, so its discovery DTI is 0.0081 — it has never
+been shown a fault absent from the catalogue, and the prize scores only off-catalogue faults (known-fault pixels are masked, forum
+11516). Full table, sources, layer names and transforms: round-2 hypotheses . The round-1 moves (distinct ideas, not the same idea re-dressed) Move 1 · structural completion relay ramps & tips emit the small connecting faults the catalogue omits at step-overs,
+    horsetails and intersections (Faulds et al.: 32% / 22% / 22% / 8% of systems) Move 2 · hydrothermal expression heat · springs · sinter faults feed hot springs and sinter deposits; where expression exists
+    without a catalogue fault, an unmapped structure is the explanation Move 3 · magnetic lineaments edge transforms structure-tensor / edge detection on the GeoDAWN magnetics for
+    concealed faults with no surface scarp Move 4 · completeness residuals strain vs. catalogue where strain rate and relief predict deformation the catalogue
+    does not show, flag the gap Move 5 · hide-and-recover no leaky training the model only ever learns to recover hidden traces;
+    “distance to known fault = 0” is never the answer Each move names its layers, its physical signature, and its
+evidence on the round-1 hypotheses page, ranked by
+expected DTI gain and implementation cost, with the free official data source
+that backs it. The five round-2 moves — gravity-gradient edge terminations,
+seismicity lineaments, alteration-cap margins, 1 m lidar scarps with a
+paleo-shoreline mask, and range-front topographic steps — are on the round-2 hypotheses page. What the score actually rewards False negatives β = 0.8 missing a hidden fault costs 4× an equal false positive False positives α = 0.2 exploratory confidence on genuinely plausible faults is cheap Match tolerance 300 m triangular a trace within 100 m of the hidden fault still earns 0.67 of full credit Phase 2 upside $250,000 experts verify your novel faults and add them to the labels —
+    genuine discoveries are re-scored as truth Equations transcribed from the official problem description and
+checked line by line in tests/test_dti.py ; the masking ruling is forum thread 11516 . What is and is not reproducible from this repository — checked by running it, 2026-09-29. The round-5, 6 and 7 gate results on this page are the team's recorded runs. Their
+evidence files are not committed : artifacts/* is gitignored except
+for three whitelisted JSONs ( holdout_round2.json , holdout_round3.json , holdout_round3_followup.json ), and every
+one of the round-5/6/7 rows below cites an artifact that is absent from this checkout.
+Executing the gate today fails on the first input: scripts/validate_real.py → rasterio.errors.RasterioIOError: data/raw/training_labels.tif: No such file or
+directory . That is a data-availability limitation, not a contradiction of the
+recorded numbers, but no round-5/6/7 claim can be re-verified here until the
+competition rasters are restored with bash scripts/download_competition_data.sh (DrivenData login required) followed
+by python scripts/prepare_data.py . The one thing that is fully
+verifiable in this checkout is the submission file itself — its pixels ship with the site
+and are hash-checked on every page load and in CI. Flagged for review as FLAG #15. Status board Item State Evidence Competition facts (metric, format, dates, rules) VERIFIED official pages + rules PDF — source table Free external datasets catalogued (INGENIOUS release) VERIFIED 16 files/DOIs with working links — source table Competition rasters in data/raw/ ABSENT IN THIS CHECKOUT Earlier sessions recorded scripts/bridge_team_mirror.sh →
+    418,912,844 B features sha256 4371c82e…, 60,988 catalogue px, 5,167,373 footprint
+    (TEAM-REPORTED; data/ is gitignored and empty here, so it cannot be
+    re-verified from this repository — run bash scripts/download_competition_data.sh to restore). Everything the submission path needs is unaffected: the prediction field
+    ships inside docs/js/payload.js and is hash-checked on every load. Pipeline (features → hide-and-recover → holdout → submission) 185 TESTS PASS Full suite including real-channel tests, DTI fast, submission gate,
+    round-7 channels, deployment-API contract and the new site-build regression tests — pytest tests -q → 185 passed , measured 2026-09-29.
+    (The number previously printed here, 154, was stale: the repository's own ledger
+    records 169 before this session's 16 site-build tests were added.) Round-2 hypothesis gate (9 arms, blocked holdout) RUN artifacts/holdout_round2.json — BLEND-MUL promoted, N1/N3/GEO-ONLY/BLEND/BLEND-ADD killed; synthetic forward model only Round-3 hypothesis gate (10 arms, blocked holdout) RUN artifacts/holdout_round3.json + follow-up — incumbent BLEND-MUL stands; all five R3 candidates and both incumbent-stacks killed — round-3 page Round-5 real-data gate (interim 2-fold) RUN · INTERRUPTED R5-4 profile curvature winning both sparse and far in both folds; all arms improve far — round-5 page Round-6 real-data gate (R6-1 horsetail splay) RUN · 4 FOLDS · PROMOTED artifacts/holdout_round6_horse.json — geom_horse beats geom on sparse AND far in 4/4 folds (0.0385→0.0624 dense, 0.0151→0.0217 sparse, 0.0003→0.0040 far) — round-6 page Round-6 remaining arms (xsec, condbase, shore) RUN · 4 FOLDS · 2 PROMOTED artifacts/holdout_round6_rest.json — R6-5 shore 4/4 sparse & far (far ≈ 13× baseline), R6-3 condbase 3/4 & 4/4 PROMOTED; R6-2 xsec killed by rule (sparse 2/4) Round-7 gates (gravtopo, trans, align ±misregistration) RUNNING Pre-registration research/hypotheses_round7.md — R7-1 misregistration stress protocol new this session — round-7 page Artifact uniqueness audit PASS scripts/check_submission_uniqueness.py — no duplicate TIFF/prediction arrays; score ties are warnings only Submission builder + format gate PASS · REAL PAYLOAD finite variant (0 outside, no NaN) — — deflate-compressed, [0,1], EPSG:32611, 3730×3292 ;
+    a directly downloadable copy lives in docs/downloads/ and the pipeline route
+    writes submissions/GEMS_…_<sha8>.tif + NOTE + MANIFEST — how to submit Site build path (browser + direct download) PASS · 20/20 STEPS node scripts/check_site_build.mjs drives the real payload.js / tif_writer.js / site.js under a DOM
+    shim, twice: once for a current browser (deflate build, 109,583 B) and once for a
+    browser with no CompressionStream (stored build, 49,116,936 B). Both must
+    reach READY, enable all three buttons, and hand over a valid float32 GeoTIFF carrying
+    the payload's pixels bit-for-bit with every value finite in [0,1]. This check did not exist before 2026-09-29 , which is why an undeclared
+    variable could leave the published page with no file to download (FLAG #14, limitations ) Site payload REAL · READY docs/js/payload.js kind= real ,
+    source — , pixels_sha256 — …, — px
+    above 0.0 ( — ), — RLE runs — measured in your browser from the shipped file, then checked in CI by scripts/check_site_build.mjs Directly downloadable .tif in docs/downloads/ PRESENT · VERIFIED scripts/build_site_download.py rebuilds the file from the
+    shipped payload and requires bit-identical pixels. Observation, not a proven identity: its container sha256 begins ccbe1de0cfd70cbe… , and research/results_ledger.md records the
+    rebuilt upload candidate's container hash as ccbe1de0cfd7… — the same
+    12 hex digits. The ledger stores only the prefix, so the full hashes cannot be
+    compared here; recorded as evidence that this download is the upload candidate, with
+    that caveat. Built for the GEMS Prize Challenge ·
+  every claim on this site links to its source; numbers without sources are labelled as team-reported ·
+  repository: buffedlizard55-lab/14GEMSDOE
